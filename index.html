@@ -49,23 +49,23 @@ h1 em{font-style:italic;background:linear-gradient(100deg,var(--dawn1),var(--daw
 .stat b{display:block;font:400 clamp(30px,3.6vw,42px)/1 var(--serif);font-variant-numeric:tabular-nums;margin-bottom:8px}
 .stat span{font:600 10.5px/1.5 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .stat.hot b{color:var(--warn)}
-.timeline{padding:64px 0 8px}
+.timeline{padding:64px 0 8px;--tcol:104px;--dcol:36px}
 .tl-head{display:flex;align-items:baseline;gap:18px;margin-bottom:40px}
 .tl-head .rule{flex:1;height:1px;background:var(--line)}
-.tl{position:relative;height:118px}
-.tl-axis{position:absolute;left:0;right:0;top:78px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--dawn3),var(--dawn2) 55%,var(--dawn1) 82%,var(--gold))}
-.tick{position:absolute;top:92px;transform:translateX(-50%);font:500 11px var(--mono);color:var(--muted)}
-.ev{position:absolute;transform:translateX(-50%);text-align:center;width:120px}
-.ev .dot{width:11px;height:11px;border-radius:50%;background:var(--gold);border:2.5px solid var(--bg);box-shadow:0 0 0 1.5px var(--gold);margin:0 auto;position:relative;top:73px}
-.ev.flag .dot{background:var(--warn);box-shadow:0 0 0 1.5px var(--warn)}
-.ev .lbl{position:relative;top:-14px;font:600 11.5px/1.35 var(--sans);letter-spacing:.02em}
-.ev .t{display:block;font:500 10.5px var(--mono);color:var(--muted);margin-top:2px}
-.ev.low .lbl{top:96px}
-@media(max-width:720px){.tl{display:none}.timeline{padding-top:48px}}
-.tl-list{display:none}
-@media(max-width:720px){.tl-list{display:block;margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
- .tl-list li{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
- .tl-list .t{font:500 12px var(--mono);color:var(--muted);min-width:86px;padding-top:2px}}
+.night{list-style:none;margin:0;padding:0;position:relative;max-width:640px}
+.night::before{content:"";position:absolute;left:calc(var(--tcol) + var(--dcol)/2 - 1px);top:10px;bottom:10px;width:2px;border-radius:2px;
+  background:linear-gradient(var(--dawn3),var(--dawn2) 45%,var(--dawn1) 75%,var(--gold))}
+.nt{display:grid;grid-template-columns:var(--tcol) var(--dcol) 1fr;align-items:start;padding:9px 0;position:relative}
+.nt-t{font:500 12.5px/1.7 var(--mono);color:var(--muted);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.nt-dot{justify-self:center;width:11px;height:11px;border-radius:50%;background:var(--gold);border:2.5px solid var(--bg);box-shadow:0 0 0 1.5px var(--gold);margin-top:5px}
+.nt.flag .nt-dot{background:var(--warn);box-shadow:0 0 0 1.5px var(--warn)}
+.nt-body{font:400 15px/1.55 var(--sans);color:var(--ink2)}
+.nt-body b{color:var(--ink);font-weight:600}
+.nt-s{font:600 10.5px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;margin-left:10px}
+.nt-s.ok{color:var(--ok)}.nt-s.warn{color:var(--warn)}.nt-s.info{color:var(--info)}
+.nt.gap{padding:4px 0}
+.nt.gap .nt-body{font:italic 400 13px/1.6 var(--serif);color:var(--muted)}
+@media(max-width:560px){.timeline{--tcol:70px;--dcol:28px}.nt-t{font-size:11.5px}.nt-body{font-size:14px}}
 .needs{padding:56px 0 10px}
 .needs-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
 @media(max-width:760px){.needs-grid{grid-template-columns:1fr}}
@@ -131,28 +131,15 @@ footer p{margin:0;font-size:13px;color:var(--muted);max-width:70ch}
 <section class="timeline">
   <div class="wrap">
     <div class="tl-head"><span class="eyebrow">How the night unfolded</span><span class="rule"></span></div>
-    <div class="tl" aria-hidden="true">
-      <div class="tl-axis"></div>
-      <span class="tick" style="left:2%">22:00</span>
-      <span class="tick" style="left:26%">02:00</span>
-      <span class="tick" style="left:50%">06:00</span>
-      <span class="tick" style="left:74%">08:00</span>
-      <span class="tick" style="left:98%">09:00</span>
-      <div class="ev flag" style="left:7%"><span class="lbl">Custodian<span class="t">22:37 · self-cancelled</span></span><span class="dot"></span></div>
-      <div class="ev" style="left:57%"><span class="lbl">Timekeeper<span class="t">07:14</span></span><span class="dot"></span></div>
-      <div class="ev low" style="left:63%"><span class="dot"></span><span class="lbl">Analyst ×2<span class="t">07:16</span></span></div>
-      <div class="ev" style="left:69%"><span class="lbl">Host<span class="t">07:15–07:27</span></span><span class="dot"></span></div>
-      <div class="ev low" style="left:81%"><span class="dot"></span><span class="lbl">Opener<span class="t">08:21–08:32</span></span></div>
-      <div class="ev" style="left:88%"><span class="lbl">Doorman<span class="t">08:29–08:34</span></span><span class="dot"></span></div>
-    </div>
-    <ul class="tl-list">
-      <li><span class="t">22:37</span><span><b>Custodian</b> — verifier pass, later self-cancelled</span></li>
-      <li><span class="t">07:14</span><span><b>Timekeeper</b> — overtime review of Jul 11</span></li>
-      <li><span class="t">07:16</span><span><b>Analyst</b> — issue-prevention reports, today + tomorrow</span></li>
-      <li><span class="t">07:15–07:27</span><span><b>Host</b> — FBS prep &amp; message queue</span></li>
-      <li><span class="t">08:21–08:32</span><span><b>Opener</b> — morning shift, verifies everything above</span></li>
-      <li><span class="t">08:29–08:34</span><span><b>Doorman</b> — alarm &amp; access pre-flight</span></li>
-    </ul>
+    <ol class="night">
+      <li class="nt flag"><span class="nt-t">22:37</span><span class="nt-dot"></span><span class="nt-body"><b>Custodian</b> — verifier pass, false alarm<span class="nt-s info">self-cancelled</span></span></li>
+      <li class="nt gap"><span class="nt-t"></span><span></span><span class="nt-body">a quiet night — nothing stirred for 8&nbsp;h&nbsp;37&nbsp;m</span></li>
+      <li class="nt"><span class="nt-t">07:14</span><span class="nt-dot"></span><span class="nt-body"><b>Timekeeper</b> — overtime review of Jul 11<span class="nt-s ok">0 flags</span></span></li>
+      <li class="nt"><span class="nt-t">07:15–07:27</span><span class="nt-dot"></span><span class="nt-body"><b>Host</b> — FBS prep &amp; message queue<span class="nt-s warn">2 flags</span></span></li>
+      <li class="nt"><span class="nt-t">07:16</span><span class="nt-dot"></span><span class="nt-body"><b>Analyst</b> ×2 — issue reports, today + tomorrow<span class="nt-s ok">both clean</span></span></li>
+      <li class="nt"><span class="nt-t">08:21–08:32</span><span class="nt-dot"></span><span class="nt-body"><b>Opener</b> — morning shift, verified the night's work<span class="nt-s ok">clean</span></span></li>
+      <li class="nt"><span class="nt-t">08:29–08:34</span><span class="nt-dot"></span><span class="nt-body"><b>Doorman</b> — alarm &amp; access pre-flight<span class="nt-s ok">16/16 pass</span></span></li>
+    </ol>
   </div>
 </section>
 
