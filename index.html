@@ -94,7 +94,9 @@ h1 em{font-style:italic;background:linear-gradient(100deg,var(--dawn1),var(--daw
 .run-body ul{margin:14px 0 0;padding:0;list-style:none}
 .run-body li{position:relative;padding-left:22px;margin:9px 0;font-size:14.5px;color:var(--ink2)}
 .run-body li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--dawn1),var(--dawn2))}
+.run-body li.act::before{background:var(--warn)}
 .run-body b{color:var(--ink);font-weight:600}
+.tag{display:inline-block;font:700 9.5px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 55%, transparent);border-radius:99px;padding:3px 8px;margin-left:8px;vertical-align:1px}
 .run-body .src{display:inline-block;margin-top:14px;font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px;transition:color .2s,border-color .2s}
 .run-body .src:hover,.run-body .src:focus-visible{color:var(--gold);border-color:var(--gold);outline:none}
 .roster{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
@@ -172,7 +174,13 @@ footer p{margin:0;font-size:13px;color:var(--muted);max-width:70ch}
       <div class="run-id"><span class="glyph">⛅</span><h3>The Opener</h3><span class="t">Morning Shift · 08:21–08:32</span><br><span class="badge b-ok">Clean run</span></div>
       <div class="run-body">
         <p class="lede">Every step of the morning checklist done — and it double-checked the whole night's work behind the other runs.</p>
-        <p class="detail">Coverage for Jul 12–14 is fully staffed (all 12 open-shift touchpoints claimed by you or Ela). Both issue reports verified and marked reviewed. Message sets confirmed complete. Fast-Track Watchlist rebuilt — 10 bookings today, first-timers Michelle C. and Himanshi M. Ela's Friday hours reconcile perfectly.</p>
+        <ul>
+          <li><b>Coverage Jul 12–14</b> — fully staffed; all 12 open shifts claimed (you + Ela)</li>
+          <li><b>Issue reports</b> — both verified, marked reviewed</li>
+          <li><b>Message sets</b> — complete</li>
+          <li><b>Fast-Track Watchlist</b> — rebuilt; 10 bookings today; first-timers Michelle C. &amp; Himanshi M.</li>
+          <li><b>Ela's Friday hours</b> — reconcile perfectly</li>
+        </ul>
         <a class="src" href="https://app.notion.com/p/39b7503281c481b7b717c7ac56108f37">Full report</a>
       </div>
     </article>
@@ -182,8 +190,8 @@ footer p{margin:0;font-size:13px;color:var(--muted);max-width:70ch}
       <div class="run-body">
         <p class="lede">Tomorrow's itinerary is built, seven new board rows seeded, and every message queued for auto-dispatch.</p>
         <ul>
-          <li><b>Sierra G. (tomorrow, 509A) — support-tier call.</b> Staff notes leaned Self Serve; the ladder says <b>FBS</b> — it's her first-ever visit to 509, and status doesn't carry to a new location. The Host defaulted to more support. If you intend Self Serve, set a Support Override on her record.</li>
-          <li><b>Ishfaaq J.'s same-day move</b> (901 → 509A, last night at 19:57) was caught and seeded as Self Serve — no messages needed; the held billing row already exists.</li>
+          <li class="act"><b>Sierra G., tomorrow 509A</b><span class="tag">action</span> — seeded FBS, not Self Serve: first-ever visit to 509, status doesn't carry. Intend Self Serve? Set a Support Override on her record.</li>
+          <li><b>Ishfaaq J. same-day move</b> — 901 → 509A (19:57) caught &amp; seeded Self Serve; no messages needed; billing row already held</li>
         </ul>
         <a class="src" href="https://app.notion.com/p/39b7503281c48164876de8885861690f">Full report</a>
       </div>
@@ -193,7 +201,11 @@ footer p{margin:0;font-size:13px;color:var(--muted);max-width:70ch}
       <div class="run-id"><span class="glyph">🚪</span><h3>The Doorman</h3><span class="t">Access Pre-flight · 08:29–08:34</span><br><span class="badge b-ok">16 / 16 pass</span></div>
       <div class="run-body">
         <p class="lede">Every renter booked today and tomorrow has a working alarm code. All five panels read normal.</p>
-        <p class="detail">One quiet fix: Risa W.'s expired temporary window was cleared — she's now correctly on permanent codes. The only panel chatter was known skip-list noise.</p>
+        <ul>
+          <li><b>Access windows</b> — 16/16 pass; five panels normal</li>
+          <li><b>Quiet fix</b> — Risa W.'s expired temp window cleared → correctly on permanent codes</li>
+          <li><b>Panel chatter</b> — known skip-list noise only</li>
+        </ul>
         <div class="roster">
           <span class="chip">Scott V.</span><span class="chip">Risa W.</span><span class="chip">Ishfaaq J.</span><span class="chip">Shamir P.</span><span class="chip">Sara D.</span><span class="chip">Michelle C.</span><span class="chip">Zoe Y.</span><span class="chip">David D.</span><span class="chip">Himanshi M.</span><span class="chip">Megan C.</span>
           <span class="chip tm">Adrianna Y.</span><span class="chip tm">Avante · Claudia D.</span><span class="chip tm">Nina L.</span><span class="chip tm">Janet Z.</span><span class="chip tm">Sierra G.</span><span class="chip tm">David G.</span>
@@ -206,8 +218,13 @@ footer p{margin:0;font-size:13px;color:var(--muted);max-width:70ch}
     <article class="run reveal">
       <div class="run-id"><span class="glyph">⏱️</span><h3>The Timekeeper</h3><span class="t">Overtime, Jul 11 · 07:14</span><br><span class="badge b-ok">0 flags</span></div>
       <div class="run-body">
-        <p class="lede">Nine bookings, four studios, nobody over the line. The closest call was nine minutes early.</p>
-        <p class="detail">Three no-shows (Yasmine, Tufan, Caney) — no charges, per policy. Laura F.'s unarmed Studio 901 was a legitimate hand-off to the next booking with a staff remote arm — <b>not</b> a forgot-to-arm. No unauthorized access anywhere.</p>
+        <p class="lede">Nine bookings, four studios, nobody over the line.</p>
+        <ul>
+          <li><b>Closest call</b> — out 9 minutes early</li>
+          <li><b>No-shows ×3</b> — Yasmine, Tufan, Caney; no charges per policy</li>
+          <li><b>Laura F., 901 unarmed</b> — legit hand-off to next booking, staff remote-armed; <b>not</b> a forgot-to-arm</li>
+          <li><b>Unauthorized access</b> — none</li>
+        </ul>
         <a class="src" href="https://app.notion.com/p/39b7503281c481da81abfa3f3f794b10">Full report</a>
       </div>
     </article>
@@ -216,7 +233,12 @@ footer p{margin:0;font-size:13px;color:var(--muted);max-width:70ch}
       <div class="run-id"><span class="glyph">🔭</span><h3>The Analyst</h3><span class="t">Issues Reports · today &amp; tomorrow</span><br><span class="badge b-ok">Both clean</span></div>
       <div class="run-body">
         <p class="lede">Nothing brewing for today or Monday — and the 509B heat watch is officially closed.</p>
-        <p class="detail"><b>Today:</b> Sunday means both 901 neighbours are closed, so no sound risk; no tight transitions, gaps, or maintenance issues. The fan has been relocated and the AC confirmed working, clearing the prevention watch. <b>Monday:</b> equally clean — Janet Z.'s evening 901 booking starts after the neighbours close. One thing to know: the last substantive cleaning pass was Jul 8 and skipped 901; Stefan's Jul 10 log is near-blank.</p>
+        <ul>
+          <li><b>Today</b> — Sunday: 901 neighbours closed → no sound risk; no tight transitions, gaps, or maintenance issues</li>
+          <li><b>Heat watch</b> — fan relocated, AC confirmed working → prevention watch closed</li>
+          <li><b>Monday</b> — clean; Janet Z.'s evening 901 starts after neighbours close</li>
+          <li><b>Worth knowing</b> — last real cleaning pass Jul 8 (skipped 901); Stefan's Jul 10 log near-blank</li>
+        </ul>
         <a class="src" href="https://app.notion.com/p/39a7503281c4816e896fdb802c3bbbfa">Today</a> &nbsp;&nbsp; <a class="src" href="https://app.notion.com/p/39b7503281c481b4ac6ef9e3ea5d191f">Tomorrow</a>
       </div>
     </article>
@@ -225,7 +247,11 @@ footer p{margin:0;font-size:13px;color:var(--muted);max-width:70ch}
       <div class="run-id"><span class="glyph">🧹</span><h3>The Custodian</h3><span class="t">Verifier · 22:37 (Jul 11)</span><br><span class="badge b-info">False alarm, self-cancelled</span></div>
       <div class="run-body">
         <p class="lede">It cried "the desk is dark" — then caught its own mistake and cancelled the alert.</p>
-        <p class="detail">The run fired at 22:37 Friday night but narrated itself as the 09:35 morning pass, so of course it found no morning reports yet. The real desk ran normally this morning — Receptionist at 08:02, Concierge at 08:11 with a full heavy pass. <b>No outage, no action needed</b> — though the self-mis-clocking quirk is worth a look sometime.</p>
+        <ul>
+          <li><b>What happened</b> — fired 22:37 Friday but narrated itself as the 09:35 morning pass → found no morning reports (there were none yet)</li>
+          <li><b>Reality</b> — desk ran normally: Receptionist 08:02, Concierge 08:11 (full heavy pass)</li>
+          <li><b>Action</b> — none; self-mis-clocking quirk worth a look sometime</li>
+        </ul>
         <a class="src" href="https://app.notion.com/p/39b7503281c481e393cceb059f451a64">Cancelled row</a>
       </div>
     </article>
