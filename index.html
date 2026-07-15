@@ -1,376 +1,430 @@
 <!doctype html>
+<!--
+  ══════════════════════════════════════════════════════════════════════════════════════
+  THE NIGHT WATCH — CLONE TEMPLATE  (Day Sheet editorial system)
+  ══════════════════════════════════════════════════════════════════════════════════════
+  Each morning the Night Watch publisher CLONES this file and fills ONLY the
+  content slots below. Rules:
+
+  1. CONTENT-ONLY EDITS. Keep the <style> block, <script>, palette, fonts, and
+     every layout class EXACTLY as-is. You edit: the kicker time, the verdict
+     sentence, the three score numbers, and the rows inside each of the three
+     sections. Do not restyle.
+  2. STRUCTURE (fixed), three sections in this order:
+       LOG    (#log)   = "How the night unfolded" — the timeline. REQUIRED.
+       ACT I  (#acts)  = "Waiting on you"          — human-action items.
+       ACT II (#ledger)= "The ledger"              — one row per overnight run.
+  3. REDACTION (public site): first name + last initial for renters; NEVER an
+     alarm/door code, phone, email, or full address. Codes live only in Notion.
+  4. A MISSING report is a finding: give it a row with a hot dot + "no report",
+     honest to <time>. Never invent content.
+  5. Keep the <meta robots noindex>, the self-refresh <script>, and the title.
+
+  CLASS VOCABULARY
+    Dots / status words / pills use state colors:
+      ok   = done/green   (clean, pass, 0 flags)
+      warn = act/amber    (needs attention / late / held)
+      hot  = red          (urgent / missing report / real time pressure)
+      info = wait/slate   (informational / in progress)
+    Pills: <span class="pill act|wait|hot|done">next step</span>
+    Timeline beat, quiet-gap row, ledger row, and chip examples are shown
+    inline below as REFERENCE — copy the pattern, swap the text.
+  ══════════════════════════════════════════════════════════════════════════════════════
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>The Night Watch — July 15, 2026</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dance Annex — The Night Watch</title>
 <style>
-  :root{
-    --paper:#f5f4f0; --paper2:#fbfaf7; --ink:#191715; --mute:#716c64; --hair:#dedbd3;
-    --brand:#5b2fd4;
-    --act:#b06c00; --act-soft:#f1e7cf;
-    --wait:#51617e; --wait-soft:#e3e7ee;
-    --hot:#c23a2b; --hot-soft:#f3dad4;
-    --done:#2c7a4e; --done-soft:#d6e8dd;
-    --cond:"Avenir Next Condensed","Avenir Next","Arial Narrow",system-ui,sans-serif;
-    --sans:"Avenir Next",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    --body:"Seravek","Avenir Next",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  :root {
+    --paper: #f5f4f0;
+    --ink: #191715;
+    --mute: #716c64;
+    --hair: #dedbd3;
+    --brand: #5b2fd4;
+    --act: #b06c00;   --act-soft: #f6ead6;
+    --wait: #51617e;  --wait-soft: #e9ecf2;
+    --hot: #c23a2b;   --hot-soft: #f9e6e2;
+    --done: #2c7a4e;  --done-soft: #e2efe7;
+    --cond: "Avenir Next Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+    --sans: "Avenir Next", Avenir, Seravek, "Segoe UI", Ubuntu, sans-serif;
+    --text: Seravek, "Avenir Next", "Segoe UI", Ubuntu, sans-serif;
   }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --paper:#17181a; --paper2:#1e1f22; --ink:#ecebe6; --mute:#9d988e; --hair:#33342f;
-      --brand:#a78bfa;
-      --act:#e0a341; --act-soft:#382e18;
-      --wait:#93a6c6; --wait-soft:#21262f;
-      --hot:#f0776a; --hot-soft:#37201d;
-      --done:#63c48d; --done-soft:#172d23;
-    }
-  }
-  :root[data-theme="light"]{
-    --paper:#f5f4f0; --paper2:#fbfaf7; --ink:#191715; --mute:#716c64; --hair:#dedbd3;
-    --brand:#5b2fd4;
-    --act:#b06c00; --act-soft:#f1e7cf; --wait:#51617e; --wait-soft:#e3e7ee;
-    --hot:#c23a2b; --hot-soft:#f3dad4; --done:#2c7a4e; --done-soft:#d6e8dd;
-  }
-  :root[data-theme="dark"]{
-    --paper:#17181a; --paper2:#1e1f22; --ink:#ecebe6; --mute:#9d988e; --hair:#33342f;
-    --brand:#a78bfa;
-    --act:#e0a341; --act-soft:#382e18; --wait:#93a6c6; --wait-soft:#21262f;
-    --hot:#f0776a; --hot-soft:#37201d; --done:#63c48d; --done-soft:#172d23;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{
-    background:var(--paper); color:var(--ink); font-family:var(--body);
-    -webkit-font-smoothing:antialiased; line-height:1.5; overflow-x:hidden;
-    font-variant-numeric:tabular-nums;
-  }
-  .sheet{max-width:860px;margin:0 auto;padding:40px 22px 80px}
-  a{color:inherit;text-decoration:none}
-  .tnum{font-variant-numeric:tabular-nums}
-  .cond{font-family:var(--cond);text-transform:uppercase;letter-spacing:.02em}
+  @media (prefers-color-scheme: dark) { :root {
+    --paper: #141210; --ink: #ece8e1; --mute: #979187; --hair: #33302b;
+    --brand: #a685f0;
+    --act: #e2a552;  --act-soft: #33270f;
+    --wait: #92a6c8; --wait-soft: #1d2430;
+    --hot: #e8796a;  --hot-soft: #3a1c17;
+    --done: #6fbd92; --done-soft: #16291f;
+  }}
+  * { box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font: 16px/1.5 var(--text); margin: 0; padding: 0 clamp(1rem, 4vw, 2.5rem) 5rem; }
+  .sheet { max-width: 900px; margin: 0 auto; }
 
-  .kicker{
-    font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;
-    font-size:12px;color:var(--mute);margin:0 0 12px;
+  /* Masthead */
+  .mast { padding: 3.2rem 0 0; }
+  .mast .kicker { display: flex; align-items: center; gap: .7rem; }
+  .mast .kicker span { font: 600 .72rem/1 var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--mute); }
+  .mast .kicker i { flex: 1; height: 1px; background: var(--hair); }
+  .mast h1 { font: 800 clamp(3rem, 11vw, 6.2rem)/0.95 var(--cond); text-transform: uppercase; letter-spacing: .01em; margin: .8rem 0 .4rem; }
+  .mast h1 em { font-style: normal; color: var(--brand); }
+  .mast .date { font: 500 .95rem/1.4 var(--text); color: var(--mute); max-width: 68ch; }
+
+  /* Score */
+  .score { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--hair); margin: 2rem 0 0; }
+  .score a { display: flex; align-items: baseline; gap: .8rem; padding: 1.1rem .2rem 1.2rem 1.2rem; text-decoration: none; color: inherit; border-left: 1px solid var(--hair); }
+  .score a:first-child { border-left: 0; padding-left: .2rem; }
+  .score .n { font: 800 clamp(2.6rem, 7vw, 4rem)/1 var(--cond); font-variant-numeric: tabular-nums; }
+  .score .k { font: 600 .7rem/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); max-width: 9em; }
+  .score a:hover .k { color: var(--ink); }
+  .score .act-n { color: var(--act); } .score .wait-n { color: var(--wait); } .score .done-n { color: var(--done); }
+
+  /* Sections */
+  section { margin-top: 3.4rem; }
+  .act-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: .4rem; }
+  .act-head .no { font: 800 1rem/1 var(--cond); color: var(--paper); padding: .34rem .6rem .28rem; border-radius: 4px; letter-spacing: .05em; }
+  .act-head h2 { font: 800 clamp(1.5rem, 4vw, 2.1rem)/1 var(--cond); text-transform: uppercase; letter-spacing: .03em; margin: 0; }
+  .act-head .note { font-size: .85rem; color: var(--mute); margin-left: auto; text-align: right; }
+  section.log .act-head .no { background: var(--brand); } section.log h2 { color: var(--brand); }
+  section.acts .act-head .no { background: var(--act); } section.acts h2 { color: var(--act); }
+  section.beats .act-head .no { background: var(--wait); } section.beats h2 { color: var(--wait); }
+
+  /* Rows */
+  .row { border-top: 1px solid var(--hair); padding: 1.15rem 0 1.25rem; }
+  section > .row:last-of-type { border-bottom: 1px solid var(--hair); }
+  .row .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; }
+  a.name { font: 700 clamp(1.15rem, 3vw, 1.45rem)/1.2 var(--sans); color: var(--ink); text-decoration: none; letter-spacing: -.01em; }
+  a.name:hover, a.name:focus-visible { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; outline: none; }
+  a.name::after { content: "↗"; font-size: .65em; vertical-align: .35em; margin-left: .35em; color: var(--mute); }
+  .plain { font: 700 clamp(1.15rem, 3vw, 1.45rem)/1.2 var(--sans); letter-spacing: -.01em; }
+  .ctx { font: 600 .72rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+  .pill { margin-left: auto; font: 700 .78rem/1 var(--sans); letter-spacing: .02em; padding: .5rem .9rem; border-radius: 999px; white-space: nowrap; }
+  .pill.act  { background: var(--act);  color: var(--paper); }
+  .pill.wait { background: var(--wait-soft); color: var(--wait); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--wait) 25%, transparent); }
+  .pill.hot  { background: var(--hot);  color: var(--paper); }
+  .pill.done { background: var(--done-soft); color: var(--done); }
+  .line { margin: .5rem 0 0; font-size: .93rem; color: var(--mute); max-width: 66ch; }
+  .line b { color: var(--ink); font-weight: 650; }
+
+  /* Timeline */
+  .tl { border-top: 1px solid var(--hair); }
+  .tl .beat { display: grid; grid-template-columns: 68px 24px 1fr; column-gap: .8rem; align-items: start; }
+  .tl .t { font: 600 .8rem/1.5 var(--cond); letter-spacing: .04em; font-variant-numeric: tabular-nums; color: var(--mute); text-align: right; padding-top: 1.05rem; white-space: nowrap; }
+  .tl .rail { position: relative; display: flex; justify-content: center; }
+  .tl .rail::before { content: ""; position: absolute; top: 0; bottom: 0; width: 2px; left: 50%; transform: translateX(-50%); background: linear-gradient(180deg, var(--brand), var(--act)); }
+  .tl .beat:first-child .rail::before { top: 1.35rem; }
+  .tl .beat:last-child .rail::before { bottom: calc(100% - 1.35rem); }
+  .tl .dot { position: relative; z-index: 1; width: 12px; height: 12px; border-radius: 50%; margin-top: 1.1rem; background: var(--wait); box-shadow: 0 0 0 4px var(--paper); }
+  .tl .dot.ok { background: var(--done); } .tl .dot.warn { background: var(--act); } .tl .dot.hot { background: var(--hot); } .tl .dot.info { background: var(--wait); }
+  .tl .b { padding: 1.05rem 0 1.15rem; border-top: 1px solid var(--hair); }
+  .tl .beat:first-child .b { border-top: 0; }
+  .tl .who { font: 700 1.05rem/1.2 var(--sans); letter-spacing: -.01em; }
+  .tl .cl { font-size: .9rem; color: var(--mute); margin-top: .15rem; max-width: 60ch; }
+  .tl .st { display: inline-block; margin-top: .4rem; font: 700 .68rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+  .tl .st.ok { color: var(--done); } .tl .st.warn { color: var(--act); } .tl .st.hot { color: var(--hot); } .tl .st.info { color: var(--wait); }
+  .tl .quiet { grid-column: 1 / -1; text-align: center; font: italic 500 .9rem/1.4 var(--text); color: var(--mute); padding: .9rem 0 1rem; }
+
+  /* Chips */
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
+  .chip { font: 600 .78rem/1 var(--sans); padding: .38rem .7rem; border-radius: 999px; background: var(--wait-soft); color: var(--wait); }
+  .chip.tmw { background: transparent; color: var(--mute); box-shadow: inset 0 0 0 1px var(--hair); border: 1px dashed var(--hair); }
+  .chip-key { font: 600 .68rem/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); margin-top: .55rem; }
+
+  footer { margin-top: 4rem; border-top: 2px solid var(--ink); padding-top: 1rem; display: flex; flex-wrap: wrap; gap: .5rem 2rem; justify-content: space-between; font-size: .78rem; color: var(--mute); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mast, .score, section, footer { animation: rise .55s cubic-bezier(.2,.7,.2,1) both; }
+    .score { animation-delay: .08s; }
+    section:nth-of-type(1) { animation-delay: .16s; } section:nth-of-type(2) { animation-delay: .24s; }
+    section:nth-of-type(3) { animation-delay: .32s; } footer { animation-delay: .4s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   }
-  .hair{height:1px;background:var(--hair);border:0;margin:0 0 14px}
-  .hair.thick{height:2px;background:var(--ink);opacity:.85}
-  h1.mast{
-    font-family:var(--cond);text-transform:uppercase;letter-spacing:.005em;line-height:.92;
-    font-weight:700;font-size:clamp(46px,11vw,104px);margin:6px 0 0;
-  }
-  h1.mast .p2{color:var(--brand)}
-  .verdict{
-    font-family:var(--body);font-size:clamp(17px,2.3vw,21px);line-height:1.4;
-    margin:18px 0 0;max-width:60ch;color:var(--ink);
-  }
-  .verdict b{font-weight:600}
-
-  .score{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
-    border-top:2px solid var(--ink);border-bottom:1px solid var(--hair);
-    margin:30px 0 0;
-  }
-  .score .cell{padding:16px 6px 18px;border-right:1px solid var(--hair)}
-  .score .cell:last-child{border-right:0}
-  .score .num{font-family:var(--cond);font-weight:700;font-size:clamp(38px,7vw,58px);line-height:.9}
-  .score .lab{font-family:var(--cond);text-transform:uppercase;letter-spacing:.13em;font-size:11px;color:var(--mute);margin-top:9px}
-  .num.done{color:var(--done)} .num.act{color:var(--act)} .num.ink{color:var(--ink)}
-  .num .sub{font-size:.5em;color:var(--mute)}
-
-  section{margin-top:46px}
-  .shead{display:flex;align-items:center;gap:12px;margin:0 0 4px}
-  .bnum{
-    font-family:var(--cond);font-weight:700;font-size:14px;color:var(--paper);
-    background:var(--ink);width:26px;height:26px;border-radius:5px;
-    display:flex;align-items:center;justify-content:center;flex:0 0 auto;
-  }
-  .bnum.act{background:var(--act)} .bnum.hot{background:var(--hot)} .bnum.brand{background:var(--brand)}
-  h2.sec{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;font-size:22px;margin:0;font-weight:700}
-  .snote{margin-left:auto;font-size:12px;color:var(--mute);font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em}
-  .shead + .hair{margin-top:12px}
-
-  .log{display:grid;gap:0;margin-top:14px}
-  .lrow{display:grid;grid-template-columns:82px 24px 1fr;align-items:start;gap:12px;padding:11px 0}
-  .lrow .t{font-family:var(--cond);font-size:13px;text-align:right;color:var(--mute);padding-top:2px;white-space:nowrap;letter-spacing:.04em}
-  .rail{position:relative;display:flex;justify-content:center}
-  .rail::before{content:"";position:absolute;top:-11px;bottom:-11px;left:50%;transform:translateX(-50%);width:2px;
-    background:linear-gradient(180deg,var(--brand),var(--act));}
-  .lrow:first-child .rail::before{top:9px}
-  .lrow:last-child .rail::before{bottom:9px}
-  .dot{position:relative;z-index:1;width:12px;height:12px;border-radius:50%;margin-top:4px;background:var(--wait);box-shadow:0 0 0 4px var(--paper)}
-  .dot.done{background:var(--done)} .dot.act{background:var(--act)} .dot.hot{background:var(--hot)} .dot.wait{background:var(--wait)}
-  .lbody .who{font-family:var(--sans);font-weight:700;font-size:15px}
-  .lbody .cl{color:var(--mute);font-size:14.5px}
-  .sw{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:11px;margin-left:8px;padding:1px 7px;border-radius:4px;white-space:nowrap}
-  .sw.done{color:var(--done);background:var(--done-soft)}
-  .sw.act{color:var(--act);background:var(--act-soft)}
-  .sw.hot{color:var(--hot);background:var(--hot-soft)}
-  .sw.wait{color:var(--wait);background:var(--wait-soft)}
-  .gap{grid-column:1/-1;padding:7px 0 7px 118px;color:var(--mute);font-style:italic;font-size:14px}
-
-  .rows{margin-top:6px}
-  .row{padding:14px 0;border-bottom:1px solid var(--hair)}
-  .row:last-child{border-bottom:0}
-  .rtop{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .rname{font-family:var(--sans);font-weight:700;font-size:16px}
-  .rname .arr{color:var(--mute);font-weight:400}
-  .rname a:hover .arr{color:var(--brand)}
-  .ctx{font-family:var(--cond);text-transform:uppercase;letter-spacing:.09em;font-size:11px;color:var(--mute)}
-  .pill{font-family:var(--cond);text-transform:uppercase;letter-spacing:.07em;font-size:10.5px;font-weight:700;
-    padding:2px 8px;border-radius:999px;margin-left:auto}
-  .pill.act{color:var(--act);background:var(--act-soft)}
-  .pill.wait{color:var(--wait);background:var(--wait-soft)}
-  .pill.hot{color:var(--hot);background:var(--hot-soft)}
-  .pill.done{color:var(--done);background:var(--done-soft)}
-  .line{margin:7px 0 0;font-size:14.5px;color:var(--ink)}
-  .amt{font-family:var(--cond);font-weight:700}
-  .subs{margin:9px 0 0;padding:0;list-style:none;display:grid;gap:5px}
-  .subs li{font-size:13.5px;color:var(--mute);padding-left:15px;position:relative}
-  .subs li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--hair)}
-  .subs li.a::before{background:var(--act)}
-  .subs li b{color:var(--ink);font-weight:600}
-
-  .chips{display:flex;flex-wrap:wrap;gap:6px;margin:11px 0 2px}
-  .chip{font-family:var(--sans);font-size:11.5px;padding:3px 9px;border-radius:999px;border:1px solid var(--hair);color:var(--mute)}
-  .chip.today{border-color:var(--ink);color:var(--ink)}
-  .chip.tmrw{border-style:dashed;border-color:var(--brand);color:var(--ink)}
-  .ckey{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:10.5px;color:var(--mute);margin-top:5px}
-
-  footer{margin-top:56px;padding-top:16px;border-top:2px solid var(--ink)}
-  footer .fl{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--mute);margin-bottom:6px}
-  footer .fn{font-size:13px;color:var(--mute)}
-
-  .reveal{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s ease}
-  .reveal.in{opacity:1;transform:none}
-  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
-  @media(max-width:560px){
-    .score .num{font-size:34px}
-    .lrow{grid-template-columns:66px 22px 1fr;gap:9px}
-    .gap{padding-left:97px}
+  @media (max-width: 620px) {
+    .score { grid-template-columns: 1fr; }
+    .score a { border-left: 0; padding-left: .2rem; border-top: 1px solid var(--hair); }
+    .score a:first-child { border-top: 0; }
+    .pill { margin-left: 0; }
   }
 </style>
+<script>
+  /* Self-refresh: keep an open tab current without a manual reload. KEEP AS-IS. */
+  (function () {
+    var MAX_AGE = 10 * 60 * 1000;
+    var loadedAt = Date.now();
+    function maybeReload() {
+      if (document.visibilityState === "visible" && Date.now() - loadedAt > MAX_AGE) {
+        location.reload();
+      }
+    }
+    setInterval(maybeReload, 60 * 1000);
+    document.addEventListener("visibilitychange", maybeReload);
+  })();
+</script>
 </head>
 <body>
 <div class="sheet">
 
-  <p class="kicker">Dance Annex · Night Watch · Wed July 15 2026</p>
-  <hr class="hair thick">
-  <h1 class="mast">The Night <span class="p2">Watch</span></h1>
-  <p class="verdict">A quiet, clean night on the floor — <b>zero overtime, a healthy alarm panel, 16 of 17 access windows clear</b> — but a dozen items are stacked up waiting on you, from two door-security confirms to a same-day owner call.</p>
+  <header class="mast">
+    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Jul 15, 2026 · 8:55 AM</span></div>
+    <h1>The Night<em> Watch</em></h1>
+    <p class="date">Six pre-dawn runs finished clean — <b style="color:var(--ink)">zero overtime, a healthy alarm panel, 16 of 17 access windows clear, and both issue-prevention reports present</b> — but a dozen items are stacked up waiting on you, from two door-security confirms to a same-day owner call.</p>
+  </header>
 
-  <div class="score reveal">
-    <div class="cell"><div class="num ink tnum">5</div><div class="lab">Runs completed</div></div>
-    <div class="cell"><div class="num done tnum">0</div><div class="lab">Overtime flags</div></div>
-    <div class="cell"><div class="num act tnum">12</div><div class="lab">Waiting on you</div></div>
-  </div>
+  <nav class="score" aria-label="The night at a glance">
+    <a href="#log"><span class="n done-n">6</span><span class="k">Runs completed</span></a>
+    <a href="#log"><span class="n done-n">0</span><span class="k">Overtime flags</span></a>
+    <a href="#acts"><span class="n act-n">12</span><span class="k">Waiting on you</span></a>
+  </nav>
 
-  <section class="reveal">
-    <div class="shead">
-      <span class="bnum brand">✦</span>
-      <h2 class="sec">Log · How the night unfolded</h2>
-      <span class="snote">evening → dawn</span>
-    </div>
-    <hr class="hair">
-    <div class="log">
-      <div class="lrow">
-        <div class="t">~9:40 PM</div>
-        <div class="rail"><div class="dot wait"></div></div>
-        <div class="lbody"><span class="who">The Closer</span> <span class="cl">closed out Tuesday; flagged 509A as maybe left open, then reconciled it — Fabio was still inside.</span><span class="sw wait">reconciled</span></div>
-      </div>
-      <div class="gap">a quiet night — nothing stirred for 6 h 28 m between the evening close and the pre-dawn runs</div>
-      <div class="lrow">
-        <div class="t">~4:08 AM</div>
-        <div class="rail"><div class="dot done"></div></div>
-        <div class="lbody"><span class="who">The Analyst</span> <span class="cl">swept tomorrow for tight transitions, gaps, 901 sound and anomalies — every axis came back empty.</span><span class="sw done">0 flags</span></div>
-      </div>
-      <div class="lrow">
-        <div class="t">~4:14 AM</div>
-        <div class="rail"><div class="dot done"></div></div>
-        <div class="lbody"><span class="who">The Timekeeper</span> <span class="cl">reviewed all nine Tuesday departures; everyone left inside the 17-minute grace.</span><span class="sw done">0 flags</span></div>
-      </div>
-      <div class="lrow">
-        <div class="t">~4:20 AM</div>
-        <div class="rail"><div class="dot act"></div></div>
-        <div class="lbody"><span class="who">The Host</span> <span class="cl">built tomorrow's FBS board and queued today's messages; held one renter's access details.</span><span class="sw act">1 flag</span></div>
-      </div>
-      <div class="lrow">
-        <div class="t">7:10–7:31</div>
-        <div class="rail"><div class="dot act"></div></div>
-        <div class="lbody"><span class="who">The Doorman</span> <span class="cl">alarm panel healthy; pre-flighted 17 access windows across both days.</span><span class="sw act">16/17 pass</span></div>
-      </div>
-      <div class="lrow">
-        <div class="t">~4:11 AM</div>
-        <div class="rail"><div class="dot hot"></div></div>
-        <div class="lbody"><span class="who">The Analyst</span> <span class="cl">— today's own Issues Report (2026-07-15) never landed; only the forward Jul 16 sweep ran.</span><span class="sw hot">no report</span></div>
-      </div>
-      <div class="lrow">
-        <div class="t">~8:20 AM</div>
-        <div class="rail"><div class="dot wait"></div></div>
-        <div class="lbody"><span class="who">The Opener</span> <span class="cl">morning shift underway; report page still filling in, three items already surfaced.</span><span class="sw wait">in progress</span></div>
-      </div>
-    </div>
-  </section>
+  <!-- ══ LOG · timeline (REQUIRED). One .beat per run, chronological (evening → dawn). ══ -->
+  <section class="log" id="log">
+    <div class="act-head"><span class="no">LOG</span><h2>How the night unfolded</h2><span class="note">evening close → dawn · times Eastern</span></div>
+    <div class="tl">
 
-  <section class="reveal">
-    <div class="shead">
-      <span class="bnum act">1</span>
-      <h2 class="sec">Waiting on you</h2>
-      <span class="snote">12 items</span>
-    </div>
-    <hr class="hair">
-    <div class="rows">
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c481e9b2fafd59661baef9">Ester V. <span class="arr">↗</span></a></span><span class="ctx">693 · Sat Jul 18 · 12–4 PM</span><span class="pill hot">Today · Owner</span></div>
-        <p class="line">Rained-out park booking — accept the ~30-guest gender reveal at 693 and set the event rate today (pricing is always human).</p>
+      <div class="beat">
+        <div class="t">9:40 PM</div>
+        <div class="rail"><div class="dot info"></div></div>
+        <div class="b"><div class="who">The Closer</div><div class="cl">Closed out Tuesday, then reconciled its own 509A "left open" flag — Fabio was still inside.</div><span class="st info">reconciled</span></div>
       </div>
 
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c481019352f1144f07e5cb">Julia S. <span class="arr">↗</span></a></span><span class="ctx">527 · today · 6–8 PM</span><span class="pill act">Owner</span></div>
-        <p class="line">Same-day Peerspace one-off: confirm/set her alarm PIN + window, and create the Skedda booking marked Paid (Peerspace handled payment).</p>
+      <div class="beat"><div class="quiet">a quiet night — nothing stirred for 6 h 31 m</div></div>
+
+      <div class="beat">
+        <div class="t">4:11 AM</div>
+        <div class="rail"><div class="dot ok"></div></div>
+        <div class="b"><div class="who">The Analyst</div><div class="cl">Both issue-prevention reports (Jul 15 + 16) present and clear — tight transitions, gaps, 901 sound and anomalies all empty.</div><span class="st ok">0 flags</span></div>
       </div>
 
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c481078176fbef657fe5ac">Chelly Li <span class="arr">↗</span></a></span><span class="ctx">509A · today · 10 AM</span><span class="pill act">Ops Lead</span></div>
-        <p class="line">GTG no-show — HTA sent but no confirmation; a gentle check-in nudge is HELD in the queue to release or skip before her start.</p>
+      <div class="beat">
+        <div class="t">4:14 AM</div>
+        <div class="rail"><div class="dot ok"></div></div>
+        <div class="b"><div class="who">The Timekeeper</div><div class="cl">Reviewed all nine Tuesday departures; everyone left inside the 17-minute grace.</div><span class="st ok">0 flags</span></div>
       </div>
 
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c4815e803be0c6ebaafb28">Maggie M. <span class="arr">↗</span></a></span><span class="ctx">509B · today · piano</span><span class="pill act">Charge</span></div>
-        <p class="line"><span class="amt">$67.80</span> — 4h × $15 + HST, summer per-use billing since her Fixed-Option ended Jun 30. [Unpaid]</p>
+      <div class="beat">
+        <div class="t">4:20 AM</div>
+        <div class="rail"><div class="dot warn"></div></div>
+        <div class="b"><div class="who">The Host</div><div class="cl">Built tomorrow's FBS board and queued today's messages; held one renter's access details.</div><span class="st warn">1 flag</span></div>
       </div>
 
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c48148ac3cf5cb1fc8acb4">Caryl C. <span class="arr">↗</span></a></span><span class="ctx">693 · today · practice</span><span class="pill act">Charge</span></div>
-        <p class="line"><span class="amt">$40.68</span> — 1.5h pay-per-use at the stated rate; matches the calendar price and her identical Jul 8 charge. [Unpaid]</p>
+      <div class="beat">
+        <div class="t">7:10 AM</div>
+        <div class="rail"><div class="dot warn"></div></div>
+        <div class="b"><div class="who">The Doorman</div><div class="cl">Alarm panel healthy; pre-flighted 17 access windows across both days.</div><span class="st warn">16/17 pass</span></div>
       </div>
 
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39d7503281c481f6b563c33be1441189">Zoey G. <span class="arr">↗</span></a></span><span class="ctx">527 · Sep–Oct</span><span class="pill wait">Invoice</span></div>
-        <p class="line"><span class="amt">$705.12</span> — six Studio 527 bookings (2h each) at $117.52 apiece, awaiting an invoice send.</p>
-      </div>
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39d7503281c481f997d6db2443d8ee15">Samiha S. <span class="arr">↗</span></a></span><span class="ctx">693 · Aug 29 · 17 guests</span><span class="pill wait">Owner · exp Jul 17</span></div>
-        <p class="line">Tagvenue birthday enquiry — accept and set the rate before it auto-expires Fri Jul 17, 03:09.</p>
-      </div>
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c4811fab8bffc9e0576917">509A door <span class="arr">↗</span></a></span><span class="ctx">Jul 14 · O'Shani C.</span><span class="pill act">Confirm</span></div>
-        <p class="line">Found unlocked on the cleaning note; panel was armed, so it's the physical lock, not the alarm. Re-armed that evening (Fabio 10:26 PM) — likely secured, confirm.</p>
-      </div>
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c481e1b659d4fee9f93c54">901 Front Door <span class="arr">↗</span></a></span><span class="ctx">overnight bypass</span><span class="pill act">Confirm</span></div>
-        <p class="line">Sensor was bypassed while 901 was armed away and empty; Doorman's 07 AM read shows 0 sensors needing attention (likely re-latched) — physically confirm + clear.</p>
-      </div>
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c48188b762ea752caa7293">527 Front Door <span class="arr">↗</span></a></span><span class="ctx">overnight bypass</span><span class="pill act">Confirm</span></div>
-        <p class="line">Same pattern as 901 — bypassed sensor on an armed, empty studio; confirm the door latches and un-bypass.</p>
-      </div>
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c481229df3dcc9f15f8aee">Francisco D. <span class="arr">↗</span></a></span><span class="ctx">509A · today · 6:30 PM</span><span class="pill act">Confirm</span></div>
-        <p class="line">His HTA was held when the 04 AM read showed the alarm window expired Jul 7; the 07 AM live read shows it renewed (Jul 14–Sep 14) — confirm his access details can release.</p>
-      </div>
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c481998249c67f97bd9ef6">Issues Report Jul 15 <span class="arr">↗</span></a></span><span class="ctx">The Analyst · missing</span><span class="pill hot">Re-verify</span></div>
-        <p class="line">No IPR for today was filed in the overnight window — only the forward Jul 16 sweep ran. Re-verify the Analyst's run schedule.</p>
+      <div class="beat">
+        <div class="t">8:51 AM</div>
+        <div class="rail"><div class="dot warn"></div></div>
+        <div class="b"><div class="who">The Opener</div><div class="cl">Wrapped the morning shift (all 7 steps); fixed Francisco D.'s missed HTA and handed you five items — two today, three this week.</div><span class="st warn">5 for you</span></div>
       </div>
 
     </div>
   </section>
 
-  <section class="reveal">
-    <div class="shead">
-      <span class="bnum">2</span>
-      <h2 class="sec">The ledger</h2>
-      <span class="snote">by persona</span>
+  <!-- ══ ACT I · Waiting on you — human-action items. Lead with $ amount when there is one. ══ -->
+  <section class="acts" id="acts">
+    <div class="act-head"><span class="no">ACT I</span><h2>Waiting on you</h2><span class="note">2 time-sensitive today · money, security &amp; data hygiene</span></div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c481e9b2fafd59661baef9">Ester V.</a>
+        <span class="ctx">693 · Sat Jul 18 · ~30 guests</span>
+        <span class="pill hot">Decide + price today</span>
+      </div>
+      <p class="line">Her Saturday park booking is rained out — accept the gender reveal at 693 and set the event rate today. <b>Pricing is always human; enquiry is time-sensitive.</b></p>
     </div>
-    <hr class="hair">
-    <div class="rows">
 
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c481308d13f9ba87999806">The Opener <span class="arr">↗</span></a></span><span class="ctx">Morning Shift · from 08:20 ET</span><span class="pill wait">In progress</span></div>
-        <p class="line">Morning shift is running now — the page is still filling in, but it has already handed you three things.</p>
-        <ul class="subs">
-          <li><b>Report status</b> — In Progress; template body not yet written.</li>
-          <li class="a"><b>Chelly Li 10 AM</b> — GTG no-show; held check-in nudge in queue.</li>
-          <li class="a"><b>Charges surfaced</b> — Caryl C. $40.68 + Maggie M. $67.80, both [Unpaid].</li>
-        </ul>
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c481019352f1144f07e5cb">Julia S.</a>
+        <span class="ctx">527 · today · 6–8 PM</span>
+        <span class="pill act">Set PIN + book</span>
       </div>
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c481229df3dcc9f15f8aee">The Host <span class="arr">↗</span></a></span><span class="ctx">04:08 → 04:20 ET</span><span class="pill act">1 flag</span></div>
-        <p class="line">Built tomorrow's board and queued today's messages cleanly — one renter's access details are held pending an alarm renewal.</p>
-        <ul class="subs">
-          <li><b>FBS Jul 16 built</b> — 6 new Self-Serve rows seeded, no duplicates; today's 9 already seeded.</li>
-          <li><b>Messages queued</b> — EOB + AVA ready for Chelly Li, Carly R-N, Francisco D., Kristyan C.; Sebastian M. HTA for Jul 16.</li>
-          <li class="a"><b>Francisco D. HTA held</b> — window read expired Jul 7 at 04 AM; Doorman's 07 AM read shows it renewed — likely resolved, confirm.</li>
-          <li><b>Position heal</b> — 0 stranded FBS tickets. Note: SQL router timed out twice, fell back to saved views (all reads verified).</li>
-        </ul>
-      </div>
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c48126bf4dc8196f9fa83c">The Doorman <span class="arr">↗</span></a></span><span class="ctx">07:10 → 07:31 ET</span><span class="pill act">16/17 pass</span></div>
-        <p class="line">Alarm panel healthy and 16 of 17 access windows clear — one Peerspace one-off can't be matched to a code holder.</p>
-        <ul class="subs">
-          <li><b>Panel health</b> — all 5 partitions armed away; 0/18 sensors need attention; nothing filed to Maintenance.</li>
-          <li class="a"><b>Julia S. · 527 tonight</b> — manual_no_match: code on file but no Alarm display name; Access/PIN row already open (deduped).</li>
-          <li><b>Sebastian M. window</b> — refreshed to the precise live datetime (Jul 14 → Aug 14).</li>
-          <li><b>Credentials in conflict ×4</b> — chronic panel skip-list item per SOP; not blocking arming, no breach.</li>
-        </ul>
-        <div class="chips">
-          <span class="chip today">Chelly Li</span><span class="chip today">Carly R-N</span><span class="chip today">Maggie M.</span><span class="chip today">Julia S.</span><span class="chip today">Ifreestyle</span><span class="chip today">Francisco D.</span><span class="chip today">Anita P.</span><span class="chip today">Fabio H.</span><span class="chip today">Kristyan C.</span><span class="chip today">Caryl C.</span>
-          <span class="chip tmrw">Maggie M.</span><span class="chip tmrw">Ifreestyle</span><span class="chip tmrw">Anita P.</span><span class="chip tmrw">Kateryna Z.</span><span class="chip tmrw">Sebastian M.</span><span class="chip tmrw">David G.</span><span class="chip tmrw">David D.</span>
-        </div>
-        <div class="ckey">solid = today (Jul 15) · dashed = tomorrow (Jul 16)</div>
-      </div>
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c481de8e3de69e5a60987e">The Timekeeper <span class="arr">↗</span></a></span><span class="ctx">Overtime · Jul 14</span><span class="pill done">0 flags · 1 note</span></div>
-        <p class="line">Zero overtime across nine Tuesday bookings — everyone left inside the grace — with one door-lock follow-up.</p>
-        <ul class="subs">
-          <li><b>Overtime ×0</b> — closest calls 11–14 min (David Diep, Ifreestyle/Caryl, Jai Smith), all under the 17-min grace.</li>
-          <li class="a"><b>509A found unlocked</b> — Stefan's cleaning note; physical lock not alarm; re-armed that evening, likely secured — confirm.</li>
-          <li><b>Unauthorized access ×0</b> — all parties were holders, authorized users, a named facilitator, or staff.</li>
-          <li><b>Cleaning logged</b> — Stefan 136 min across 527 → 509 → 901; inspection entry updated.</li>
-        </ul>
-      </div>
-
-      <div class="row">
-        <div class="rtop"><span class="rname"><a href="https://app.notion.com/p/39e7503281c481998249c67f97bd9ef6">The Analyst <span class="arr">↗</span></a></span><span class="ctx">Issues Report · Jul 16</span><span class="pill hot">Today missing</span></div>
-        <p class="line">Tomorrow's issue-prevention sweep came back empty on every axis — but today's own report never landed.</p>
-        <ul class="subs">
-          <li><b>Coverage Jul 16</b> — tight transitions, booking gaps, 901 sound, anomalies, artist-watch all clear.</li>
-          <li class="a"><b>IPR Jul 15 missing</b> — only the forward Jul 16 sweep ran; re-verify the run schedule.</li>
-          <li><b>Maintenance ×0</b> — live SQL timed out (429); carried forward the prior "nothing urgent" determination.</li>
-          <li><b>Correspondence watch</b> — prevention review couldn't re-run (connector 429); re-verify next cycle.</li>
-        </ul>
-      </div>
-
+      <p class="line">Same-day Peerspace one-off: confirm/set her alarm PIN + window and create the Skedda booking <b>marked Paid — Peerspace handled payment</b>.</p>
     </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c481078176fbef657fe5ac">Chelly L.</a>
+        <span class="ctx">509A · today · 10 AM</span>
+        <span class="pill act">Release or skip nudge</span>
+      </div>
+      <p class="line">GTG no-show: HTA sent but no confirmation on record. <b>A gentle check-in nudge is HELD in the queue</b> to release or skip before her start.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c4815e803be0c6ebaafb28">Maggie M.</a>
+        <span class="ctx">509B · today · piano</span>
+        <span class="pill act">Approve charge</span>
+      </div>
+      <p class="line"><b>$67.80</b> — 4h × $15 + HST, summer per-use billing since her Fixed-Option ended Jun 30. [Unpaid], matches the calendar price.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c48148ac3cf5cb1fc8acb4">Caryl C.</a>
+        <span class="ctx">693 · today · practice</span>
+        <span class="pill act">Approve charge</span>
+      </div>
+      <p class="line"><b>$40.68</b> — 1.5h pay-per-use at the stated rate; matches the calendar price and her identical Jul 8 charge. [Unpaid].</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39d7503281c481f6b563c33be1441189">Zoey G.</a>
+        <span class="ctx">527 · Sep–Oct · 6 bookings</span>
+        <span class="pill wait">Send invoice</span>
+      </div>
+      <p class="line"><b>$705.12</b> — six Studio 527 bookings (2h each) at $117.52 apiece, awaiting an invoice send.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39d7503281c481f997d6db2443d8ee15">Samiha S.</a>
+        <span class="ctx">693 · Aug 29 · 17 guests</span>
+        <span class="pill wait">Decide by Jul 17</span>
+      </div>
+      <p class="line">Tagvenue birthday enquiry — accept and set the rate before it <b>auto-expires Fri Jul 17, 03:09</b>.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c4811fab8bffc9e0576917">509A door</a>
+        <span class="ctx">Jul 14 · prior renter O'Shani C.</span>
+        <span class="pill act">Confirm locked</span>
+      </div>
+      <p class="line">Found unlocked on the cleaning note; <b>the panel was armed, so it's the physical lock, not the alarm</b>. Re-armed that evening (10:26 PM) — likely secured, confirm.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c481e1b659d4fee9f93c54">901 Front Door</a>
+        <span class="ctx">overnight · armed + empty</span>
+        <span class="pill act">Confirm + un-bypass</span>
+      </div>
+      <p class="line">Sensor was bypassed while 901 was armed away and empty; <b>the 7 AM read shows 0 sensors needing attention (likely re-latched)</b> — physically confirm and clear.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c48188b762ea752caa7293">527 Front Door</a>
+        <span class="ctx">overnight · armed + empty</span>
+        <span class="pill act">Confirm + un-bypass</span>
+      </div>
+      <p class="line">Same pattern as 901 — a bypassed sensor on an armed, empty studio. <b>Confirm the door latches</b> and un-bypass.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39c7503281c48160b30ee36edc1bed46">Ela — Jul 14 hours</a>
+        <span class="ctx">staff hours · this week</span>
+        <span class="pill wait">Verify the figure</span>
+      </div>
+      <p class="line">The itinerary logs Ela = 2h but Staff Scheduling shows one 1h block (+ an unassigned Close). <b>Left uncorrected — confirm the true figure</b> before it reaches payroll.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <span class="plain">Carly R. — duplicate record</span>
+        <span class="ctx">artist DB · this week</span>
+        <span class="pill wait">Dedupe</span>
+      </div>
+      <p class="line">A duplicate Carly Ream-Neal artist record surfaced during the Fast-Track watchlist rebuild — <b>dedupe when convenient</b>.</p>
+    </div>
+
+  </section>
+
+  <!-- ══ ACT II · The ledger — one .row per overnight run, with a status pill. ══ -->
+  <section class="beats" id="ledger">
+    <div class="act-head"><span class="no">ACT II</span><h2>The ledger</h2><span class="note">one line per overnight run</span></div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c481308d13f9ba87999806">The Opener</a>
+        <span class="ctx">Morning Shift · 08:20 → 08:51</span>
+        <span class="pill act">5 for you</span>
+      </div>
+      <p class="line">Wrapped all seven steps and <b>fixed Francisco D.'s missed HTA</b> — leaving five for you: Chelly L.'s no-show + the 509A lock today, plus two held charges, Ela's Jul 14 hours, and a duplicate artist record this week.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c481229df3dcc9f15f8aee">The Host</a>
+        <span class="ctx">04:08 → 04:20 · FBS prep</span>
+        <span class="pill act">1 flag</span>
+      </div>
+      <p class="line">Built tomorrow's board (6 Self-Serve rows, no dupes) and queued today's EOB/AVA cleanly; held Francisco D.'s HTA pending an alarm-window read — <b>the Opener sent it morning-of once the code cleared</b>.</p>
+    </div>
+
+    <!-- DOORMAN row: renters as chips (solid = today, dashed = tomorrow). Codes NEVER on the page. -->
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c48126bf4dc8196f9fa83c">The Doorman</a>
+        <span class="ctx">07:10 → 07:31 · access pre-flight</span>
+        <span class="pill act">16/17 pass</span>
+      </div>
+      <p class="line">Panel healthy — all 5 partitions armed away, 0/18 sensors need attention; <b>only Julia S.'s 527 one-off couldn't be matched to a code holder</b> (Access/PIN row already open).</p>
+      <div class="chips">
+        <span class="chip">Chelly L.</span>
+        <span class="chip">Carly R.</span>
+        <span class="chip">Maggie M.</span>
+        <span class="chip">Julia S.</span>
+        <span class="chip">Ifreestyle</span>
+        <span class="chip">Francisco D.</span>
+        <span class="chip">Anita P.</span>
+        <span class="chip">Fabio H.</span>
+        <span class="chip">Kristyan C.</span>
+        <span class="chip">Caryl C.</span>
+        <span class="chip tmw">Maggie M.</span>
+        <span class="chip tmw">Ifreestyle</span>
+        <span class="chip tmw">Anita P.</span>
+        <span class="chip tmw">Kateryna Z.</span>
+        <span class="chip tmw">Sebastian M.</span>
+        <span class="chip tmw">David G.</span>
+        <span class="chip tmw">David D.</span>
+      </div>
+      <div class="chip-key">solid = today (Jul 15) · dashed = tomorrow (Jul 16)</div>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c481de8e3de69e5a60987e">The Timekeeper</a>
+        <span class="ctx">Overtime · Jul 14</span>
+        <span class="pill done">0 flags</span>
+      </div>
+      <p class="line"><b>Zero overtime across nine bookings</b> — closest calls 11–14 min, all under the 17-min grace; no unauthorized access. One door-lock follow-up on 509A.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c481998249c67f97bd9ef6">The Analyst</a>
+        <span class="ctx">Issues Reports · Jul 15 + 16</span>
+        <span class="pill done">0 flags</span>
+      </div>
+      <p class="line">Both issue-prevention reports are <b>present and clear on every axis</b> — transitions, gaps, 901 sound, anomalies — and the Opener verified and marked them Reviewed.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39e7503281c4814abe4bccd6f5dc6661">The Closer</a>
+        <span class="ctx">Tuesday close · 9:40 PM</span>
+        <span class="pill wait">reconciled</span>
+      </div>
+      <p class="line">Flagged 509A as possibly left open at 9:34 PM, then <b>reconciled it against a live read — Fabio was inside on his own booking</b>, not an abandoned-open studio.</p>
+    </div>
+
   </section>
 
   <footer>
-    <div class="fl">Sources · Workflow Reports + Actions to Perform (Notion)</div>
-    <div class="fn">Compiled 08:40 ET · Wed July 15, 2026 · America/Toronto. A read-only digest of the pre-dawn autonomous runs — the daytime desk reports separately.</div>
+    <span>Sources: Workflow Reports · Money Request Queue · live studio calendars · overnight autonomous runs.</span>
+    <span>Names open the Notion report ↗ · read-only digest · the daytime desk reports separately · codes &amp; contact info live only in Notion.</span>
   </footer>
 
 </div>
-<script>
-  (function(){
-    var els=document.querySelectorAll('.reveal');
-    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduce||!('IntersectionObserver'in window)){els.forEach(function(e){e.classList.add('in')});return;}
-    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{rootMargin:'0px 0px -8% 0px'});
-    els.forEach(function(e){io.observe(e);});
-  })();
-</script>
 </body>
 </html>
