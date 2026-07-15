@@ -5,9 +5,21 @@
 ## Hard rules
 - `<head>` MUST include `<meta name="robots" content="noindex, nofollow">`. Public-by-URL, never indexed.
 - Self-contained: inline CSS/JS only, no external requests.
+- **LINKS OPEN IN A NEW TAB.** Every external link (`href` starting `http`) MUST carry `target="_blank" rel="noopener"` so it opens in a new tab, not the current page. Also include the runtime safety snippet in `## Links` below so any anchor is covered even if a per-link `target` was missed.
 - PUBLIC REDACTION: never print alarm/door/entry codes, phone numbers, emails, or full addresses. First name + last initial for renters. The Notion links carry the detail.
 - Read-only digest: never mark reports Reviewed, never modify queue rows, never message customers.
 - Keep the self-refresh script (reloads a visible stale tab every ~10 min).
+
+## Links
+Every external link opens in a new tab. Put `target="_blank" rel="noopener"` on each anchor, AND keep this runtime safety net in the page (it upgrades any external anchor at load, and leaves in-page `#anchor` links alone):
+```html
+<script>
+  /* Every external link opens in a new tab. */
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    a.target = "_blank"; a.rel = "noopener";
+  });
+</script>
+```
 
 ## Visual system (Day Sheet) — all baked into template.html
 - **Palette:** warm paper `#f5f4f0`, ink `#191715`, mute `#716c64`, hair `#dedbd3`, brand purple `#5b2fd4`. State colors: act `#b06c00` (amber), wait `#51617e` (slate), hot `#c23a2b` (red), done `#2c7a4e` (green), each with a `-soft` tint. Full dark-mode overrides via `prefers-color-scheme`.
@@ -27,4 +39,4 @@ The **`LOG · How the night unfolded`** section is required and sits directly un
 - Title `Dance Annex — The Night Watch`. Footer: sources + "the daytime desk reports separately."
 
 ## Publish
-Zapier GitHub: `get_file_contents` index.html for the SHA → `create_file` (repo `night-watch-k3v9x`, path `index.html`, message `Night Watch <date>`, sha). Then Slack self-DM to Junyan (U0AR42HAEB0).
+Zapier GitHub: `get_file_contents` index.html for the SHA → `create_file` (repo `night-watch-k3v9x`, path `index.html`, message `Night Watch <date>`, sha). Then Slack self-DM to Junyan (U0AR42HAEB0). See `HANDOFF.md` for the full operator guide.
