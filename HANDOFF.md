@@ -17,7 +17,7 @@ Once each morning (~08:40 ET, unattended, in the cloud) compile the pre-dawn aut
 
 ## Tools
 - **Notion (read):** `notion-fetch`, `notion-query-data-sources`. Read-only.
-- **Publish to GitHub:** see the publish step. **Working write path today = the Zapier GitHub action** (`selected_api: GitHubCLIAPI`): `user`, `get_file_contents`, `create_file`; call `list_enabled_zapier_actions` first each session. `git` is installed and can READ the repo through `$HTTPS_PROXY`, but the environment tokens are **read-only**, so `git push` is denied — prefer git ONLY once a write-scoped token is added (see below). The claude.ai GitHub connector is NOT exposed as tools to agent/Claude Code sessions.
+- **Publish to GitHub:** see the publish step. **Working write path = the GitHub MCP connector** (now write-enabled): read the current file to capture its SHA, then create/update file contents on the default branch. `git` (installed, reaches the repo through `$HTTPS_PROXY`) is the equivalent CLI path when a Contents:write token is present — either works. **Zapier is retired for this job — do not use it.**
 - **Slack:** `slack_send_message` (self-DM only).
 
 ## Daily procedure
@@ -27,9 +27,9 @@ Once each morning (~08:40 ET, unattended, in the cloud) compile the pre-dawn aut
    - **REDACTION:** first name + last initial for renters; NEVER an alarm/door/entry code, phone, email, or full address. The Notion links carry the detail.
    - **Keep the timeline** (`LOG · How the night unfolded`) directly under the score band.
    - **LINKS OPEN IN A NEW TAB.** Every external link must have `target="_blank" rel="noopener"`. Keep the runtime safety snippet from `DESIGN.md` as a backstop.
-3. **Publish to GitHub.**
-   - **Working path — Zapier.** (a) `user` → confirm login `junyanboon`. (b) `get_file_contents` repo `night-watch-k3v9x`, path `index.html`, default branch → capture the file **SHA** (top-level `sha` field). (c) `create_file` → same repo/path/branch, `content` = the full HTML, `commit_message` = `Night Watch <today>`, `sha` = the captured SHA (omit on first-ever publish). Pages redeploys automatically.
-   - **Preferred once a write-scoped token exists (no inline HTML, easy archiving).** The env has `git` + proxy `$HTTPS_PROXY`; if `$GITHUB_TOKEN` (or another named secret) has **Contents: write**:
+3. **Publish to GitHub (GitHub MCP connector — no Zapier).**
+   - **Working path — GitHub MCP.** (a) Confirm the repo/login (`junyanboon/night-watch-k3v9x`). (b) Read the current file contents for repo `night-watch-k3v9x`, path `index.html`, default branch → capture the file **SHA**. (c) Create/update file contents → same repo/path/branch, `content` = the full HTML, message = `Night Watch <today>`, `sha` = the captured SHA (omit on a first-ever publish). Pages redeploys automatically.
+   - **git alternative (no inline HTML, easy archiving).** The env has `git` + proxy `$HTTPS_PROXY`; with a **Contents: write** token (e.g. `$GITHUB_TOKEN`):
      ```bash
      git -c http.proxy="$HTTPS_PROXY" clone "https://x-access-token:${GITHUB_TOKEN}@github.com/junyanboon/night-watch-k3v9x" nw
      cd nw && git config http.proxy "$HTTPS_PROXY"
@@ -38,15 +38,14 @@ Once each morning (~08:40 ET, unattended, in the cloud) compile the pre-dawn aut
      git add -A && git commit -m "Night Watch <today>"
      git -c http.proxy="$HTTPS_PROXY" push
      ```
-     NOTE: as of now the environment tokens are **read-only** and this push is rejected ("Password authentication is not supported" = insufficient scope). Use the Zapier path until a Contents:write token is provisioned.
 4. **Confirm.** One short Slack DM to `U0AR42HAEB0`: `Night Watch published for <date> — <verdict one-liner>, <N> items need you. https://junyanboon.github.io/night-watch-k3v9x/`
 
 ## Gotchas
-- **Zapier `create_file` replaces the whole file** — no patch/append. Send the complete HTML in `content`; escape newlines as `\n` and quotes as `\"`. Passing the SHA makes a concurrent edit fail loudly instead of clobbering. (git avoids all of this once a write token exists.)
-- **`get_file_contents`** returns base64 `content` + a `decoded_content` preview; the SHA you need is the top-level `sha`.
-- **git read works, git push does not** (read-only env token); the **GitHub connector is not callable** from agent sessions — only Notion, Slack, and Zapier tools are.
+- **The GitHub file-write tool replaces the whole file** — no patch/append. Send the complete HTML in `content`. Always pass the current **SHA** so a concurrent edit fails loudly instead of clobbering. (The git path avoids the inline-HTML escaping entirely.)
+- **Reading file contents** typically returns base64 `content`; the SHA you need for the write is the file blob's `sha`.
+- **git push works** with a Contents:write token over `$HTTPS_PROXY`; use the GitHub MCP connector otherwise. Either way, **no Zapier**.
 - If no GitHub write path is available or the repo is missing: don't retry endlessly — Slack-DM Junyan exactly what's missing and stop.
 - **The scheduled trigger prompt** (what launches this run each morning) lives in the Claude Code **web** automation UI — it is NOT a file and NOT editable from inside a run. It should instruct: *"Read HANDOFF.md + DESIGN.md + template.html from the repo and follow them; clone template.html and fill its `{{...}}` slots; do not use the old indigo/serif theme."* If a run ever produces the wrong look, that prompt is the thing to fix.
 
 ## Constraints
-Notion is read-only. No customer-facing sends. Stay within Notion read tools, Write/Read/Edit + git (read), the Zapier GitHub actions, and the single Slack self-DM.
+Notion is read-only. No customer-facing sends. Stay within Notion read tools, Write/Read/Edit + git, the GitHub MCP connector, and the single Slack self-DM.
