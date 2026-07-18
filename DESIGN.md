@@ -25,7 +25,7 @@ Every external link opens in a new tab. Put `target="_blank" rel="noopener"` on 
 - **Palette:** warm paper `#f5f4f0`, ink `#191715`, mute `#716c64`, hair `#dedbd3`, brand purple `#5b2fd4`. State colors: act `#b06c00` (amber), wait `#51617e` (slate), hot `#c23a2b` (red), done `#2c7a4e` (green), each with a `-soft` tint. Full dark-mode overrides via `prefers-color-scheme`.
 - **Type:** `Avenir Next Condensed`/`Arial Narrow` for the big uppercase masthead, score numerals, and section headers; `Avenir Next` sans for names/pills; `Seravek` for body text. Tabular numerals.
 - **Masthead:** small-caps kicker + hairline, giant uppercase `THE NIGHT WATCH` wordmark (second word in brand purple), one-sentence honest verdict line.
-- **Score band:** 3-column band, big colored tabular numerals — Runs completed / Overtime flags / Waiting on you. Amber (`act-n`) when the review count > 0.
+- **Score band:** big colored tabular numerals — Runs completed / Overtime flags / Waiting on you, plus a red (`hot-n`) **Fix these · you** cell WHEN there are open `For = Junyan` rows (drop that cell on a clean day). Amber (`act-n`) when the Waiting count > 0. The band is `auto-fit` so it reads 3 cells clean-day and 4 when the Fix cell is present.
 - **Sections** use `LOG / ACT I / ACT II` colored number badges + condensed uppercase `<h2>` + right-aligned note. Hairline `.row`s: `name↗` link · uppercase `.ctx` context · one colored `.pill` (act/wait/hot/done) stating the next step · one `.line` summary a human reads in two seconds.
 - **State-color vocabulary** for dots, status words, and pills: `ok`=green (clean/pass), `warn`=amber (needs attention/late/held), `hot`=red (urgent/missing report), `info`=slate (informational/in progress).
 
@@ -34,7 +34,8 @@ The **`LOG · How the night unfolded`** section is required and sits directly un
 
 ## Content contract
 - Gather the pre-dawn reports (Opener, Host, Doorman, Timekeeper, Analyst) + overnight Money Request Queue rows. A MISSING report is itself a finding — mark it clearly (persona, "no report as of <time>"), never invent content.
-- **Waiting on you** (ACT I) = the human-action items (held nudges, decisions, access, premises). Lead with the amount when there is one; say plainly when no money moved.
+- **Waiting on you** (ACT I) = the **Ops-lead** staff-gate items — open Actions `For = Ops Lead` (held nudges, decisions, access, premises). Lead with the amount when there is one; say plainly when no money moved.
+- **Fix these — you** (FIX) = agent mistakes only **Junyan** can correct — open Actions `For = Junyan` (`Type = Review`, `Raised by = The Custodian`), filed by the Custodian's 02:35 day-in-review pass (ticket 027). Hard-split from ACT I because the audience differs: the Ops lead has no agent access and can only action staff gates. **Omit the whole `#fixme` section (and its score cell) when there are zero open `For = Junyan` rows** — a clean day shows no Fix block. Read the shared Actions DB by collection id with a `For` / `Type` filter (it is shared with the Money Request Queue). One `.row` per open row, `.pill hot` = the fix.
 - **The ledger** (ACT II) = one row per persona/run with a status pill and a one-line takeaway. The Doorman row uses `<span class="plain">` when there's no report to link, and renders renters as chips (solid = today, dashed = tomorrow).
 - Title `Dance Annex — The Night Watch`. Footer: sources + "the daytime desk reports separately."
 

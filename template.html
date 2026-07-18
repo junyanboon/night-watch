@@ -10,9 +10,16 @@
      every layout class EXACTLY as-is. You edit: the kicker time, the verdict
      sentence, the three score numbers, and the rows inside each of the three
      sections. Do not restyle.
-  2. STRUCTURE (fixed), three sections in this order:
+  2. STRUCTURE (fixed), four sections in this order:
        LOG    (#log)   = "How the night unfolded" — the timeline. REQUIRED.
-       ACT I  (#acts)  = "Waiting on you"          — human-action items.
+       ACT I  (#acts)  = "Waiting on you"          — Ops-lead staff-gate items
+                                                     (Actions For = Ops Lead).
+       FIX    (#fixme) = "Fix these — you"         — agent mistakes only Junyan
+                                                     can correct (Actions
+                                                     For = Junyan). Hard-split
+                                                     from ACT I: different
+                                                     audience. Omit the whole
+                                                     section when zero open rows.
        ACT II (#ledger)= "The ledger"              — one row per overnight run.
   3. REDACTION (public site): first name + last initial for renters; NEVER an
      alarm/door code, phone, email, or full address. Codes live only in Notion.
@@ -74,13 +81,13 @@
   .mast .date { font: 500 .95rem/1.4 var(--text); color: var(--mute); max-width: 68ch; }
 
   /* Score */
-  .score { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--hair); margin: 2rem 0 0; }
+  .score { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--hair); margin: 2rem 0 0; }
   .score a { display: flex; align-items: baseline; gap: .8rem; padding: 1.1rem .2rem 1.2rem 1.2rem; text-decoration: none; color: inherit; border-left: 1px solid var(--hair); }
   .score a:first-child { border-left: 0; padding-left: .2rem; }
   .score .n { font: 800 clamp(2.6rem, 7vw, 4rem)/1 var(--cond); font-variant-numeric: tabular-nums; }
   .score .k { font: 600 .7rem/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); max-width: 9em; }
   .score a:hover .k { color: var(--ink); }
-  .score .act-n { color: var(--act); } .score .wait-n { color: var(--wait); } .score .done-n { color: var(--done); }
+  .score .act-n { color: var(--act); } .score .wait-n { color: var(--wait); } .score .done-n { color: var(--done); } .score .hot-n { color: var(--hot); }
 
   /* Sections */
   section { margin-top: 3.4rem; }
@@ -90,6 +97,7 @@
   .act-head .note { font-size: .85rem; color: var(--mute); margin-left: auto; text-align: right; }
   section.log .act-head .no { background: var(--brand); } section.log h2 { color: var(--brand); }
   section.acts .act-head .no { background: var(--act); } section.acts h2 { color: var(--act); }
+  section.fixme .act-head .no { background: var(--hot); } section.fixme h2 { color: var(--hot); }
   section.beats .act-head .no { background: var(--wait); } section.beats h2 { color: var(--wait); }
 
   /* Rows */
@@ -179,6 +187,8 @@
     <a href="#log"><span class="n done-n">{{N}}</span><span class="k">Runs completed</span></a>
     <a href="#log"><span class="n done-n">{{N}}</span><span class="k">Overtime flags</span></a>
     <a href="#acts"><span class="n act-n">{{N}}</span><span class="k">Waiting on you</span></a>
+    <!-- Include ONLY when there are open Actions For = Junyan; drop this cell when the count is 0. -->
+    <a href="#fixme"><span class="n hot-n">{{N}}</span><span class="k">Fix these · you</span></a>
   </nav>
 
   <!-- ══ LOG · timeline (REQUIRED). One .beat per run, chronological (evening → dawn). ══ -->
@@ -214,6 +224,25 @@
         <span class="pill act">{{the next step}}</span>
       </div>
       <p class="line">{{One-sentence plain-English explanation. Bold the key fact with <b>…</b>.}}</p>
+    </div>
+
+  </section>
+
+  <!-- ══ FIX · Fix these — you — agent mistakes only Junyan can correct (Actions For = Junyan).
+       Hard-split from ACT I (which is the Ops-lead staff-gate brief). Source = open rows on the
+       ✅ Actions to Perform DB with For = Junyan (Type = Review, Raised by = The Custodian), filed
+       by the Custodian's 02:35 day-in-review. OMIT this whole <section> when there are zero open
+       rows — a clean day shows no Fix block (and drop the matching score cell above). ══ -->
+  <section class="fixme" id="fixme">
+    <div class="act-head"><span class="no">FIX</span><h2>Fix these — you</h2><span class="note">agent mistakes only you can correct</span></div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="{{notion url — the ticket/row concerned}}">{{First L. · or short defect title}}</a>
+        <span class="ctx">{{which agent · what it got wrong}}</span>
+        <span class="pill hot">{{the fix}}</span>
+      </div>
+      <p class="line">{{One-sentence plain-English explanation of the live wrong state. Bold the key fact with <b>…</b>.}}</p>
     </div>
 
   </section>
