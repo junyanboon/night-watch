@@ -1,5 +1,11 @@
 <!doctype html>
-<!-- THE NIGHT WATCH — published edition. Compiled from template.html; content slots only. -->
+<!--
+  ════════════════════════════════════════════════════════════════════════════════════
+  THE NIGHT WATCH — CLONE TEMPLATE  (Day Sheet editorial system)
+  ════════════════════════════════════════════════════════════════════════════════════
+  Each morning the Night Watch publisher CLONES this file and fills ONLY the
+  content slots below. This is the published edition — content slots filled.
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -44,13 +50,13 @@
   .mast .date { font: 500 .95rem/1.4 var(--text); color: var(--mute); max-width: 68ch; }
 
   /* Score */
-  .score { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--hair); margin: 2rem 0 0; }
+  .score { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--hair); margin: 2rem 0 0; }
   .score a { display: flex; align-items: baseline; gap: .8rem; padding: 1.1rem .2rem 1.2rem 1.2rem; text-decoration: none; color: inherit; border-left: 1px solid var(--hair); }
   .score a:first-child { border-left: 0; padding-left: .2rem; }
   .score .n { font: 800 clamp(2.6rem, 7vw, 4rem)/1 var(--cond); font-variant-numeric: tabular-nums; }
   .score .k { font: 600 .7rem/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); max-width: 9em; }
   .score a:hover .k { color: var(--ink); }
-  .score .act-n { color: var(--act); } .score .wait-n { color: var(--wait); } .score .done-n { color: var(--done); }
+  .score .act-n { color: var(--act); } .score .wait-n { color: var(--wait); } .score .done-n { color: var(--done); } .score .hot-n { color: var(--hot); }
 
   /* Sections */
   section { margin-top: 3.4rem; }
@@ -60,6 +66,7 @@
   .act-head .note { font-size: .85rem; color: var(--mute); margin-left: auto; text-align: right; }
   section.log .act-head .no { background: var(--brand); } section.log h2 { color: var(--brand); }
   section.acts .act-head .no { background: var(--act); } section.acts h2 { color: var(--act); }
+  section.fixme .act-head .no { background: var(--hot); } section.fixme h2 { color: var(--hot); }
   section.beats .act-head .no { background: var(--wait); } section.beats h2 { color: var(--wait); }
 
   /* Rows */
@@ -138,15 +145,16 @@
 <div class="sheet">
 
   <header class="mast">
-    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Jul 17, 2026 · 8:40 AM</span></div>
+    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Jul 18, 2026 · 8:40 AM</span></div>
     <h1>The Night<em> Watch</em></h1>
-    <p class="date">A calm, clean night across all five studios — <b style="color:var(--ink)">no overtime, no incidents, and the panel armed away with every sensor clear</b> — with 6 things waiting on you: 3 good-to-go check-ins for tonight and 3 access windows to confirm for tomorrow.</p>
+    <p class="date">A calm, clean night across all five studios — <b style="color:var(--ink)">no overtime, no incidents, and the panel armed away with every sensor clear</b> — with 5 things waiting on you (3 for tonight, 2 for the week) and one retired agent trigger only you can switch off.</p>
   </header>
 
   <nav class="score" aria-label="The night at a glance">
-    <a href="#log"><span class="n done-n">11</span><span class="k">Runs completed</span></a>
+    <a href="#log"><span class="n done-n">12</span><span class="k">Runs completed</span></a>
     <a href="#log"><span class="n done-n">0</span><span class="k">Overtime flags</span></a>
-    <a href="#acts"><span class="n act-n">6</span><span class="k">Waiting on you</span></a>
+    <a href="#acts"><span class="n act-n">5</span><span class="k">Waiting on you</span></a>
+    <a href="#fixme"><span class="n hot-n">1</span><span class="k">Fix these · you</span></a>
   </nav>
 
   <section class="log" id="log">
@@ -154,45 +162,57 @@
     <div class="tl">
 
       <div class="beat">
-        <div class="t">7:33 PM</div>
+        <div class="t">7:34 PM</div>
         <div class="rail"><div class="dot ok"></div></div>
         <div class="b"><div class="who">The Planner</div><div class="cl">Staged the next three days — reconciled the staff blocks, added Sunday's Peerspace FBS, and posted the open shifts.</div><span class="st ok">staged</span></div>
       </div>
 
       <div class="beat">
-        <div class="t">9:36 PM</div>
-        <div class="rail"><div class="dot ok"></div></div>
-        <div class="b"><div class="who">The Closer</div><div class="cl">Closed out Thursday — 7 bookings reviewed, every studio armed, premises swept, nothing left open.</div><span class="st ok">clean</span></div>
+        <div class="t">9:35 PM</div>
+        <div class="rail"><div class="dot warn"></div></div>
+        <div class="b"><div class="who">The Closer</div><div class="cl">Closed out Friday — seven bookings reviewed, every studio armed, premises swept — but this run shouldn't have fired at all (see Fix these).</div><span class="st warn">ran anyway</span></div>
       </div>
 
-      <div class="beat"><div class="quiet">a quiet night — nothing stirred for 6 h 34 m</div></div>
+      <div class="beat">
+        <div class="t">10:32 PM</div>
+        <div class="rail"><div class="dot ok"></div></div>
+        <div class="b"><div class="who">The Concierge</div><div class="cl">Recovered from an early-evening stall on its own and ran clean through 10:32 PM — inbox cleared, Mia's charge settled, the Destiny lead closed, no customer harm.</div><span class="st ok">recovered</span></div>
+      </div>
+
+      <div class="beat"><div class="quiet">a quiet night — nothing stirred for about 4 hours</div></div>
+
+      <div class="beat">
+        <div class="t">2:36 AM</div>
+        <div class="rail"><div class="dot warn"></div></div>
+        <div class="b"><div class="who">The Fixer</div><div class="cl">Night QA and the day-in-review — data flat at zero for the 12th straight window; surfaced one retired trigger for you to switch off.</div><span class="st warn">1 for you</span></div>
+      </div>
 
       <div class="beat">
         <div class="t">4:10 AM</div>
-        <div class="rail"><div class="dot ok"></div></div>
-        <div class="b"><div class="who">The Timekeeper</div><div class="cl">Reviewed all 7 of Wednesday's bookings — every one within grace, two buffer merges prevented false flags.</div><span class="st ok">0 flags</span></div>
+        <div class="rail"><div class="dot warn"></div></div>
+        <div class="b"><div class="who">The Timekeeper</div><div class="cl">Reviewed all five of Friday's bookings — every one within grace, $0 billable overtime — with one Forgot-to-Arm to reconcile (Amy, 527).</div><span class="st warn">forgot-to-arm</span></div>
       </div>
 
       <div class="beat">
         <div class="t">4:14 AM</div>
-        <div class="rail"><div class="dot ok"></div></div>
-        <div class="b"><div class="who">The Analyst</div><div class="cl">Scanned today and tomorrow — today all clear, tomorrow just one low-risk 901 sound watch, no tickets.</div><span class="st ok">clear</span></div>
+        <div class="rail"><div class="dot warn"></div></div>
+        <div class="b"><div class="who">The Analyst</div><div class="cl">Scanned today and tomorrow — today all clear; tomorrow one 901 tight transition (Megan → Sebastian) ticketed with heads-up drafts held.</div><span class="st warn">1 ticket</span></div>
       </div>
 
       <div class="beat">
         <div class="t">4:23 AM</div>
         <div class="rail"><div class="dot warn"></div></div>
-        <div class="b"><div class="who">The Host</div><div class="cl">Seeded the FBS board and queued tomorrow's access texts; held one and flagged two for staff.</div><span class="st warn">3 flags</span></div>
+        <div class="b"><div class="who">The Host</div><div class="cl">Seeded the FBS board for both days and queued the messages — held Ester's access text (no code, unconfirmed) and flagged two more.</div><span class="st warn">3 flags</span></div>
       </div>
 
       <div class="beat">
         <div class="t">6:03 AM</div>
         <div class="rail"><div class="dot ok"></div></div>
-        <div class="b"><div class="who">The Bookkeeper</div><div class="cl">Logged Thursday's staff hours onto the FBS itinerary — overlap de-duplicated, no flags.</div><span class="st ok">logged</span></div>
+        <div class="b"><div class="who">The Bookkeeper</div><div class="cl">Logged Friday's staff hours onto the FBS itinerary — overlap de-duplicated, no flags.</div><span class="st ok">logged</span></div>
       </div>
 
       <div class="beat">
-        <div class="t">7:02 AM</div>
+        <div class="t">7:05 AM</div>
         <div class="rail"><div class="dot ok"></div></div>
         <div class="b"><div class="who">The Sentinel</div><div class="cl">Dawn health check — woke the desk on schedule, all clear on both passes.</div><span class="st ok">on watch</span></div>
       </div>
@@ -200,13 +220,7 @@
       <div class="beat">
         <div class="t">7:10 AM</div>
         <div class="rail"><div class="dot warn"></div></div>
-        <div class="b"><div class="who">The Doorman</div><div class="cl">Read the panel live — all five studios armed away, 18 sensors clean, but 3 access windows come up short for tomorrow.</div><span class="st warn">3 gaps</span></div>
-      </div>
-
-      <div class="beat">
-        <div class="t">7:18 AM</div>
-        <div class="rail"><div class="dot ok"></div></div>
-        <div class="b"><div class="who">The Concierge</div><div class="cl">Cleared the overnight inbox to zero, reconciled two collected charges, and filed one Zap-error maintenance ticket.</div><span class="st ok">inbox zero</span></div>
+        <div class="b"><div class="who">The Doorman</div><div class="cl">Read the panel live — all five studios armed away, 18 sensors clean, but 3 access windows come up short (2 today, 1 tomorrow).</div><span class="st warn">3 gaps</span></div>
       </div>
 
       <div class="beat">
@@ -216,7 +230,7 @@
       </div>
 
       <div class="beat">
-        <div class="t">8:03 AM</div>
+        <div class="t">8:05 AM</div>
         <div class="rail"><div class="dot info"></div></div>
         <div class="b"><div class="who">The Receptionist</div><div class="cl">Opened the rolling correspondence sweep — still running at compile time.</div><span class="st info">in progress</span></div>
       </div>
@@ -224,67 +238,72 @@
       <div class="beat">
         <div class="t">8:21 AM</div>
         <div class="rail"><div class="dot warn"></div></div>
-        <div class="b"><div class="who">The Opener</div><div class="cl">Ran the morning checklist end to end and surfaced six things for you.</div><span class="st warn">6 for you</span></div>
+        <div class="b"><div class="who">The Opener</div><div class="cl">Ran the morning checklist end to end — 0 unpaid charges, both issue reports reviewed, and surfaced five things for you.</div><span class="st warn">5 for you</span></div>
       </div>
 
     </div>
   </section>
 
   <section class="acts" id="acts">
-    <div class="act-head"><span class="no">ACT I</span><h2>Waiting on you</h2><span class="note">3 tonight · 3 for tomorrow · no money moved</span></div>
+    <div class="act-head"><span class="no">ACT I</span><h2>Waiting on you</h2><span class="note">3 tonight · 2 this week · no money moved</span></div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c481a78d40cdd8b255c2b2">Salia M.</a>
-        <span class="ctx">509B · Jul 17 · FBS tonight</span>
-        <span class="pill act">release or confirm</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c481c192f9f6f32adbde60">Amy B.</a>
+        <span class="ctx">527 · Jul 17 · Forgot-to-Arm</span>
+        <span class="pill act">release reminder</span>
       </div>
-      <p class="line">How-to-access was sent but she hasn't confirmed good-to-go and there's <b>no reply on file</b>. A gentle check-in nudge is held at Pending Review — release it or confirm she's set for tonight.</p>
+      <p class="line">Overtime flagged a Forgot-to-Arm: she disarmed at 7:47 PM but no armed-away was ever logged, so staff armed 527 remotely at ~10:22 PM. A <b>held reminder sits at Pending Review</b> — release it or confirm it's handled. No overtime, no unauthorized access.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c4818e8012c7376f6d3556">Juriza N.</a>
-        <span class="ctx">509A · Jul 17 · first 509 visit</span>
-        <span class="pill act">release or confirm</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c481929590d9c95b5c936c">Megan C. → Sebastian M.</a>
+        <span class="ctx">901 · Jul 19 · 0-min buffer</span>
+        <span class="pill act">review drafts</span>
       </div>
-      <p class="line">First time in 509 with no staff at start — HTA sent, but <b>board still shows not good-to-go</b> and no reply logged. Held check-in nudge waiting on your go-ahead.</p>
+      <p class="line">Tomorrow's 901 has <b>Megan's heels class handing straight to Sebastian's class with no gap</b>. Two heads-up drafts are held Pending Review — review and release, and add any Skedda waiver, comp time, or on-site staff.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c481e0a41af468abb08b25">Amy B.</a>
-        <span class="ctx">527 · Jul 17 · Lindy Hop event, 👥30</span>
-        <span class="pill act">release or confirm</span>
-      </div>
-      <p class="line">A 30-person evening event with HTA sent but <b>no good-to-go confirmation yet</b>. Held check-in nudge queued — release it or confirm she's set.</p>
-    </div>
-
-    <div class="row">
-      <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c4817db821e3c7f8921925">Kangbin Z.</a>
-        <span class="ctx">527 · Jul 18 · FBS</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c4813aa279f2f54ba53c68">Anastasia M.</a>
+        <span class="ctx">527 · tonight · Kizomba social</span>
         <span class="pill act">verify access</span>
       </div>
-      <p class="line">Account is closed and <b>no live panel user matches</b> across all 154 — a code is on file but can't be verified. Confirm the code works or provision access before tomorrow's booking.</p>
+      <p class="line">The live panel returned <b>no access user matching her, despite a code on file</b> — her PIN may have been de-provisioned. Verify her door code still works before tonight's 8:00 PM social. Self-serve, so nothing was changed on the panel.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c481ceaf54c7cc41c7c4ae">Camila A.</a>
-        <span class="ctx">509A · Jul 18 · self-serve</span>
-        <span class="pill act">verify access</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c481f3b32fe95272a8b20f">Himanshi M.</a>
+        <span class="ctx">901 · Jul 19 · Monitor</span>
+        <span class="pill act">extend access</span>
       </div>
-      <p class="line">Her window on file covers the date, but <b>the live panel read shows no matching user</b>, so access can't be confirmed. Check her access still exists before tomorrow.</p>
+      <p class="line">Her alarm window <b>expires Jul 19 at 7:38 AM and doesn't cover the 3:30 PM booking</b> — a prior extension never persisted on the panel. Re-extend before tomorrow afternoon. Raised a day ahead for lead time.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c4818a96afe61e7a5d5401">Ester V.</a>
-        <span class="ctx">693 · Jul 18 · event, unconfirmed</span>
-        <span class="pill hot">provision access</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c48125bc08c7d839b58095">Ester V.</a>
+        <span class="ctx">693 · Jul 18 · event · resolved</span>
+        <span class="pill wait">confirm cancelled</span>
       </div>
-      <p class="line">A Tagvenue event still marked <b>unconfirmed and unpaid</b> — no code, no window, and no panel user on file, so the access text is being held. If it proceeds, provision a code before the booking.</p>
+      <p class="line">Her 693 gender-reveal dropped off the calendar; the slot's now empty, the board reads Cancelled, and the stale access row was closed as moot. <b>Nothing to do unless the booking returns</b> — just confirm it was intentional.</p>
+    </div>
+
+  </section>
+
+  <section class="fixme" id="fixme">
+    <div class="act-head"><span class="no">FIX</span><h2>Fix these — you</h2><span class="note">agent mistakes only you can correct</span></div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c4813789e8e7d5bcd3d31e">The Closer trigger</a>
+        <span class="ctx">The Closer · ran after being retired</span>
+        <span class="pill hot">disable trigger</span>
+      </div>
+      <p class="line">Ticket 027 folded end-of-day into the Custodian, but <b>a Closer run still fired at 9:34 PM Friday and did real work</b> (it deferred Amy's PBF). The trigger looks still-enabled and now overlaps the Custodian's night pass — only you can switch it off, and it recurs nightly until you do.</p>
     </div>
 
   </section>
@@ -294,132 +313,143 @@
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/39f7503281c481d9b2eafd0076c1f167">The Planner</a>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c481b7b32ccd7e0135427b">The Planner</a>
         <span class="ctx">Tomorrow-prep · Jul 17–19</span>
         <span class="pill done">staged</span>
       </div>
-      <p class="line">Three days staged and ready — <b>+1 FBS (Quynh, Sun 901), 5 staff blocks, 3 open shifts</b>; three coverage rows raised for the Ops Lead.</p>
+      <p class="line">Three days staged and ready — <b>+1 FBS (Quynh, Sun 901), 5 staff blocks, 3 open shifts</b>; seven coverage rows posted for staff to claim.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c481ccb948fb0e2ac1c9e0">The Closer</a>
-        <span class="ctx">Evening close · Jul 16</span>
-        <span class="pill done">clean</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c4812cb5f4df2735d983bd">The Closer</a>
+        <span class="ctx">Evening close · Jul 17</span>
+        <span class="pill act">flagged</span>
       </div>
-      <p class="line">Seven bookings reviewed and the premises secured — <b>no flags, no incidents</b>; one PBF message deferred to auto-release today.</p>
+      <p class="line">Seven bookings reviewed and the premises secured — <b>no flags, no incidents</b>; one PBF message deferred to today's auto-release. But the run itself shouldn't have fired — see Fix these.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c481c48f7cc8aba2ed8f61">The Timekeeper</a>
-        <span class="ctx">Overtime · Jul 16</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c4814fa265f8dd167ceaf5">The Fixer</a>
+        <span class="ctx">Night QA · day-in-review</span>
+        <span class="pill act">1 for you</span>
+      </div>
+      <p class="line">Whole-day QA came back <b>flat at zero — the 12th straight clean window</b>; the day's one incident (the Concierge stall) recovered with no harm, and one retired trigger was filed for you.</p>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c48172a779ed9683268c09">The Timekeeper</a>
+        <span class="ctx">Overtime · Jul 17</span>
         <span class="pill done">0 flags</span>
       </div>
-      <p class="line">Seven bookings within grace, <b>$0 billable overtime</b> — two contiguous-buffer merges kept two near-misses from flagging.</p>
+      <p class="line">Five bookings all within grace, <b>$0 billable overtime</b> — one Forgot-to-Arm (Amy, 527) raised with a held reminder; Tess English confirmed an authorized user, no unauthorized access.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c48125bc08c7d839b58095">The Analyst</a>
-        <span class="ctx">Issues · Jul 17–18</span>
-        <span class="pill done">clear</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c481c68519e2fe3b05994c">The Analyst</a>
+        <span class="ctx">Issues · Jul 18–19</span>
+        <span class="pill act">1 ticket</span>
       </div>
-      <p class="line">Today all clear — the moved-booking transition ticket is now moot — and tomorrow shows only a <b>low-risk 901 sound watch, no ticket</b>.</p>
+      <p class="line">Today all clear — tomorrow just <b>one 901 tight transition (Megan → Sebastian, 0-min buffer)</b> ticketed with drafts held, plus a low-risk 901 sound watch, no ticket.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c481b3950ad528aecad484">The Host</a>
-        <span class="ctx">FBS prep · Jul 17–18</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c481b7849ad4c47a96b7f4">The Host</a>
+        <span class="ctx">FBS prep · Jul 18–19</span>
         <span class="pill act">3 flags</span>
       </div>
-      <p class="line">Board seeded for both days and EOB/AVA queued — <b>held Ester's access text</b> (no code, unconfirmed) and flagged Kangbin's closed account plus a 901 drop-off.</p>
+      <p class="line">Board seeded for both days and EOB/AVA queued — <b>held Ester's access text</b> (no code, unconfirmed), and flagged Sara's tier and Quynh's corrected event ID.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c481b4966df17bba11d81f">The Bookkeeper</a>
-        <span class="ctx">Staff hours · Jul 16</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c481a3a366d2feb1d160ff">The Bookkeeper</a>
+        <span class="ctx">Staff hours · Jul 17</span>
         <span class="pill done">logged</span>
       </div>
-      <p class="line">Logged Thursday's hours onto the itinerary — <b>Junyan 1.0 h, Ela 2.75 h</b> (overlap de-duplicated); no flags.</p>
+      <p class="line">Logged Friday's staff hours onto the itinerary — <b>overlap de-duplicated, no flags</b>.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c481ccbd9bf8dbe0e2187c">The Sentinel</a>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c481a189dcd75f8fb261e7">The Sentinel</a>
         <span class="ctx">Health check · dawn</span>
         <span class="pill done">on watch</span>
       </div>
-      <p class="line">Two dawn checks at 7:02 and 8:04 — <b>both all clear</b>, the monitoring chain woke on schedule.</p>
+      <p class="line">Dawn health checks <b>both all clear</b> — the monitoring chain woke on schedule.</p>
     </div>
 
     <div class="row">
       <div class="head">
         <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c4813c8bd6fc80f2691500">The Concierge</a>
         <span class="ctx">Rolling desk · Jul 17</span>
-        <span class="pill done">inbox zero</span>
+        <span class="pill done">recovered</span>
       </div>
-      <p class="line">Cleared four inbox threads, <b>reconciled two collected charges</b>, and closed out a Zap subject-line bug with a maintenance ticket — 0 desk defects.</p>
+      <p class="line">Stalled early evening, then <b>recovered on its own and ran clean through 10:32 PM</b> — every Friday first-timer monitored, two charges reconciled, inbox to zero.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c48132a8efd47b6540df9e">The Doorman</a>
-        <span class="ctx">local run · own schedule</span>
-        <span class="pill act">3 gaps</span>
-      </div>
-      <p class="line">Panel armed away on all five studios, 18 sensors clean, <b>16 of 19 access windows clear</b> — the 3 short windows (all tomorrow) raised as access rows.</p>
-      <div class="chips">
-        <span class="chip">Salia M.</span>
-        <span class="chip">David D.</span>
-        <span class="chip">Juriza N.</span>
-        <span class="chip">Amy B.</span>
-        <span class="chip">Isabel C.</span>
-        <span class="chip tmw">Zulekha P.</span>
-        <span class="chip tmw">Roux B.</span>
-        <span class="chip tmw">Anastasia M.</span>
-        <span class="chip tmw">Kangbin Z.</span>
-        <span class="chip tmw">Kateryna Z.</span>
-        <span class="chip tmw">Laura F.</span>
-        <span class="chip tmw">Desiree J.</span>
-        <span class="chip tmw">Tunde I.</span>
-        <span class="chip tmw">Camila A.</span>
-        <span class="chip tmw">Kristyan C.</span>
-        <span class="chip tmw">Tufan B.</span>
-        <span class="chip tmw">Himanshi M.</span>
-        <span class="chip tmw">Ester V.</span>
-        <span class="chip tmw">Quynh T.</span>
-      </div>
-      <div class="chip-key">solid = today (Jul 17) · dashed = tomorrow (Jul 18)</div>
-    </div>
-
-    <div class="row">
-      <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c48196827ef2fd45976a14">The Watchman</a>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c4811f94c3d35af44cbbd4">The Watchman</a>
         <span class="ctx">Watchdog · dawn</span>
         <span class="pill done">all clear</span>
       </div>
-      <p class="line"><b>Sentinel healthy</b> on both the 7:32 and 8:32 checks.</p>
+      <p class="line"><b>Sentinel healthy</b> on both the 7:05 and later checks.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c48157b2e7fef5ec3c0749">The Receptionist</a>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c4816087f2ef63d8a06947">The Receptionist</a>
         <span class="ctx">Correspondence · rolling</span>
         <span class="pill wait">in progress</span>
       </div>
-      <p class="line">Opened at 8:03 AM and <b>still running</b> its correspondence sweep at compile time.</p>
+      <p class="line">Opened at 8:05 AM and <b>still running</b> its correspondence sweep at compile time.</p>
     </div>
 
     <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a07503281c48166ba5afa0b8010ebec">The Opener</a>
-        <span class="ctx">Morning shift · Jul 17</span>
-        <span class="pill act">6 for you</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c48153b861ce75fc952dcb">The Doorman</a>
+        <span class="ctx">local run · own schedule</span>
+        <span class="pill act">3 gaps</span>
       </div>
-      <p class="line">Full checklist clean — both issue reports reviewed and <b>0 unpaid charges</b> — surfacing 3 held good-to-go nudges for tonight plus the 3 access windows the Doorman pre-flighted for tomorrow.</p>
+      <p class="line">Panel armed away on all five studios and 18 sensors clean, <b>19 of 22 access windows clear</b> — the 3 short windows (Kangbin &amp; Anastasia today, Himanshi tomorrow) raised as access rows.</p>
+      <div class="chips">
+        <span class="chip">Tunde I.</span>
+        <span class="chip">Camila A.</span>
+        <span class="chip">Tufan B.</span>
+        <span class="chip">Kateryna Z.</span>
+        <span class="chip">Laura F.</span>
+        <span class="chip">Mia V.</span>
+        <span class="chip">Roux B.</span>
+        <span class="chip">Desiree J.</span>
+        <span class="chip">Kristyan C.</span>
+        <span class="chip">Kangbin Z.</span>
+        <span class="chip">Himanshi M.</span>
+        <span class="chip">Zulekha P.</span>
+        <span class="chip">Anastasia M.</span>
+        <span class="chip">Quynh T.</span>
+        <span class="chip tmw">Scott V.</span>
+        <span class="chip tmw">Risa W.</span>
+        <span class="chip tmw">Nabil F.</span>
+        <span class="chip tmw">Sara D.</span>
+        <span class="chip tmw">David D.</span>
+        <span class="chip tmw">Megan C.</span>
+        <span class="chip tmw">Sebastian M.</span>
+      </div>
+      <div class="chip-key">solid = today (Jul 18) · dashed = tomorrow (Jul 19)</div>
+    </div>
+
+    <div class="row">
+      <div class="head">
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a17503281c48159a1fdffa3a83856e4">The Opener</a>
+        <span class="ctx">Morning shift · Jul 18</span>
+        <span class="pill act">5 for you</span>
+      </div>
+      <p class="line">Full checklist clean — both issue reports reviewed and <b>0 unpaid charges</b> — surfacing three held good-to-go items for tonight plus the two access windows the Doorman pre-flighted for tomorrow.</p>
     </div>
 
   </section>
