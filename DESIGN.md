@@ -40,4 +40,4 @@ The **`LOG · How the night unfolded`** section is required and sits directly un
 - Title `Dance Annex — The Night Watch`. Footer: sources + "the daytime desk reports separately."
 
 ## Publish
-GitHub MCP connector (no Zapier): read `index.html` for the SHA → create/update file contents (repo `night-watch-k3v9x`, path `index.html`, message `Night Watch <date>`, sha). `git` push with a Contents:write token is the equivalent CLI path. Then Slack self-DM to Junyan (U0AR42HAEB0). See `HANDOFF.md` for the full operator guide.
+GitHub MCP connector (no Zapier): read `index.html` for the SHA → create/update file contents (repo `night-watch`, path `index.html`, message `Night Watch <date>`, sha). `git` push with a Contents:write token is the equivalent CLI path. Then Slack self-DM to Junyan (U0AR42HAEB0). See `HANDOFF.md` for the full operator guide.

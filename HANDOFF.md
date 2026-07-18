@@ -6,8 +6,8 @@ How to run the **Dance Annex Night Watch publisher** from a fresh session. This 
 Once each morning (~08:40 ET, unattended, in the cloud) compile the pre-dawn autonomous run reports into ONE self-contained HTML dashboard and publish it to a public GitHub Pages site. You are a **READ-ONLY digest**: never mark reports Reviewed, never modify queue rows, never message customers. No customer-facing sends.
 
 ## Where everything lives
-- **GitHub repo:** `junyanboon/night-watch-k3v9x` (login `junyanboon`).
-- **Public URL:** https://junyanboon.github.io/night-watch-k3v9x/ (served automatically from `index.html`; same URL every day).
+- **GitHub repo:** `junyanboon/night-watch` (login `junyanboon`).
+- **Public URL:** https://junyanboon.github.io/night-watch/ (served automatically from `index.html`; same URL every day).
 - **`index.html`** — the published page; overwritten each morning. Optionally copy the outgoing edition into `archive/<date>.html`.
 - **`template.html`** — CLONE this and fill only its `{{...}}` slots; keep style/script/classes byte-for-byte.
 - **`DESIGN.md`** — the full design + content contract.
@@ -29,17 +29,17 @@ Once each morning (~08:40 ET, unattended, in the cloud) compile the pre-dawn aut
    - **Keep the timeline** (`LOG · How the night unfolded`) directly under the score band.
    - **LINKS OPEN IN A NEW TAB.** Every external link must have `target="_blank" rel="noopener"`. Keep the runtime safety snippet from `DESIGN.md` as a backstop.
 3. **Publish to GitHub (GitHub MCP connector — no Zapier).**
-   - **Working path — GitHub MCP.** (a) Confirm the repo/login (`junyanboon/night-watch-k3v9x`). (b) Read the current file contents for repo `night-watch-k3v9x`, path `index.html`, default branch → capture the file **SHA**. (c) Create/update file contents → same repo/path/branch, `content` = the full HTML, message = `Night Watch <today>`, `sha` = the captured SHA (omit on a first-ever publish). Pages redeploys automatically.
+   - **Working path — GitHub MCP.** (a) Confirm the repo/login (`junyanboon/night-watch`). (b) Read the current file contents for repo `night-watch`, path `index.html`, default branch → capture the file **SHA**. (c) Create/update file contents → same repo/path/branch, `content` = the full HTML, message = `Night Watch <today>`, `sha` = the captured SHA (omit on a first-ever publish). Pages redeploys automatically.
    - **git alternative (no inline HTML, easy archiving).** The env has `git` + proxy `$HTTPS_PROXY`; with a **Contents: write** token (e.g. `$GITHUB_TOKEN`):
      ```bash
-     git -c http.proxy="$HTTPS_PROXY" clone "https://x-access-token:${GITHUB_TOKEN}@github.com/junyanboon/night-watch-k3v9x" nw
+     git -c http.proxy="$HTTPS_PROXY" clone "https://x-access-token:${GITHUB_TOKEN}@github.com/junyanboon/night-watch" nw
      cd nw && git config http.proxy "$HTTPS_PROXY"
      git config user.name junyanboon && git config user.email junyan.boon@gmail.com
      # write index.html (and optionally cp the previous edition to archive/<date>.html)
      git add -A && git commit -m "Night Watch <today>"
      git -c http.proxy="$HTTPS_PROXY" push
      ```
-4. **Confirm.** One short Slack DM to `U0AR42HAEB0`: `Night Watch published for <date> — <verdict one-liner>, <N> items need you. https://junyanboon.github.io/night-watch-k3v9x/`
+4. **Confirm.** One short Slack DM to `U0AR42HAEB0`: `Night Watch published for <date> — <verdict one-liner>, <N> items need you. https://junyanboon.github.io/night-watch/`
 
 ## Gotchas
 - **The GitHub file-write tool replaces the whole file** — no patch/append. Send the complete HTML in `content`. Always pass the current **SHA** so a concurrent edit fails loudly instead of clobbering. (The git path avoids the inline-HTML escaping entirely.)
