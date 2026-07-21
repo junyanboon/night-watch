@@ -10,17 +10,15 @@
      every layout class EXACTLY as-is. You edit: the kicker time, the verdict
      sentence, the three score numbers, and the rows inside each of the three
      sections. Do not restyle.
-  2. STRUCTURE (fixed), four sections in this order:
+  2. STRUCTURE (fixed), three sections in this order:
        LOG    (#log)   = "How the night unfolded" — the timeline. REQUIRED.
        ACT I  (#acts)  = "Waiting on you"          — Ops-lead staff-gate items
                                                      (Actions For = Ops Lead).
-       FIX    (#fixme) = "Fix these — you"         — agent mistakes only Junyan
-                                                     can correct (Actions
-                                                     For = Junyan). Hard-split
-                                                     from ACT I: different
-                                                     audience. Omit the whole
-                                                     section when zero open rows.
        ACT II (#ledger)= "The ledger"              — one row per overnight run.
+     NO FIX SECTION (2026-07-21): "Fix these — you" (Actions For = Junyan)
+     lives ONLY on The Fixer Report (junyanboon.github.io/fixer-report/).
+     When ≥1 open For = Junyan row exists, render the .fixnote pointer line
+     after ACT I (count + link); when zero, omit the pointer entirely.
   3. REDACTION (public site): first name + last initial for renters; NEVER an
      alarm/door code, phone, email, or full address. Codes live only in Notion.
   4. A MISSING report is a finding: give it a row with a hot dot + "no report",
@@ -98,8 +96,21 @@
   .act-head .note { font-size: .85rem; color: var(--mute); margin-left: auto; text-align: right; }
   section.log .act-head .no { background: var(--brand); } section.log h2 { color: var(--brand); }
   section.acts .act-head .no { background: var(--act); } section.acts h2 { color: var(--act); }
-  section.fixme .act-head .no { background: var(--hot); } section.fixme h2 { color: var(--hot); }
   section.beats .act-head .no { background: var(--wait); } section.beats h2 { color: var(--wait); }
+
+  /* Fixer pointer — the one-line hand-off to The Fixer Report (no #fixme section on this page) */
+  .fixnote { display: flex; align-items: baseline; gap: .6rem; margin-top: 1.1rem; font: 600 .85rem/1.4 var(--sans); color: var(--mute); }
+  .fixnote .tag { font: 800 .72rem/1 var(--cond); color: var(--paper); background: var(--hot); padding: .3rem .5rem .24rem; border-radius: 4px; letter-spacing: .04em; white-space: nowrap; }
+  .fixnote a { color: var(--hot); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--hot) 35%, transparent); }
+  .fixnote a:hover { border-bottom-color: var(--hot); }
+
+  /* ACT I check-off — local, per-edition, this browser only (does not touch Notion) */
+  .tick { margin-left: .5rem; width: 1.7rem; height: 1.7rem; border-radius: 50%; border: 1.5px solid var(--hair); background: transparent; color: transparent; font: 700 .9rem/1 var(--sans); cursor: pointer; flex: none; align-self: center; }
+  .tick:hover, .tick:focus-visible { border-color: var(--done); color: var(--done); outline: none; }
+  .tick.on { background: var(--done); border-color: var(--done); color: var(--paper); }
+  .row.done-row a.name, .row.done-row .ctx, .row.done-row .line { opacity: .45; }
+  .row.done-row a.name { text-decoration: line-through; }
+  .row.done-row .pill { background: var(--done-soft); color: var(--done); box-shadow: none; }
 
   /* Rows */
   .row { border-top: 1px solid var(--hair); padding: 1.15rem 0 1.25rem; }
@@ -172,6 +183,33 @@
     document.addEventListener("visibilitychange", maybeReload);
   })();
 </script>
+<script>
+  /* ACT I check-off. KEEP AS-IS. Tap ✓ to strike a row you've handled. Local to this
+     browser, keyed by edition date (auto-resets each morning). Cosmetic only — the real
+     close is the Notion Action row; this never writes anywhere. */
+  document.addEventListener("DOMContentLoaded", function () {
+    var kick = document.querySelectorAll(".kicker span");
+    var ed = kick.length ? kick[kick.length - 1].textContent.trim() : "";
+    var key = "nw-done::" + ed;
+    var done = {};
+    try { done = JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) {}
+    document.querySelectorAll("section.acts .row").forEach(function (row, i) {
+      var head = row.querySelector(".head");
+      if (!head) return;
+      var btn = document.createElement("button");
+      btn.className = "tick"; btn.type = "button"; btn.textContent = "✓";
+      btn.setAttribute("aria-label", "Mark handled (local)");
+      head.appendChild(btn);
+      function paint() { row.classList.toggle("done-row", !!done[i]); btn.classList.toggle("on", !!done[i]); }
+      btn.addEventListener("click", function () {
+        done[i] = !done[i];
+        try { localStorage.setItem(key, JSON.stringify(done)); } catch (e) {}
+        paint();
+      });
+      paint();
+    });
+  });
+</script>
 </head>
 <body>
 <div class="sheet">
@@ -188,8 +226,7 @@
     <a href="#log"><span class="n done-n">{{N}}</span><span class="k">Runs completed</span></a>
     <a href="#log"><span class="n done-n">{{N}}</span><span class="k">Overtime flags</span></a>
     <a href="#acts"><span class="n act-n">{{N}}</span><span class="k">Waiting on you</span></a>
-    <!-- Include ONLY when there are open Actions For = Junyan; drop this cell when the count is 0. -->
-    <a href="#fixme"><span class="n hot-n">{{N}}</span><span class="k">Fix these · you</span></a>
+    <!-- NO "Fix these" score cell — Fix items live on The Fixer Report (see the .fixnote after ACT I). -->
   </nav>
 
   <!-- ══ LOG · timeline (REQUIRED). One .beat per run, chronological (evening → dawn). ══ -->
@@ -227,24 +264,9 @@
       <p class="line">{{One-sentence plain-English explanation. Bold the key fact with <b>…</b>.}}</p>
     </div>
 
-  </section>
-
-  <!-- ══ FIX · Fix these — you — agent mistakes only Junyan can correct (Actions For = Junyan).
-       Hard-split from ACT I (which is the Ops-lead staff-gate brief). Source = open rows on the
-       ✅ Actions to Perform DB with For = Junyan (Type = Review, Raised by = The Custodian), filed
-       by the Custodian's 02:35 day-in-review. OMIT this whole <section> when there are zero open
-       rows — a clean day shows no Fix block (and drop the matching score cell above). ══ -->
-  <section class="fixme" id="fixme">
-    <div class="act-head"><span class="no">FIX</span><h2>Fix these — you</h2><span class="note">agent mistakes only you can correct</span></div>
-
-    <div class="row">
-      <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="{{notion url — the ticket/row concerned}}">{{First L. · or short defect title}}</a>
-        <span class="ctx">{{which agent · what it got wrong}}</span>
-        <span class="pill hot">{{the fix}}</span>
-      </div>
-      <p class="line">{{One-sentence plain-English explanation of the live wrong state. Bold the key fact with <b>…</b>.}}</p>
-    </div>
+    <!-- FIXER POINTER (render ONLY when there are ≥1 open Actions For = Junyan; omit when zero).
+         Agent-mistake items themselves live on The Fixer Report, never on this page. -->
+    <div class="fixnote"><span class="tag">FIX</span><span>{{N}} agent {{mistake/mistakes}} for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
 
   </section>
 

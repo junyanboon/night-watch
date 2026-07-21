@@ -9,6 +9,7 @@
 - PUBLIC REDACTION: never print alarm/door/entry codes, phone numbers, emails, or full addresses. First name + last initial for renters. The Notion links carry the detail.
 - Read-only digest: never mark reports Reviewed, never modify queue rows, never message customers.
 - Keep the self-refresh script (reloads a visible stale tab every ~10 min).
+- Keep the ACT I check-off script (per-row ✓ toggle, `localStorage` keyed by edition date). It is **cosmetic and local to the viewer's browser** — a strike-through so the Ops lead can track their pass through the list. It never writes to Notion; the real close is still the Action row, and each new edition's date key resets the checks.
 
 ## Links
 Every external link opens in a new tab. Put `target="_blank" rel="noopener"` on each anchor, AND keep this runtime safety net in the page (it upgrades any external anchor at load, and leaves in-page `#anchor` links alone):
@@ -25,7 +26,7 @@ Every external link opens in a new tab. Put `target="_blank" rel="noopener"` on 
 - **Palette:** warm paper `#f5f4f0`, ink `#191715`, mute `#716c64`, hair `#dedbd3`, brand purple `#5b2fd4`. State colors: act `#b06c00` (amber), wait `#51617e` (slate), hot `#c23a2b` (red), done `#2c7a4e` (green), each with a `-soft` tint. Full dark-mode overrides via `prefers-color-scheme`.
 - **Type:** `Avenir Next Condensed`/`Arial Narrow` for the big uppercase masthead, score numerals, and section headers; `Avenir Next` sans for names/pills; `Seravek` for body text. Tabular numerals.
 - **Masthead:** small-caps kicker + hairline, giant uppercase `THE NIGHT WATCH` wordmark (second word in brand purple), one-sentence honest verdict line.
-- **Score band:** big colored tabular numerals — Runs completed / Overtime flags / Waiting on you, plus a red (`hot-n`) **Fix these · you** cell WHEN there are open `For = Junyan` rows (drop that cell on a clean day). Amber (`act-n`) when the Waiting count > 0. The band is `auto-fit` so it reads 3 cells clean-day and 4 when the Fix cell is present.
+- **Score band:** big colored tabular numerals — Runs completed / Overtime flags / Waiting on you (always exactly 3 cells; amber `act-n` when the Waiting count > 0). **No "Fix these" cell** — Fix items live on The Fixer Report (2026-07-21).
 - **Sections** use `LOG / ACT I / ACT II` colored number badges + condensed uppercase `<h2>` + right-aligned note. Hairline `.row`s: `name↗` link · uppercase `.ctx` context · one colored `.pill` (act/wait/hot/done) stating the next step · one `.line` summary a human reads in two seconds.
 - **State-color vocabulary** for dots, status words, and pills: `ok`=green (clean/pass), `warn`=amber (needs attention/late/held), `hot`=red (urgent/missing report), `info`=slate (informational/in progress).
 
@@ -35,7 +36,7 @@ The **`LOG · How the night unfolded`** section is required and sits directly un
 ## Content contract
 - Gather the pre-dawn reports (Custodian **`Fixer Report — <date>`**, Opener, Host, Doorman, Timekeeper, Analyst) + overnight Money Request Queue rows. The Fixer Report is the Custodian's 02:35 night pass — it carries the full-day QA + day-in-review and is the source of the "Fix these — you" (`For = Junyan`) items. A MISSING report is itself a finding — mark it clearly (persona, "no report as of <time>"), never invent content.
 - **Waiting on you** (ACT I) = the **Ops-lead** staff-gate items — open Actions `For = Ops Lead` (held nudges, decisions, access, premises). Lead with the amount when there is one; say plainly when no money moved.
-- **Fix these — you** (FIX) = agent mistakes only **Junyan** can correct — open Actions `For = Junyan` (`Type = Review`, `Raised by = The Custodian`), filed by the Custodian's 02:35 day-in-review pass (ticket 027). Hard-split from ACT I because the audience differs: the Ops lead has no agent access and can only action staff gates. **Omit the whole `#fixme` section (and its score cell) when there are zero open `For = Junyan` rows** — a clean day shows no Fix block. Read the shared Actions DB by collection id with a `For` / `Type` filter (it is shared with the Money Request Queue). One `.row` per open row, `.pill hot` = the fix.
+- **Fix these — you (MOVED, 2026-07-21):** agent mistakes only **Junyan** can correct (open Actions `For = Junyan`, `Type = Review`, `Raised by = The Custodian`) belong to **The Fixer Report** (https://junyanboon.github.io/fixer-report/) — the Night Watch never renders a `#fixme` section or score cell. The audiences differ: the Night Watch briefs the Ops lead (staff gates only); the Fixer Report briefs Junyan (agent corrections). On the Night Watch, when ≥1 such row is open, render only the one-line `.fixnote` pointer after ACT I (`FIX · N agent mistakes for Junyan → The Fixer Report ↗`); omit it entirely at zero.
 - **The ledger** (ACT II) = one row per persona/run with a status pill and a one-line takeaway. The Doorman row uses `<span class="plain">` when there's no report to link, and renders renters as chips (solid = today, dashed = tomorrow).
 - Title `Dance Annex — The Night Watch`. Footer: sources + "the daytime desk reports separately."
 
