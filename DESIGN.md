@@ -9,7 +9,7 @@
 - PUBLIC REDACTION: never print alarm/door/entry codes, phone numbers, emails, or full addresses. First name + last initial for renters. The Notion links carry the detail.
 - Read-only digest: never mark reports Reviewed, never modify queue rows, never message customers.
 - Keep the self-refresh script (reloads a visible stale tab every ~10 min).
-- Keep the ACT I check-off script (per-row ✓ toggle, `localStorage` keyed by edition date). It is **cosmetic and local to the viewer's browser** — a strike-through so the Ops lead can track their pass through the list. It never writes to Notion; the real close is still the Action row, and each new edition's date key resets the checks.
+- ACT I check-off / tick feature **removed 2026-07-23, owner request — do not re-add**; completed items are closed in Notion, and an edition may use static struck-through rows for owner cross-offs.
 
 ## Links
 Every external link opens in a new tab. Put `target="_blank" rel="noopener"` on each anchor, AND keep this runtime safety net in the page (it upgrades any external anchor at load, and leaves in-page `#anchor` links alone):

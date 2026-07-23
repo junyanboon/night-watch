@@ -104,14 +104,6 @@
   .fixnote a { color: var(--hot); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--hot) 35%, transparent); }
   .fixnote a:hover { border-bottom-color: var(--hot); }
 
-  /* ACT I check-off — local, per-edition, this browser only (does not touch Notion) */
-  .tick { margin-left: .5rem; width: 1.7rem; height: 1.7rem; border-radius: 50%; border: 1.5px solid var(--hair); background: transparent; color: transparent; font: 700 .9rem/1 var(--sans); cursor: pointer; flex: none; align-self: center; }
-  .tick:hover, .tick:focus-visible { border-color: var(--done); color: var(--done); outline: none; }
-  .tick.on { background: var(--done); border-color: var(--done); color: var(--paper); }
-  .row.done-row a.name, .row.done-row .ctx, .row.done-row .line { opacity: .45; }
-  .row.done-row a.name { text-decoration: line-through; }
-  .row.done-row .pill { background: var(--done-soft); color: var(--done); box-shadow: none; }
-
   /* Rows */
   .row { border-top: 1px solid var(--hair); padding: 1.15rem 0 1.25rem; }
   section > .row:last-of-type { border-bottom: 1px solid var(--hair); }
@@ -182,33 +174,6 @@
     setInterval(maybeReload, 60 * 1000);
     document.addEventListener("visibilitychange", maybeReload);
   })();
-</script>
-<script>
-  /* ACT I check-off. KEEP AS-IS. Tap ✓ to strike a row you've handled. Local to this
-     browser, keyed by edition date (auto-resets each morning). Cosmetic only — the real
-     close is the Notion Action row; this never writes anywhere. */
-  document.addEventListener("DOMContentLoaded", function () {
-    var kick = document.querySelectorAll(".kicker span");
-    var ed = kick.length ? kick[kick.length - 1].textContent.trim() : "";
-    var key = "nw-done::" + ed;
-    var done = {};
-    try { done = JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) {}
-    document.querySelectorAll("section.acts .row").forEach(function (row, i) {
-      var head = row.querySelector(".head");
-      if (!head) return;
-      var btn = document.createElement("button");
-      btn.className = "tick"; btn.type = "button"; btn.textContent = "✓";
-      btn.setAttribute("aria-label", "Mark handled (local)");
-      head.appendChild(btn);
-      function paint() { row.classList.toggle("done-row", !!done[i]); btn.classList.toggle("on", !!done[i]); }
-      btn.addEventListener("click", function () {
-        done[i] = !done[i];
-        try { localStorage.setItem(key, JSON.stringify(done)); } catch (e) {}
-        paint();
-      });
-      paint();
-    });
-  });
 </script>
 </head>
 <body>

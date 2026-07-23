@@ -76,13 +76,9 @@
   .fixnote a { color: var(--hot); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--hot) 35%, transparent); }
   .fixnote a:hover { border-bottom-color: var(--hot); }
 
-  /* ACT I check-off — local, per-edition, this browser only (does not touch Notion) */
-  .tick { margin-left: .5rem; width: 1.7rem; height: 1.7rem; border-radius: 50%; border: 1.5px solid var(--hair); background: transparent; color: transparent; font: 700 .9rem/1 var(--sans); cursor: pointer; flex: none; align-self: center; }
-  .tick:hover, .tick:focus-visible { border-color: var(--done); color: var(--done); outline: none; }
-  .tick.on { background: var(--done); border-color: var(--done); color: var(--paper); }
-  .row.done-row a.name, .row.done-row .ctx, .row.done-row .line { opacity: .45; }
-  .row.done-row a.name { text-decoration: line-through; }
-  .row.done-row .pill { background: var(--done-soft); color: var(--done); box-shadow: none; }
+  section.acts .row.closed{opacity:.55}
+  section.acts .row.closed .head h3{text-decoration:line-through;text-decoration-thickness:1.5px}
+  section.acts .row.closed .outcome{color:#4a7c59;font-size:.85em;font-weight:600;text-decoration:none}
 
   /* Rows */
   .row { border-top: 1px solid var(--hair); padding: 1.15rem 0 1.25rem; }
@@ -155,33 +151,6 @@
     document.addEventListener("visibilitychange", maybeReload);
   })();
 </script>
-<script>
-  /* ACT I check-off. KEEP AS-IS. Tap ✓ to strike a row you've handled. Local to this
-     browser, keyed by edition date (auto-resets each morning). Cosmetic only — the real
-     close is the Notion Action row; this never writes anywhere. */
-  document.addEventListener("DOMContentLoaded", function () {
-    var kick = document.querySelectorAll(".kicker span");
-    var ed = kick.length ? kick[kick.length - 1].textContent.trim() : "";
-    var key = "nw-done::" + ed;
-    var done = {};
-    try { done = JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) {}
-    document.querySelectorAll("section.acts .row").forEach(function (row, i) {
-      var head = row.querySelector(".head");
-      if (!head) return;
-      var btn = document.createElement("button");
-      btn.className = "tick"; btn.type = "button"; btn.textContent = "✓";
-      btn.setAttribute("aria-label", "Mark handled (local)");
-      head.appendChild(btn);
-      function paint() { row.classList.toggle("done-row", !!done[i]); btn.classList.toggle("on", !!done[i]); }
-      btn.addEventListener("click", function () {
-        done[i] = !done[i];
-        try { localStorage.setItem(key, JSON.stringify(done)); } catch (e) {}
-        paint();
-      });
-      paint();
-    });
-  });
-</script>
 </head>
 <body>
 <div class="sheet">
@@ -250,56 +219,62 @@
   </section>
 
   <section class="acts" id="acts">
-    <div class="act-head"><span class="no">ACT I</span><h2>Waiting on you</h2><span class="note">7 items · 2 today, 5 this week</span></div>
+    <div class="act-head"><span class="no">ACT I</span><h2>Waiting on you</h2><span class="note">7 items · 6 handled · 1 open (Ayden)</span></div>
 
-    <div class="row">
+    <div class="row closed">
       <div class="head">
         <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c48185b67bec3fcb232bbb">Marco A.</a>
+        <span class="outcome">✓ handled — owner called Marco; bass down til 7 agreed; confirmation queued</span>
         <span class="ctx">901 · Thu Jul 23 · today's call</span>
         <span class="pill act">optional courtesy heads-up</span>
       </div>
       <p class="line">His <b>12-person 901 rehearsal (6–8 PM)</b> overlaps Pink Lemon's hours on the shared wall, one day after a live noise complaint. Optional staff-only "keep it down until 7 PM" heads-up — he'd need an Artist record created first. No message drafted.</p>
     </div>
 
-    <div class="row">
+    <div class="row closed">
       <div class="head">
         <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a57503281c4815ba6b4d325759c7738">Today's 901 touchpoints</a>
+        <span class="outcome">✓ claimed by Ela</span>
         <span class="ctx">901 · Thu Jul 23 · open shifts</span>
         <span class="pill act">claim or defaults to AI watch</span>
       </div>
       <p class="line">Four FBS / Monitoring touchpoints for today sit on the Open Shifts board; today's are claimed by Ela, but <b>Nicole D.'s late-added 901 monitor shift</b> is newly posted. Claim by day start or they run on AI watch.</p>
     </div>
 
-    <div class="row">
+    <div class="row closed">
       <div class="head">
         <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c481bcaeacfd8ab4eee52f">Kyle F.</a>
+        <span class="outcome">✓ charged $74.58</span>
         <span class="ctx">509A · Thu Jul 23 · AAP overage</span>
         <span class="pill act">review &amp; bill $74.58</span>
       </div>
       <p class="line">509A [Unpaid] 3:30–6:15 PM with his four July prepaid AAP hours already used → 2.75 h fully overage = <b>$74.58</b> (× $27.12, cross-checked to Skedda). Held at Pending Review; staff bill.</p>
     </div>
 
-    <div class="row">
+    <div class="row closed">
       <div class="head">
         <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c481aab1e9dbb06370f6c2">Maggie M.</a>
+        <span class="outcome">✓ card declined — CC ticket opened, awaiting Maggie</span>
         <span class="ctx">509B · Thu Jul 23 · Fixed-Option extra</span>
         <span class="pill act">decide &amp; bill</span>
       </div>
       <p class="line">509B [Unpaid] 1:00–8:00 PM Fixed-Option booking (not a prepaid plan) → the <b>amount is a staff call</b> (Skedda price $118.65 noted). Held at Pending Review.</p>
     </div>
 
-    <div class="row">
+    <div class="row closed">
       <div class="head">
         <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c48185921beb24f6c20bef">Fabio H.</a>
+        <span class="outcome">✓ notice sent — bill after 24h per SOP</span>
         <span class="ctx">509A · Jul 22 · overtime charge</span>
         <span class="pill act">review &amp; bill $11.30</span>
       </div>
       <p class="line">Left <b>24 min</b> after his 10:15 PM booked end → 0.4 h over the grace = <b>$11.30</b>, plus a held T1 heads-up. Verified in the Overtime review; staff settle from the queue.</p>
     </div>
 
-    <div class="row">
+    <div class="row closed">
       <div class="head">
         <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c48186add0cceed3678f74">Caney</a>
+        <span class="outcome">✓ confirmed staff close-up — no charge</span>
         <span class="ctx">901 · Jul 22 · departure attribution</span>
         <span class="pill wait">confirm attribution</span>
       </div>
@@ -309,6 +284,7 @@
     <div class="row">
       <div class="head">
         <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c481c4941cd94319f68a51">Ayden M.</a>
+        <span class="outcome">→ in desk drop — must be provisioned before Fri 6 PM</span>
         <span class="ctx">527 · Fri Jul 24 · FBS access</span>
         <span class="pill act">verify Alarm.com access</span>
       </div>
