@@ -1,4 +1,9 @@
 <!doctype html>
+<!--
+  ═════════════════════════════════════════════════════════════════════════════════════════════════════════
+  THE NIGHT WATCH — published edition · 2026-07-24 (cloned from template.html, content slots only)
+  ═════════════════════════════════════════════════════════════════════════════════════════════════════════
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -33,7 +38,6 @@
   body { background: var(--paper); color: var(--ink); font: 16px/1.5 var(--text); margin: 0; padding: 0 clamp(1rem, 4vw, 2.5rem) 5rem; }
   .sheet { max-width: 900px; margin: 0 auto; }
 
-  /* Masthead */
   .mast { padding: 3.2rem 0 0; }
   .mast .kicker { display: flex; align-items: center; gap: .7rem; }
   .mast .kicker span { font: 600 .72rem/1 var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--mute); }
@@ -42,7 +46,6 @@
   .mast h1 em { font-style: normal; color: var(--brand); }
   .mast .date { font: 500 .95rem/1.4 var(--text); color: var(--mute); max-width: 68ch; }
 
-  /* Score */
   .score { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--hair); margin: 2rem 0 0; }
   .score a { display: flex; align-items: baseline; gap: .8rem; padding: 1.1rem .2rem 1.2rem 1.2rem; text-decoration: none; color: inherit; border-left: 1px solid var(--hair); }
   .score a:first-child { border-left: 0; padding-left: .2rem; }
@@ -51,7 +54,6 @@
   .score a:hover .k { color: var(--ink); }
   .score .act-n { color: var(--act); } .score .wait-n { color: var(--wait); } .score .done-n { color: var(--done); } .score .hot-n { color: var(--hot); }
 
-  /* Sections */
   section { margin-top: 3.4rem; }
   .act-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: .4rem; }
   .act-head .no { font: 800 1rem/1 var(--cond); color: var(--paper); padding: .34rem .6rem .28rem; border-radius: 4px; letter-spacing: .05em; }
@@ -60,18 +62,15 @@
   section.log .act-head .no { background: var(--brand); } section.log h2 { color: var(--brand); }
   section.acts .act-head .no { background: var(--act); } section.acts h2 { color: var(--act); }
 
-  /* Fixer pointer — the one-line hand-off to The Fixer Report (no #fixme section on this page) */
   .fixnote { display: flex; align-items: baseline; gap: .6rem; margin-top: 1.1rem; font: 600 .85rem/1.4 var(--sans); color: var(--mute); }
   .fixnote .tag { font: 800 .72rem/1 var(--cond); color: var(--paper); background: var(--hot); padding: .3rem .5rem .24rem; border-radius: 4px; letter-spacing: .04em; white-space: nowrap; }
   .fixnote a { color: var(--hot); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--hot) 35%, transparent); }
   .fixnote a:hover { border-bottom-color: var(--hot); }
 
-  /* Owner cross-offs (static, published) — a closed ACT II row */
   section.acts .row.closed{opacity:.55}
   section.acts .row.closed .head h3{text-decoration:line-through;text-decoration-thickness:1.5px}
   section.acts .row.closed .outcome{color:#4a7c59;font-size:.85em;font-weight:600;text-decoration:none}
 
-  /* Rows (ACT II) */
   .row { border-top: 1px solid var(--hair); padding: 1.15rem 0 1.25rem; }
   section > .row:last-of-type { border-bottom: 1px solid var(--hair); }
   .row .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; }
@@ -81,7 +80,6 @@
   .plain { font: 700 clamp(1.15rem, 3vw, 1.45rem)/1.2 var(--sans); letter-spacing: -.01em; }
   .ctx { font: 600 .72rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
 
-  /* Pills — THREE STATES ONLY: ok (all good) · warn (warning) · hot (urgent) */
   .pill { margin-left: auto; font: 700 .78rem/1 var(--sans); letter-spacing: .02em; padding: .5rem .9rem; border-radius: 999px; white-space: nowrap; }
   .pill.ok   { background: var(--done-soft); color: var(--done); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--done) 25%, transparent); }
   .pill.warn { background: var(--act);  color: var(--paper); }
@@ -90,7 +88,6 @@
   .line { margin: .5rem 0 0; font-size: .93rem; color: var(--mute); max-width: 66ch; }
   .line b { color: var(--ink); font-weight: 650; }
 
-  /* ACT I — merged timeline (one beat per run, with bullets) */
   .tl { border-top: 1px solid var(--hair); }
   .tl .beat { display: grid; grid-template-columns: 68px 24px 1fr; column-gap: .8rem; align-items: start; }
   .tl .t { font: 600 .8rem/1.5 var(--cond); letter-spacing: .04em; font-variant-numeric: tabular-nums; color: var(--mute); text-align: right; padding-top: 1.05rem; white-space: nowrap; }
@@ -114,7 +111,6 @@
   .tl .bl b { color: var(--ink); font-weight: 650; }
   .tl .quiet { grid-column: 1 / -1; text-align: center; font: italic 500 .9rem/1.4 var(--text); color: var(--mute); padding: .9rem 0 1rem; }
 
-  /* Chips */
   .chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
   .chip { font: 600 .78rem/1 var(--sans); padding: .38rem .7rem; border-radius: 999px; background: var(--wait-soft); color: var(--wait); }
   .chip.tmw { background: transparent; color: var(--mute); box-shadow: inset 0 0 0 1px var(--hair); border: 1px dashed var(--hair); }
@@ -137,7 +133,6 @@
   }
 </style>
 <script>
-  /* Self-refresh: keep an open tab current without a manual reload. KEEP AS-IS. */
   (function () {
     var MAX_AGE = 10 * 60 * 1000;
     var loadedAt = Date.now();
@@ -155,15 +150,15 @@
 <div class="sheet">
 
   <header class="mast">
-    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Jul 23, 2026 · 8:44 AM</span></div>
+    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Jul 24, 2026 · 8:40 AM</span></div>
     <h1>The Night<em> Watch</em></h1>
-    <p class="date">A calm, well-run night — <b style="color:var(--ink)">six overnight runs completed with a single overtime flag</b> — leaving seven items for you: three charges to bill, a 901 sound-courtesy call, an access check for tomorrow, an ambiguous-departure review, and today's 901 touchpoints to claim, plus two agent fixes routed to the Fixer Report.</p>
+    <p class="date">A steady pre-dawn — <b style="color:var(--ink)">five runs cleared the studios for the weekend</b>, but the Opener never filed its Morning Shift, and a held <b style="color:var(--ink)">$77.97 Ifreestyle overtime charge</b> waits on your bill-or-waive call.</p>
   </header>
 
   <nav class="score" aria-label="The night at a glance">
-    <a href="#log"><span class="n done-n">6</span><span class="k">Runs completed</span></a>
-    <a href="#log"><span class="n act-n">5</span><span class="k">Warnings</span></a>
-    <a href="#acts"><span class="n act-n">7</span><span class="k">Waiting on you</span></a>
+    <a href="#log"><span class="n done-n">5</span><span class="k">Runs completed</span></a>
+    <a href="#log"><span class="n act-n">4</span><span class="k">Warnings</span></a>
+    <a href="#acts"><span class="n act-n">5</span><span class="k">Waiting on you</span></a>
   </nav>
 
   <section class="log" id="log">
@@ -171,113 +166,86 @@
     <div class="tl">
 
       <div class="beat">
-        <div class="t">7:33 PM</div>
+        <div class="t">2:47 AM</div>
+        <div class="rail"><div class="dot warn"></div></div>
+        <div class="b">
+          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a77503281c4815fbb76eae5ff47839c">The Custodian</a><span class="ctx">Fixer Report · full-day QA</span><span class="pill warn">1 defect caught</span></div>
+          <ul class="bl">
+            <li>Reviewed <b>5 care tickets</b> at the Review gate — <b>all 5 advanced, 0 bounced</b>; desk invariants clean at <b>0 of 8</b> violations.</li>
+            <li>Caught a serious defect: Kyle F.'s 8:00 AM acknowledgement SMS was set to auto-send <b>blank and unapproved</b> — flagged for Junyan and <b>since corrected and sent at 8:05 AM</b>.</li>
+            <li>Routed <b>8 open items to Junyan</b> and logged the recurring hold-contract gap for the desk bots.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="beat">
+        <div class="t">4:14 AM</div>
+        <div class="rail"><div class="dot warn"></div></div>
+        <div class="b">
+          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a77503281c481b5a633e3f06dccc593">The Timekeeper</a><span class="ctx">Overtime · Jul 23 · 11 bookings</span><span class="pill warn">1 overtime flag</span></div>
+          <ul class="bl">
+            <li><b>Ifreestyle Dance Co. (693)</b> armed out at 11:38 PM vs a 10:00 PM end — <b>98 min over</b>; a held <b>$77.97</b> charge and a care ticket await your bill-or-waive call (see Act II).</li>
+            <li><b>Forgot-to-arm:</b> Kyle F. left 509A open at 3:25 PM; the incoming holder armed it at 8:39 PM — a reminder is held, no overtime charged.</li>
+            <li>No unauthorized access all night; the 693 cleaning log was auto-generated (38 min).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="beat">
+        <div class="t">4:22 AM</div>
         <div class="rail"><div class="dot ok"></div></div>
         <div class="b">
-          <div class="bhead"><span class="who">The Planner</span><span class="ctx">tomorrow-prep · open shifts</span><span class="pill ok">All good</span></div>
+          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a77503281c4819991f8cd42945ed71f">The Analyst</a><span class="ctx">Issues Report · Jul 25 Saturday</span><span class="pill ok">All good</span></div>
           <ul class="bl">
-            <li>Posted Thursday's <b>four FBS / Monitoring touchpoints</b> — all Studio 901 — to the Open Shifts board; today's pair was later <b>claimed by Ela</b>.</li>
-            <li>Nicole D.'s late-added 901 monitor shift posted for staff.</li>
+            <li>Pre-read Saturday's bookings across all 5 studios — <b>no artist-blocking issues, no sound conflicts, no tight transitions or booking gaps</b>.</li>
+            <li>Surfaced 3 <b>staff-only</b> alarm/lock items already tracked (527 partition fault · panel tamper · 901 front-door lock) — none artist-caused; flagged the busy 901 Saturday as worth confirming the lock beforehand.</li>
           </ul>
         </div>
       </div>
 
-      <div class="beat"><div class="quiet">a quiet night — nothing stirred for ~7 h 03 m</div></div>
-
       <div class="beat">
-        <div class="t">2:36 AM</div>
+        <div class="t">4:24 AM</div>
         <div class="rail"><div class="dot warn"></div></div>
         <div class="b">
-          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c48189bd05cf749a1c282e">The Custodian</a><span class="ctx">night pass · full-day review</span><span class="pill warn">2 defects</span></div>
+          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a77503281c48175a53dd74e19068b0b">The Host</a><span class="ctx">FBS prep · tomorrow seeded</span><span class="pill warn">2 flags for staff</span></div>
           <ul class="bl">
-            <li>Full-day audit <b>graded well-run</b>: eight tickets adjudicated (six advanced), <b>zero bounces</b>, all eight desk invariants held.</li>
-            <li><b>Two minor agent defects</b> routed to Junyan via the Fixer Report.</li>
-            <li>Flagged for Junyan: confirm <b>Julia C.'s</b> cancel + credit message went out, and merge a <b>duplicate Anastasia ticket</b> (concurrent-runtime duplication class).</li>
+            <li>Built tomorrow's itinerary, seeded <b>10 board rows</b>, and queued <b>17 messages</b> (6 end-of-booking · 7 availability · 4 how-to-access) — all self-checked, no defects.</li>
+            <li><b>Kelly K.</b> — a same-day first-time 509B booking; messages queued but confirm she has her access details (also in Act II).</li>
+            <li><b>Tanisha C.</b> — defaulted to full support for an unfamiliar 509A; a harmless redundancy if she already knows the room.</li>
           </ul>
         </div>
       </div>
 
       <div class="beat">
-        <div class="t">4:15 AM</div>
-        <div class="rail"><div class="dot warn"></div></div>
-        <div class="b">
-          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c481449d70f45891e0193d">The Timekeeper</a><span class="ctx">overtime · Jul 22</span><span class="pill warn">1 flag</span></div>
-          <ul class="bl">
-            <li>Reviewed <b>eight bookings across five studios</b> — no unauthorized access, no forgot-to-arm tickets.</li>
-            <li><b>Fabio H. left 24 min late</b> (509A) → <b>$11.30</b> charge held with a T1 heads-up.</li>
-            <li>One comp-booking departure (Caney, 901) raised for attribution review.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="beat">
-        <div class="t">4:20 AM</div>
-        <div class="rail"><div class="dot warn"></div></div>
-        <div class="b">
-          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c4813798a8f394dacc2b72">The Analyst</a><span class="ctx">issues · Jul 23 + 24</span><span class="pill warn">1 watch</span></div>
-          <ul class="bl">
-            <li>Today's Issues Report re-verified and Friday's built — <b>Friday is clean</b>.</li>
-            <li>Maintenance findings all <b>carry-forward</b>: 693 door sensor (suppressed), 527 partition.</li>
-            <li>Escalated a <b>901 sound-courtesy watch</b> — Marco A.'s 12-person rehearsal overlaps Pink Lemon's hours.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="beat">
-        <div class="t">4:23 AM</div>
+        <div class="t">6:09 AM</div>
         <div class="rail"><div class="dot ok"></div></div>
         <div class="b">
-          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c481e1804ad042c3fe6bb7">The Host</a><span class="ctx">FBS prep · Jul 24</span><span class="pill ok">All good</span></div>
+          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a77503281c4816d82d8d32ea44e346e">The Doorman</a><span class="ctx">Alarm pass · 20 bookings pre-flighted</span><span class="pill ok">All good</span></div>
           <ul class="bl">
-            <li>Tomorrow's itinerary created and the board <b>seeded — nine rows across five studios</b> (plus three today rows corrected).</li>
-            <li><b>Eleven messages</b> (end-of-booking, availability, access) queued and gate-checked; every alarm code on file.</li>
+            <li>All 5 studios <b>Armed Away</b>; every renter across today and tomorrow has a code on file and a covering access window (<b>1 stale window refreshed</b> for Amandeep S.).</li>
+            <li>One live no-match — Vicky Y. (509A tonight) — was <b>already resolved</b>, her window covers the booking; <b>0 new alarm tickets filed</b> (existing 527 fault + tamper deduped).</li>
           </ul>
-        </div>
-      </div>
-
-      <div class="beat">
-        <div class="t">6:08 AM</div>
-        <div class="rail"><div class="dot warn"></div></div>
-        <div class="b">
-          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c4819a81c7e901f1f273ba">The Doorman</a><span class="ctx">alarm pre-flight · all 5 studios</span><span class="pill warn">2 access flags</span></div>
-          <ul class="bl">
-            <li>All five panels read <b>Armed Away</b>; <b>18 bookings / 17 renters</b> across today + tomorrow cleared the access-window check.</li>
-            <li>Two tomorrow flags: <b>Ayden M. — no Alarm.com user match</b> (since provisioned + verified ✓) · Vicky Y. covered by DB window.</li>
-            <li>Two maintenance rows filed: <b>527 partition fault</b> · panel tamper.</li>
-          </ul>
+          <div class="chip-key">Access windows confirmed — today</div>
           <div class="chips">
-            <span class="chip">Mariah J.</span>
-            <span class="chip">Nicole D.</span>
-            <span class="chip">Kyle F.</span>
-            <span class="chip">Marco V.</span>
-            <span class="chip">Kateryna Z.</span>
-            <span class="chip">Anita P.</span>
-            <span class="chip">Ifreestyle</span>
-            <span class="chip">Maggie M.</span>
-            <span class="chip">David D.</span>
-            <span class="chip tmw">Brad W.</span>
-            <span class="chip tmw">Sierra G.</span>
-            <span class="chip tmw">Mia V.</span>
-            <span class="chip tmw">Ayden M.</span>
-            <span class="chip tmw">Tanisha C.</span>
-            <span class="chip tmw">Salia M.</span>
-            <span class="chip tmw">Nina L.</span>
-            <span class="chip tmw">Vicky Y.</span>
-            <span class="chip tmw">David D.</span>
+            <span class="chip">Brad W.</span><span class="chip">Kelly K.</span><span class="chip">Sierra G.</span><span class="chip">Mia V.</span><span class="chip">Ayden M.</span><span class="chip">Tanisha C.</span><span class="chip">Sangah L.</span><span class="chip">Salia M.</span><span class="chip">Nina L.</span><span class="chip">Vicky Y.</span><span class="chip">David D.</span>
           </div>
-          <div class="chip-key">solid = today (Jul 23) · dashed = tomorrow (Jul 24)</div>
+          <div class="chip-key">Tomorrow</div>
+          <div class="chips">
+            <span class="chip tmw">Tufan B.</span><span class="chip tmw">Kateryna Z.</span><span class="chip tmw">Tanisha C.</span><span class="chip tmw">Laura F.</span><span class="chip tmw">Aahuti D.</span><span class="chip tmw">Sara D.</span><span class="chip tmw">Chelly L.</span><span class="chip tmw">David G.</span><span class="chip tmw">Amandeep S.</span>
+          </div>
         </div>
       </div>
 
+      <div class="beat"><div class="quiet">a quiet stretch — nothing filed for 1 h 56 m</div></div>
+
       <div class="beat">
-        <div class="t">8:04 AM</div>
-        <div class="rail"><div class="dot warn"></div></div>
+        <div class="t">—</div>
+        <div class="rail"><div class="dot hot"></div></div>
         <div class="b">
-          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c4814d99f9dc54825da471">The Opener</a><span class="ctx">morning shift · Jul 23</span><span class="pill warn">7 for you</span></div>
+          <div class="bhead"><span class="who plain">The Opener</span><span class="ctx">Morning Shift · Jul 24</span><span class="pill hot">no report</span></div>
           <ul class="bl">
-            <li>Morning shift ran 08:04–08:24 — in-scope steps <b>all clean</b>; prior-day back-check clear.</li>
-            <li><b>Two unpaid charges queued</b>: Kyle F. <b>$74.58</b> (AAP overage) · Maggie M. (Fixed-Option, staff call).</li>
-            <li>Yesterday's hours reconciled; Fast-Track watchlist rebuilt (17 rows); <b>seven items surfaced</b> to Act II.</li>
+            <li><b>No Morning Shift report filed as of 8:40 AM</b> — the pre-dawn Opener run did not check in (last edition: Jul 23).</li>
+            <li>Its "For You" held-items hand-off is unavailable this morning; the items below were compiled directly from the Money Request Queue instead.</li>
           </ul>
         </div>
       </div>
@@ -286,79 +254,54 @@
   </section>
 
   <section class="acts" id="acts">
-    <div class="act-head"><span class="no">ACT II</span><h2>Waiting on you</h2><span class="note">7 items · all handled ✓</span></div>
+    <div class="act-head"><span class="no">ACT II</span><h2>Waiting on you</h2><span class="note">ops-lead gates · open in Notion</span></div>
 
-    <div class="row closed">
+    <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c48185b67bec3fcb232bbb">Marco A.</a>
-        <span class="outcome">✓ handled — owner called Marco; bass down til 7 agreed; confirmation queued</span>
-        <span class="ctx">901 · Thu Jul 23 · today's call</span>
-        <span class="pill warn">optional courtesy heads-up</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a77503281c48158aab3e89ee8082afe">Ifreestyle Dance Co.</a>
+        <span class="ctx">693 · Jul 23 · overtime</span>
+        <span class="pill warn">$77.97 — bill or waive</span>
       </div>
-      <p class="line">His <b>12-person 901 rehearsal (6–8 PM)</b> overlaps Pink Lemon's hours on the shared wall, one day after a live noise complaint. Optional staff-only "keep it down until 7 PM" heads-up — he'd need an Artist record created first. No message drafted.</p>
+      <p class="line">Ran 693 <b>98 minutes past</b> their 10:00 PM end. But they habitually stay until ~11:38 PM on class nights and the booking note says it "reflects current agreement" — the charge is <b>held pending your call</b> to bill the overage or waive it.</p>
     </div>
 
-    <div class="row closed">
+    <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a57503281c4815ba6b4d325759c7738">Today's 901 touchpoints</a>
-        <span class="outcome">✓ claimed by Ela</span>
-        <span class="ctx">901 · Thu Jul 23 · open shifts</span>
-        <span class="pill warn">claim or defaults to AI watch</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a77503281c4813e9630c9c95b3b10e8">Kelly K.</a>
+        <span class="ctx">509B · today 1:00 PM · access</span>
+        <span class="pill hot">verify before 1 PM</span>
       </div>
-      <p class="line">Four FBS / Monitoring touchpoints for today sit on the Open Shifts board; today's are claimed by Ela, but <b>Nicole D.'s late-added 901 monitor shift</b> is newly posted. Claim by day start or they run on AI watch.</p>
+      <p class="line">Her fast-track confirmation and entry details went out last night, but a live access check <b>still can't find her</b> in the panel. Confirm her 509B access actually works <b>before her 1:00 PM booking</b> or she risks being locked out.</p>
     </div>
 
-    <div class="row closed">
+    <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c481c4941cd94319f68a51">Kyle F.</a>
-        <span class="outcome">✓ charged $74.58</span>
-        <span class="ctx">509A · Thu Jul 23 · AAP overage</span>
-        <span class="pill warn">review &amp; bill $74.58</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a77503281c481008df5d643e15ecab4">Studio 901 front door</a>
+        <span class="ctx">901 · lock · before Saturday</span>
+        <span class="pill warn">ask Stefan to test</span>
       </div>
-      <p class="line">509A [Unpaid] 3:30–6:15 PM with his four July prepaid AAP hours already used → 2.75 h fully overage = <b>$74.58</b> (× $27.12, cross-checked to Skedda). Held at Pending Review; staff bill.</p>
+      <p class="line">The 901 front-door lock intermittently won't latch (blinking red). With a <b>fully booked 901 Saturday</b>, have Stefan physically verify the latch, keypad and battery before the day starts.</p>
     </div>
 
-    <div class="row closed">
+    <div class="row">
       <div class="head">
         <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c481aab1e9dbb06370f6c2">Maggie M.</a>
-        <span class="outcome">✓ card declined — CC ticket opened, awaiting Maggie</span>
-        <span class="ctx">509B · Thu Jul 23 · Fixed-Option extra</span>
-        <span class="pill warn">decide &amp; bill</span>
+        <span class="ctx">509B · Jul 23 · unpaid</span>
+        <span class="pill warn">coordinate re-run</span>
       </div>
-      <p class="line">509B [Unpaid] 1:00–8:00 PM Fixed-Option booking (not a prepaid plan) → the <b>amount is a staff call</b> (Skedda price $118.65 noted). Held at Pending Review.</p>
+      <p class="line">Her 509B card <b>declined (insufficient funds)</b> and she asked to sort out timing herself — coordinate directly before re-running, with a <b>$15 late fee only</b> if it passes the 24-hour SOP window.</p>
     </div>
 
-    <div class="row closed">
+    <div class="row">
       <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c48185921beb24f6c20bef">Fabio H.</a>
-        <span class="outcome">✓ notice sent — bill after 24h per SOP</span>
-        <span class="ctx">509A · Jul 22 · overtime charge</span>
-        <span class="pill warn">review &amp; bill $11.30</span>
+        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a77503281c481729f63c1afa0d30618">#desk-drops scan</a>
+        <span class="ctx">Slack · overnight · run hiccup</span>
+        <span class="pill warn">add bot to channel</span>
       </div>
-      <p class="line">Left <b>24 min</b> after his 10:15 PM booked end → 0.4 h over the grace = <b>$11.30</b>, plus a held T1 heads-up. Verified in the Overtime review; staff settle from the queue.</p>
+      <p class="line">The Concierge <b>couldn't read #desk-drops</b> twice overnight — its bot isn't a member of the channel, so any notes you dropped there weren't picked up. Add the bot to the channel to restore the feed.</p>
     </div>
 
-    <div class="row closed">
-      <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c48186add0cceed3678f74">Caney</a>
-        <span class="outcome">✓ confirmed staff close-up — no charge</span>
-        <span class="ctx">901 · Jul 22 · departure attribution</span>
-        <span class="pill warn">confirm attribution</span>
-      </div>
-      <p class="line">Her comp 901 booking's only arm was <b>staff (Junyan, 10:29 PM)</b>, so it wasn't charged — confirm whose departure it was; most likely just staff closing up. No charge raised.</p>
-    </div>
-
-    <div class="row closed">
-      <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3a67503281c481bcaeacfd8ab4eee52f">Ayden M.</a>
-        <span class="outcome">✓ provisioned on Alarm.com — access check passes for Fri 6 PM</span>
-        <span class="ctx">527 · Fri Jul 24 · FBS access</span>
-        <span class="pill warn">verify Alarm.com access</span>
-      </div>
-      <p class="line">Tomorrow's 527 FBS booking (6:00–7:15 PM) has a code on file but <b>no matching Alarm.com user</b> (searched all 154). Verify or provision access before the How-to-Access message is relied on.</p>
-    </div>
-
-    <div class="fixnote"><span class="tag">FIX</span><span>2 agent fixes for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
+    <div class="fixnote"><span class="tag">FIX</span><span>8 open items for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
 
   </section>
 
@@ -368,5 +311,10 @@
   </footer>
 
 </div>
+<script>
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    a.target = "_blank"; a.rel = "noopener";
+  });
+</script>
 </body>
 </html>
