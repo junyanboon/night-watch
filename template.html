@@ -8,32 +8,39 @@
 
   1. CONTENT-ONLY EDITS. Keep the <style> block, <script>, palette, fonts, and
      every layout class EXACTLY as-is. You edit: the kicker time, the verdict
-     sentence, the three score numbers, and the rows inside each of the three
+     sentence, the three score numbers, and the rows inside each of the two
      sections. Do not restyle.
-  2. STRUCTURE (fixed), three sections in this order:
-       LOG    (#log)   = "How the night unfolded" — the timeline. REQUIRED.
-       ACT I  (#acts)  = "Waiting on you"          — Ops-lead staff-gate items
-                                                     (Actions For = Ops Lead).
-       ACT II (#ledger)= "The ledger"              — one row per overnight run.
+  2. STRUCTURE (fixed, since 2026-07-23 — owner directive), TWO sections:
+       ACT I  (#log)  = "How the night unfolded" — the merged timeline+ledger.
+                        One .beat per overnight run, chronological (evening →
+                        dawn). Each beat: time · dot · persona (linked to its
+                        Notion report) · a 3-state pill · BULLETS (ul.bl) that
+                        say concretely what that agent did/found. The former
+                        separate "ledger" section is gone — its content lives
+                        in the bullets here.
+       ACT II (#acts) = "Waiting on you" — Ops-lead staff-gate items
+                        (Actions For = Ops Lead).
      NO FIX SECTION (2026-07-21): "Fix these — you" (Actions For = Junyan)
      lives ONLY on The Fixer Report (junyanboon.github.io/fixer-report/).
      When ≥1 open For = Junyan row exists, render the .fixnote pointer line
-     after ACT I (count + link); when zero, omit the pointer entirely.
+     after ACT II (count + link); when zero, omit the pointer entirely.
   3. REDACTION (public site): first name + last initial for renters; NEVER an
      alarm/door code, phone, email, or full address. Codes live only in Notion.
-  4. A MISSING report is a finding: give it a row with a hot dot + "no report",
+  4. A MISSING report is a finding: give it a beat with a hot dot + "no report",
      honest to <time>. Never invent content.
   5. Keep the <meta robots noindex>, the self-refresh <script>, and the title.
+  6. The local ✓ check-off feature was removed 2026-07-23 (owner request) — do
+     not re-add it; completed items are closed in Notion, and the page may carry
+     static struck-through rows when the owner crosses items off mid-day.
 
-  CLASS VOCABULARY
-    Dots / status words / pills use state colors:
-      ok   = done/green   (clean, pass, 0 flags)
-      warn = act/amber    (needs attention / late / held)
-      hot  = red          (urgent / missing report / real time pressure)
-      info = wait/slate   (informational / in progress)
-    Pills: <span class="pill act|wait|hot|done">next step</span>
-    Timeline beat, quiet-gap row, ledger row, and chip examples are shown
-    inline below as REFERENCE — copy the pattern, swap the text.
+  CLASS VOCABULARY — THREE STATES ONLY (owner directive 2026-07-23)
+    Dots AND pills use exactly three states:
+      ok   = green  "All good"  (clean, pass, 0 flags)
+      warn = amber  warning     (needs attention / flags raised / held items)
+      hot  = red    urgent      (missing report / real time pressure / emergency)
+    Pills: <span class="pill ok|warn|hot">label</span> — no other pill classes.
+    Beat, quiet-gap, bullets, chips, and ACT II row examples are shown inline
+    below as REFERENCE — copy the pattern, swap the text.
   ═════════════════════════════════════════════════════════════════════════════
 -->
 <html lang="en">
@@ -96,7 +103,6 @@
   .act-head .note { font-size: .85rem; color: var(--mute); margin-left: auto; text-align: right; }
   section.log .act-head .no { background: var(--brand); } section.log h2 { color: var(--brand); }
   section.acts .act-head .no { background: var(--act); } section.acts h2 { color: var(--act); }
-  section.beats .act-head .no { background: var(--wait); } section.beats h2 { color: var(--wait); }
 
   /* Fixer pointer — the one-line hand-off to The Fixer Report (no #fixme section on this page) */
   .fixnote { display: flex; align-items: baseline; gap: .6rem; margin-top: 1.1rem; font: 600 .85rem/1.4 var(--sans); color: var(--mute); }
@@ -104,7 +110,12 @@
   .fixnote a { color: var(--hot); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--hot) 35%, transparent); }
   .fixnote a:hover { border-bottom-color: var(--hot); }
 
-  /* Rows */
+  /* Owner cross-offs (static, published) — a closed ACT II row */
+  section.acts .row.closed{opacity:.55}
+  section.acts .row.closed .head h3{text-decoration:line-through;text-decoration-thickness:1.5px}
+  section.acts .row.closed .outcome{color:#4a7c59;font-size:.85em;font-weight:600;text-decoration:none}
+
+  /* Rows (ACT II) */
   .row { border-top: 1px solid var(--hair); padding: 1.15rem 0 1.25rem; }
   section > .row:last-of-type { border-bottom: 1px solid var(--hair); }
   .row .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; }
@@ -113,15 +124,17 @@
   a.name::after { content: "↗"; font-size: .65em; vertical-align: .35em; margin-left: .35em; color: var(--mute); }
   .plain { font: 700 clamp(1.15rem, 3vw, 1.45rem)/1.2 var(--sans); letter-spacing: -.01em; }
   .ctx { font: 600 .72rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+
+  /* Pills — THREE STATES ONLY: ok (all good) · warn (warning) · hot (urgent) */
   .pill { margin-left: auto; font: 700 .78rem/1 var(--sans); letter-spacing: .02em; padding: .5rem .9rem; border-radius: 999px; white-space: nowrap; }
-  .pill.act  { background: var(--act);  color: var(--paper); }
-  .pill.wait { background: var(--wait-soft); color: var(--wait); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--wait) 25%, transparent); }
+  .pill.ok   { background: var(--done-soft); color: var(--done); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--done) 25%, transparent); }
+  .pill.warn { background: var(--act);  color: var(--paper); }
   .pill.hot  { background: var(--hot);  color: var(--paper); }
-  .pill.done { background: var(--done-soft); color: var(--done); }
+
   .line { margin: .5rem 0 0; font-size: .93rem; color: var(--mute); max-width: 66ch; }
   .line b { color: var(--ink); font-weight: 650; }
 
-  /* Timeline */
+  /* ACT I — merged timeline (one beat per run, with bullets) */
   .tl { border-top: 1px solid var(--hair); }
   .tl .beat { display: grid; grid-template-columns: 68px 24px 1fr; column-gap: .8rem; align-items: start; }
   .tl .t { font: 600 .8rem/1.5 var(--cond); letter-spacing: .04em; font-variant-numeric: tabular-nums; color: var(--mute); text-align: right; padding-top: 1.05rem; white-space: nowrap; }
@@ -129,14 +142,20 @@
   .tl .rail::before { content: ""; position: absolute; top: 0; bottom: 0; width: 2px; left: 50%; transform: translateX(-50%); background: linear-gradient(180deg, var(--brand), var(--act)); }
   .tl .beat:first-child .rail::before { top: 1.35rem; }
   .tl .beat:last-child .rail::before { bottom: calc(100% - 1.35rem); }
-  .tl .dot { position: relative; z-index: 1; width: 12px; height: 12px; border-radius: 50%; margin-top: 1.1rem; background: var(--wait); box-shadow: 0 0 0 4px var(--paper); }
-  .tl .dot.ok { background: var(--done); } .tl .dot.warn { background: var(--act); } .tl .dot.hot { background: var(--hot); } .tl .dot.info { background: var(--wait); }
+  .tl .dot { position: relative; z-index: 1; width: 12px; height: 12px; border-radius: 50%; margin-top: 1.1rem; background: var(--done); box-shadow: 0 0 0 4px var(--paper); }
+  .tl .dot.ok { background: var(--done); } .tl .dot.warn { background: var(--act); } .tl .dot.hot { background: var(--hot); }
   .tl .b { padding: 1.05rem 0 1.15rem; border-top: 1px solid var(--hair); }
   .tl .beat:first-child .b { border-top: 0; }
+  .tl .bhead { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1rem; }
   .tl .who { font: 700 1.05rem/1.2 var(--sans); letter-spacing: -.01em; }
-  .tl .cl { font-size: .9rem; color: var(--mute); margin-top: .15rem; max-width: 60ch; }
-  .tl .st { display: inline-block; margin-top: .4rem; font: 700 .68rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
-  .tl .st.ok { color: var(--done); } .tl .st.warn { color: var(--act); } .tl .st.hot { color: var(--hot); } .tl .st.info { color: var(--wait); }
+  a.who { color: var(--ink); text-decoration: none; }
+  a.who:hover, a.who:focus-visible { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; outline: none; }
+  a.who::after { content: "↗"; font-size: .65em; vertical-align: .35em; margin-left: .35em; color: var(--mute); }
+  .tl .cl { font-size: .9rem; color: var(--mute); margin-top: .15rem; max-width: 62ch; }
+  .tl ul.bl { margin: .55rem 0 0; padding-left: 1.15rem; font-size: .9rem; color: var(--mute); max-width: 62ch; }
+  .tl .bl li { margin: .28rem 0; }
+  .tl .bl li::marker { color: var(--hair); }
+  .tl .bl b { color: var(--ink); font-weight: 650; }
   .tl .quiet { grid-column: 1 / -1; text-align: center; font: italic 500 .9rem/1.4 var(--text); color: var(--mute); padding: .9rem 0 1rem; }
 
   /* Chips */
@@ -151,7 +170,7 @@
     .mast, .score, section, footer { animation: rise .55s cubic-bezier(.2,.7,.2,1) both; }
     .score { animation-delay: .08s; }
     section:nth-of-type(1) { animation-delay: .16s; } section:nth-of-type(2) { animation-delay: .24s; }
-    section:nth-of-type(3) { animation-delay: .32s; } footer { animation-delay: .4s; }
+    footer { animation-delay: .32s; }
     @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   }
   @media (max-width: 620px) {
@@ -189,42 +208,54 @@
   <!-- FILL the three score numbers. Amber (act-n) when a count needs attention. -->
   <nav class="score" aria-label="The night at a glance">
     <a href="#log"><span class="n done-n">{{N}}</span><span class="k">Runs completed</span></a>
-    <a href="#log"><span class="n done-n">{{N}}</span><span class="k">Overtime flags</span></a>
+    <a href="#log"><span class="n act-n">{{N}}</span><span class="k">Warnings</span></a>
     <a href="#acts"><span class="n act-n">{{N}}</span><span class="k">Waiting on you</span></a>
-    <!-- NO "Fix these" score cell — Fix items live on The Fixer Report (see the .fixnote after ACT I). -->
+    <!-- NO "Fix these" score cell — Fix items live on The Fixer Report (see the .fixnote after ACT II). -->
   </nav>
 
-  <!-- ══ LOG · timeline (REQUIRED). One .beat per run, chronological (evening → dawn). ══ -->
+  <!-- ══ ACT I · How the night unfolded (REQUIRED) — the merged timeline+ledger.
+       One .beat per run, chronological (evening → dawn). Each beat: persona
+       linked to its Notion report · 3-state pill · bullets of what happened. ══ -->
   <section class="log" id="log">
-    <div class="act-head"><span class="no">LOG</span><h2>How the night unfolded</h2><span class="note">evening close → dawn · times Eastern</span></div>
+    <div class="act-head"><span class="no">ACT I</span><h2>How the night unfolded</h2><span class="note">evening close → dawn · times Eastern</span></div>
     <div class="tl">
 
-      <!-- BEAT pattern — dot + status class = ok | warn | hot | info -->
+      <!-- BEAT pattern — dot + pill state = ok | warn | hot (three states ONLY).
+           Pill label: ok → "All good" · warn/hot → the short reason. -->
       <div class="beat">
         <div class="t">{{H:MM PM}}</div>
         <div class="rail"><div class="dot ok"></div></div>
-        <div class="b"><div class="who">{{Persona}}</div><div class="cl">{{short plain-English clause}}</div><span class="st ok">{{0 flags}}</span></div>
+        <div class="b">
+          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="{{notion report url}}">{{Persona}}</a><span class="ctx">{{run · context}}</span><span class="pill ok">All good</span></div>
+          <ul class="bl">
+            <li>{{What the agent did — one concrete fact per bullet. Bold key facts/amounts with <b>…</b>.}}</li>
+            <li>{{Second fact — flags raised, items queued, anything the reader must know.}}</li>
+          </ul>
+        </div>
       </div>
 
       <!-- QUIET-GAP row (optional): collapse long silent stretches, no dot -->
       <div class="beat"><div class="quiet">a quiet night — nothing stirred for {{N h NN m}}</div></div>
 
-      <!-- MISSING report still gets a beat: dot hot + "no report" -->
+      <!-- MISSING report still gets a beat: dot hot + pill hot "no report" -->
       <!-- <div class="beat"><div class="t">—</div><div class="rail"><div class="dot hot"></div></div>
-           <div class="b"><div class="who">The Doorman</div><div class="cl">No report filed as of {{time}}.</div><span class="st hot">no report</span></div></div> -->
+           <div class="b"><div class="bhead"><span class="who">The Doorman</span><span class="pill hot">no report</span></div>
+           <ul class="bl"><li>No report filed as of {{time}}.</li></ul></div></div> -->
+
+      <!-- DOORMAN beat may carry renter chips (solid = today, dashed = tomorrow). Codes NEVER on the page. -->
 
     </div>
   </section>
 
-  <!-- ══ ACT I · Waiting on you — human-action items. Lead with $ amount when there is one. ══ -->
+  <!-- ══ ACT II · Waiting on you — human-action items. Lead with $ amount when there is one. ══ -->
   <section class="acts" id="acts">
-    <div class="act-head"><span class="no">ACT I</span><h2>Waiting on you</h2><span class="note">{{sub-note}}</span></div>
+    <div class="act-head"><span class="no">ACT II</span><h2>Waiting on you</h2><span class="note">{{sub-note}}</span></div>
 
     <div class="row">
       <div class="head">
         <a class="name" target="_blank" rel="noopener" href="{{notion url}}">{{First L.}}</a>
         <span class="ctx">{{Studio · date · context}}</span>
-        <span class="pill act">{{the next step}}</span>
+        <span class="pill warn">{{the next step}}</span>
       </div>
       <p class="line">{{One-sentence plain-English explanation. Bold the key fact with <b>…</b>.}}</p>
     </div>
@@ -232,37 +263,6 @@
     <!-- FIXER POINTER (render ONLY when there are ≥1 open Actions For = Junyan; omit when zero).
          Agent-mistake items themselves live on The Fixer Report, never on this page. -->
     <div class="fixnote"><span class="tag">FIX</span><span>{{N}} agent {{mistake/mistakes}} for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
-
-  </section>
-
-  <!-- ══ ACT II · The ledger — one .row per overnight run, with a status pill. ══ -->
-  <section class="beats" id="ledger">
-    <div class="act-head"><span class="no">ACT II</span><h2>The ledger</h2><span class="note">one line per overnight run</span></div>
-
-    <div class="row">
-      <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="{{notion url}}">{{Persona}}</a>
-        <span class="ctx">{{run · context}}</span>
-        <span class="pill done">{{0 flags}}</span>
-      </div>
-      <p class="line">{{One-sentence takeaway. Bold the outcome with <b>…</b>.}}</p>
-    </div>
-
-    <!-- DOORMAN row: use <span class="plain"> instead of a name link when there is no report to link,
-         and render renters as chips (solid = today, dashed = tomorrow). Codes NEVER on the page. -->
-    <div class="row">
-      <div class="head">
-        <span class="plain">The Doorman</span>
-        <span class="ctx">local run · own schedule</span>
-        <span class="pill act">{{status}}</span>
-      </div>
-      <p class="line">{{takeaway}}</p>
-      <div class="chips">
-        <span class="chip">{{Today R.}}</span>
-        <span class="chip tmw">{{Tomorrow R.}}</span>
-      </div>
-      <div class="chip-key">solid = today ({{Mon DD}}) · dashed = tomorrow ({{Mon DD}})</div>
-    </div>
 
   </section>
 
