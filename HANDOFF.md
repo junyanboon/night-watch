@@ -1,52 +1,85 @@
 # Night Watch — session handoff
 
-How to run the **Dance Annex Night Watch publisher** from a fresh session. This doc is the operator's guide; `DESIGN.md` is the design contract and `template.html` is the page to clone.
+How to run the Dance Annex Night Watch publisher. `DESIGN.md` is the product contract and `template.html` is the page to clone.
 
 ## What the job is
-Once each morning (~08:40 ET, unattended, in the cloud) compile the pre-dawn autonomous run reports into ONE self-contained HTML dashboard and publish it to a public GitHub Pages site. You are a **READ-ONLY digest**: never mark reports Reviewed, never modify queue rows, never message customers. No customer-facing sends.
 
-## Where everything lives
-- **GitHub repo:** `junyanboon/night-watch` (login `junyanboon`).
-- **Public URL:** https://junyanboon.github.io/night-watch/ (served automatically from `index.html`; same URL every day).
-- **`index.html`** — the published page; overwritten each morning. Optionally copy the outgoing edition into `archive/<date>.html`.
-- **`template.html`** — CLONE this and fill only its `{{...}}` slots; keep style/script/classes byte-for-byte.
-- **`DESIGN.md`** — the full design + content contract.
-- **Notion Workflow Reports DB** — data source `collection://469a877b-83fa-4387-ac97-94aa656481dd` (under "Source Pages (Dance Annex)").
-- **Money Request Queue / Actions to Perform DB** — `https://app.notion.com/p/760a2e655c694b6fbd4a2b185ece0973` (data source `collection://20df225d-382f-4bb8-9c15-c31571c9f4e0`).
-- **Slack DM target:** Junyan, user `U0AR42HAEB0`.
+Once each morning at approximately 08:40 Toronto, publish a self-contained **exception console**. The Concierge’s first morning pass owns all verification, ticket work, safe fixes, and reconciliation. Night Watch runs afterward and displays only the remaining human-only gates.
 
-## Tools
-- **Notion (read):** `notion-fetch`, `notion-query-data-sources`. Read-only.
-- **Publish to GitHub:** see the publish step. **Working write path = the GitHub MCP connector** (now write-enabled): read the current file to capture its SHA, then create/update file contents on the default branch. `git` (installed, reaches the repo through `$HTTPS_PROXY`) is the equivalent CLI path when a Contents:write token is present — either works. **Zapier is retired for this job — do not use it.**
-- **Slack:** `slack_send_message` (self-DM only).
+The publisher is read-only: never update a ticket or Action row, never send a customer message, never settle money, and never change configuration. It also never converts unprocessed Concierge work into an Ops Lead task.
+
+## Sources
+
+- GitHub repo: `junyanboon/night-watch`
+- Public URL: https://junyanboon.github.io/night-watch/
+- `template.html`: visual and structural source of truth
+- `DESIGN.md`: exception qualification and content contract
+- `ACCEPTANCE.md`: July 26 regression fixture and expected ownership
+- Workflow Reports data source
+- Actions to Perform data source
+- Message Queue: read only when a residual action is a human-reviewed outbound
+- Fixer Report: https://junyanboon.github.io/fixer-report/
+- Configured Junyan self-DM target
 
 ## Daily procedure
-1. **Gather (Notion, today = America/Toronto).** Fetch in full each report created since ~22:00 ET yesterday: `Fixer Report — <today>` (the Custodian's 02:35 night pass — full-day QA + day-in-review; the source of the "Fix these — you" items), `Morning Shift — <today>` (Opener), `The Host — <today>`, `The Doorman — <today>` (alarm + access pre-flight), `Overtime — <yesterday>` (Timekeeper), `Issues Report — <today>` and `— <tomorrow>` (Analyst). Also scan the Money Request Queue for overnight alert/Action rows and any held/Pending-Review rows named in the Opener's "For You". **A MISSING report is itself a finding** — mark it clearly (persona, "no report as of <time>"); never invent content. Re-fetch on stale cache.
-   Also count the open **`For = Junyan`** Actions (`Type = Review`, `Raised by = The Custodian`) — but ONLY for the `.fixnote` pointer count. **The items themselves render on The Fixer Report (https://junyanboon.github.io/fixer-report/), never here** (2026-07-21). Zero rows = omit the pointer.
-2. **Build the page.** CLONE `template.html`; fill only the `{{...}}` slots (masthead time + verdict, the three score numbers, the beats/rows in the TWO sections — restructured 2026-07-23, owner directive: ACT I `How the night unfolded` = the merged timeline+ledger, one beat per run with the persona linked to its report, a 3-state pill (`ok` "All good" / `warn` / `hot` — the ONLY pill classes), and bullets of what that agent did; ACT II `Waiting on you` = `For = Ops Lead`. No separate ledger section.). **No FIX section or score cell ever** — when ≥1 open `For = Junyan` row exists, fill the one-line `.fixnote` pointer after ACT I (count + link to The Fixer Report); omit it at zero. The local ✓ check-off feature was removed 2026-07-23 (owner request) — do not re-add it; completed items are closed in Notion, and the page may carry static struck-through rows when the owner crosses items off mid-day. Follow `DESIGN.md`. Non-negotiables:
-   - `<head>` includes `<meta name="robots" content="noindex, nofollow">`; self-contained (inline CSS/JS, no external requests).
-   - **REDACTION:** first name + last initial for renters; NEVER an alarm/door/entry code, phone, email, or full address. The Notion links carry the detail.
-   - **Keep the timeline** (`LOG · How the night unfolded`) directly under the score band.
-   - **LINKS OPEN IN A NEW TAB.** Every external link must have `target="_blank" rel="noopener"`. Keep the runtime safety snippet from `DESIGN.md` as a backstop.
-3. **Publish to GitHub (GitHub MCP connector — no Zapier).**
-   - **Working path — GitHub MCP.** (a) Confirm the repo/login (`junyanboon/night-watch`). (b) Read the current file contents for repo `night-watch`, path `index.html`, default branch → capture the file **SHA**. (c) Create/update file contents → same repo/path/branch, `content` = the full HTML, message = `Night Watch <today>`, `sha` = the captured SHA (omit on a first-ever publish). Pages redeploys automatically.
-   - **git alternative (no inline HTML, easy archiving).** The env has `git` + proxy `$HTTPS_PROXY`; with a **Contents: write** token (e.g. `$GITHUB_TOKEN`):
-     ```bash
-     git -c http.proxy="$HTTPS_PROXY" clone "https://x-access-token:${GITHUB_TOKEN}@github.com/junyanboon/night-watch" nw
-     cd nw && git config http.proxy "$HTTPS_PROXY"
-     git config user.name junyanboon && git config user.email junyan.boon@gmail.com
-     # write index.html (and optionally cp the previous edition to archive/<date>.html)
-     git add -A && git commit -m "Night Watch <today>"
-     git -c http.proxy="$HTTPS_PROXY" push
-     ```
-4. **Confirm.** One short Slack DM to `U0AR42HAEB0`: `Night Watch published for <date> — <verdict one-liner>, <N> items need you. https://junyanboon.github.io/night-watch/`
 
-## Gotchas
-- **The GitHub file-write tool replaces the whole file** — no patch/append. Send the complete HTML in `content`. Always pass the current **SHA** so a concurrent edit fails loudly instead of clobbering. (The git path avoids the inline-HTML escaping entirely.)
-- **Reading file contents** typically returns base64 `content`; the SHA you need for the write is the file blob's `sha`.
-- **git push works** with a Contents:write token over `$HTTPS_PROXY`; use the GitHub MCP connector otherwise. Either way, **no Zapier**.
-- If no GitHub write path is available or the repo is missing: don't retry endlessly — Slack-DM Junyan exactly what's missing and stop.
-- **The scheduled trigger prompt** (what launches this run each morning) lives in the Claude Code **web** automation UI — it is NOT a file and NOT editable from inside a run. It should instruct: *"Read HANDOFF.md + DESIGN.md + template.html from the repo and follow them; clone template.html and fill its `{{...}}` slots; do not use the old indigo/serif theme."* If a run ever produces the wrong look, that prompt is the thing to fix.
+### 1. Verify the Concierge handoff
 
-## Constraints
-Notion is read-only. No customer-facing sends. Stay within Notion read tools, Write/Read/Edit + git, the GitHub MCP connector, and the single Slack self-DM.
+Fetch today’s `The Concierge — Rolling Daily YYYY-MM-DD` report in full. Require a fresh exact marker:
+
+`NW-HANDOFF-V1 checked=<N> completed=<N> parked=<N> needs_ops=<N> system_exceptions=<N>`
+
+Re-fetch if the Notion response is stale.
+
+- Fresh marker, zero system exceptions: continue.
+- Missing, stale, malformed, internally inconsistent marker, unknown residual class, or any system exception: render one hot **Concierge handoff incomplete** system row and carry its evidence. Do not list every raw overnight report item as work for the Ops Lead.
+
+### 2. Re-read the residual human queue
+
+Read only the Action URLs named on `RESIDUAL` lines beneath the marker. For every candidate, fetch the complete row and linked ticket. Include it only when its present state is still open, the requested outcome remains unmet, and its class is one of `money`, `physical`, `access-config`, `policy`, or `message-review`.
+
+JOB 34's classification is canonical. The publisher does not search the whole Ops Lead queue or independently reroute work; it verifies the named residuals against fresh source state. A pending row alone is insufficient: exclude machine-readable work already completed, Concierge-owned admin/ticket work, future artist-facing time gates, duplicates, obsolete rows, and policy-excluded noise. Live verification and fact-driven advancement are never deferred by `Revisit After`.
+
+Open `For = Junyan`, `Type = Review`, `Raised by = The Custodian` rows contribute only to the Fixer Report pointer count.
+
+### 3. Build the page
+
+Clone `template.html` and fill the content slots:
+
+- masthead date/time and honest verdict;
+- score counts as `checked`, `completed + parked`, and the freshly verified residual count;
+- ACT I human-only rows, or the all-clear card at zero;
+- ACT II compact automatic audit from JOB 34;
+- optional system exception and Fixer pointer.
+
+Keep the established design. Never add worksheet controls or a chat handoff.
+
+### 4. Validate
+
+Before publishing, check:
+
+- exactly three score cells;
+- `Needs you` count equals the rendered human-action rows;
+- a zero count renders the all-clear card;
+- missing handoff never renders all clear;
+- every displayed action links to its live Notion row;
+- no codes, phone numbers, emails, or full addresses;
+- renter names are first name + last initial;
+- all external links open in a new tab;
+- HTML contains no unresolved `{{...}}` placeholders.
+
+### 5. Publish and confirm
+
+Read the current `index.html` SHA, replace the full file on the default branch, and use commit message `Night Watch <YYYY-MM-DD> — exception console`. GitHub Pages redeploys automatically.
+
+Then send one Slack self-DM:
+
+`Night Watch published for <date> — <all clear | N items need you | Concierge handoff incomplete>. https://junyanboon.github.io/night-watch/`
+
+## Trigger boundary
+
+The scheduled publisher trigger lives outside this repo. Its prompt should say:
+
+> Read HANDOFF.md, DESIGN.md, and template.html from `junyanboon/night-watch`. Verify the fresh Concierge JOB 34 `NW-HANDOFF-V1` marker first. Publish only its freshly verified `RESIDUAL` Actions; raw overnight findings are Concierge work, not Ops Lead work.
+
+Changing, enabling, or disabling the trigger remains a human-controlled configuration action.

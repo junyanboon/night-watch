@@ -1,44 +1,83 @@
-# The Night Watch — design contract
+# The Night Watch — exception-console design contract
 
-**How to build the page each morning: CLONE [`template.html`](./template.html) and fill only its `{{...}}` content slots** — keep the `<style>`, `<script>`, palette, fonts, and layout classes byte-for-byte. `template.html` carries the full skeleton plus inline instructions and reference rows; `index.html` is the current published edition (also a valid reference). Do NOT revert to the old dark-indigo "pre-dawn" theme. This doc explains the contract; the template enforces it.
+The Night Watch is the **post-Concierge exception display**, not a worksheet and not an operations queue. Each morning the Concierge first processes the overnight findings through its JOB 34 handoff. The publisher then clones [`template.html`](./template.html) and shows only what remains genuinely human-only.
+
+`template.html` is the visual source of truth. Fill its `{{...}}` content slots; preserve the style system, layout classes, redaction rules, and scripts.
+
+[`ACCEPTANCE.md`](./ACCEPTANCE.md) is the regression fixture for the July 26 cases. Any future change that makes those cases reappear as worksheet decisions violates this contract.
+
+## Product contract
+
+The Ops Lead should see one of two outcomes:
+
+1. **All clear** — the Concierge verified and completed every overnight finding; or
+2. **Needs you** — a short list containing only actions that require human authority or hands.
+
+The page never asks the Ops Lead to verify reports, classify work, update statuses, copy a handoff into chat, or confirm that an already-observable result happened. Those are Concierge responsibilities.
+
+## Required morning handshake
+
+Before rendering, fetch the current `The Concierge — Rolling Daily YYYY-MM-DD` report and find a fresh line matching:
+
+`NW-HANDOFF-V1 checked=<N> completed=<N> parked=<N> needs_ops=<N> system_exceptions=<N>`
+
+- A fresh marker proves the Concierge consumed the overnight reports.
+- The Concierge lists every human-only candidate directly below it as `RESIDUAL class=<money|physical|access-config|policy|message-review> action=<Notion URL>`. That classification is canonical; the publisher verifies current state without rerouting raw findings.
+- If the marker is missing, stale, malformed, internally inconsistent, names an unknown class, or reports one or more system exceptions, render one hot system exception: **Concierge handoff incomplete**. Do not promote the raw overnight findings into Ops Lead tasks.
+- `Checked overnight` = marker `checked`.
+- `Handled automatically` = marker `completed + parked`.
+- `Needs you` = named residual rows that remain open after the publisher's fresh re-read. It must equal marker `needs_ops`; a mismatch is a system exception.
+
+## What qualifies for “Needs you”
+
+A row may appear only when all of these are true:
+
+1. It is a live, open ✅ Actions to Perform row assigned to `For = Ops Lead` or `For = Owner`.
+2. The Concierge’s fresh handoff re-read the source and left the row open.
+3. The requested outcome is still unmet.
+4. JOB 34 named it with one allowed `RESIDUAL class`: `money`, `physical`, `access-config`, `policy`, or `message-review`.
+
+Never render:
+
+- machine-readable gates that already read true;
+- ticket routing, correspondence capture, documentation, deduplication, or closure work;
+- a future artist-facing `Gate: Time` outbound before its due date (live verification and fact-driven advancement still run every pass);
+- ignored/policy-excluded report noise;
+- a duplicate, cancelled, processed, or superseded Action row;
+- `For = Junyan` defects—the Fixer Report owns those.
+
+## Page structure
+
+- **Masthead:** same warm-paper editorial visual; one honest outcome sentence.
+- **Score band:** `Checked overnight` / `Handled automatically` / `Needs you`.
+- **ACT I — Needs you:** first and prominent. At zero, show one green all-clear card. Otherwise show only the residual human actions, each with a direct Notion link, evidence, and one concrete next step.
+- **ACT II — Automatic audit:** a compact collapsed audit of what the Concierge completed or parked. It exists for trust and debugging, not as a checklist.
+- **System exception:** a red row above human actions when the morning handshake or a required live source failed.
+- **Fixer pointer:** when open `For = Junyan` verifier defects exist, show only the pointer to The Fixer Report.
+
+There are no worksheet controls, status dropdowns, notes fields, selections, checkboxes, or chat handoff button.
+
+## Visual system
+
+Keep the established Day Sheet visual language:
+
+- warm paper `#f5f4f0`, ink `#191715`, muted `#716c64`, hairline `#dedbd3`, brand purple `#5b2fd4`;
+- amber for a normal human action, red for an urgent/system exception, green for verified clear;
+- `Avenir Next Condensed`/`Arial Narrow` masthead and numerals; `Avenir Next`/`Seravek` body;
+- first name + last initial for renters;
+- dark-mode variables and reduced-motion behavior;
+- three pill states only: `ok`, `warn`, `hot`.
 
 ## Hard rules
-- `<head>` MUST include `<meta name="robots" content="noindex, nofollow">`. Public-by-URL, never indexed.
-- Self-contained: inline CSS/JS only, no external requests.
-- **LINKS OPEN IN A NEW TAB.** Every external link (`href` starting `http`) MUST carry `target="_blank" rel="noopener"` so it opens in a new tab, not the current page. Also include the runtime safety snippet in `## Links` below so any anchor is covered even if a per-link `target` was missed.
-- PUBLIC REDACTION: never print alarm/door/entry codes, phone numbers, emails, or full addresses. First name + last initial for renters. The Notion links carry the detail.
-- Read-only digest: never mark reports Reviewed, never modify queue rows, never message customers.
-- Keep the self-refresh script (reloads a visible stale tab every ~10 min).
-- ACT I check-off / tick feature **removed 2026-07-23, owner request — do not re-add**; completed items are closed in Notion, and an edition may use static struck-through rows for owner cross-offs.
 
-## Links
-Every external link opens in a new tab. Put `target="_blank" rel="noopener"` on each anchor, AND keep this runtime safety net in the page (it upgrades any external anchor at load, and leaves in-page `#anchor` links alone):
-```html
-<script>
-  /* Every external link opens in a new tab. */
-  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
-    a.target = "_blank"; a.rel = "noopener";
-  });
-</script>
-```
-
-## Visual system (Day Sheet) — all baked into template.html
-- **Palette:** warm paper `#f5f4f0`, ink `#191715`, mute `#716c64`, hair `#dedbd3`, brand purple `#5b2fd4`. State colors: act `#b06c00` (amber), wait `#51617e` (slate), hot `#c23a2b` (red), done `#2c7a4e` (green), each with a `-soft` tint. Full dark-mode overrides via `prefers-color-scheme`.
-- **Type:** `Avenir Next Condensed`/`Arial Narrow` for the big uppercase masthead, score numerals, and section headers; `Avenir Next` sans for names/pills; `Seravek` for body text. Tabular numerals.
-- **Masthead:** small-caps kicker + hairline, giant uppercase `THE NIGHT WATCH` wordmark (second word in brand purple), one-sentence honest verdict line.
-- **Score band:** big colored tabular numerals — Runs completed / Warnings / Waiting on you (always exactly 3 cells; amber `act-n` when a count needs attention). **No "Fix these" cell** — Fix items live on The Fixer Report (2026-07-21).
-- **Sections (restructured 2026-07-23, owner directive)** use `ACT I / ACT II` colored number badges + condensed uppercase `<h2>` + right-aligned note. TWO sections only: **ACT I `How the night unfolded`** (the merged timeline+ledger) and **ACT II `Waiting on you`** (hairline `.row`s: `name↗` link · uppercase `.ctx` context · one `.pill` · one `.line` summary).
-- **State-color vocabulary — THREE STATES ONLY (owner directive 2026-07-23)** for dots AND pills alike: `ok`=green "All good" (clean/pass) · `warn`=amber warning (needs attention/flags/held) · `hot`=red urgent (missing report/time pressure/emergency). No other pill classes; the old act/wait/done/info pills are retired.
-
-## Keep the timeline — ACT I is the merged timeline+ledger (2026-07-23)
-The **`ACT I · How the night unfolded`** section is required and sits directly under the score band. It MERGES the former LOG timeline and ACT II ledger into one component: right-aligned mono time · a dot centred on a continuous 2px vertical rail carrying a brand→amber gradient (night at top → morning at bottom) · the persona **linked to its Notion report** (`a.who`) · uppercase `.ctx` context · a right-aligned **3-state pill** (`ok` "All good" / `warn` / `hot`) · and a **bullet list (`ul.bl`)** of what that agent concretely did and found — counts, amounts, flags, filings. The reader must be able to understand each agent's night from the bullets alone. One `.beat` per run in chronological order (evening close → dawn). A missing report gets a hot dot + pill `no report`. Long quiet stretches collapse into a dot-less italic `.quiet` gap row (e.g. "a quiet night — nothing stirred for 6 h 37 m"). The Doorman beat may carry renter chips (solid = today, dashed = tomorrow); codes never on the page. There is NO separate ledger section anymore.
-
-## Content contract
-- Gather the pre-dawn reports (Custodian **`Fixer Report — <date>`**, Opener, Host, Doorman, Timekeeper, Analyst) + overnight Money Request Queue rows. The Fixer Report is the Custodian's 02:35 night pass — it carries the full-day QA + day-in-review and is the source of the "Fix these — you" (`For = Junyan`) items. A MISSING report is itself a finding — mark it clearly (persona, "no report as of <time>"), never invent content.
-- **Waiting on you** (ACT II) = the **Ops-lead** staff-gate items — open Actions `For = Ops Lead` (held nudges, decisions, access, premises). Lead with the amount when there is one; say plainly when no money moved. Pills here use the same three states (`warn` for a normal next step, `hot` for genuine urgency).
-- **Fix these — you (MOVED, 2026-07-21):** agent mistakes only **Junyan** can correct (open Actions `For = Junyan`, `Type = Review`, `Raised by = The Custodian`) belong to **The Fixer Report** (https://junyanboon.github.io/fixer-report/) — the Night Watch never renders a `#fixme` section or score cell. The audiences differ: the Night Watch briefs the Ops lead (staff gates only); the Fixer Report briefs Junyan (agent corrections). On the Night Watch, when ≥1 such row is open, render only the one-line `.fixnote` pointer after ACT II (`FIX · N agent mistakes for Junyan → The Fixer Report ↗`); omit it entirely at zero.
-- **The ledger (RETIRED 2026-07-23, owner directive):** the separate per-run ledger section is gone — its content (per-agent outcomes, counts, the Doorman chips) now lives in ACT I's bullets.
-- Title `Dance Annex — The Night Watch`. Footer: sources + "the daytime desk reports separately."
+- `<meta name="robots" content="noindex,nofollow">`.
+- Self-contained HTML: inline CSS/JS only, except the existing local favicon.
+- External links always use `target="_blank" rel="noopener"`; retain the runtime safety script.
+- Never publish an alarm/door/entry code, phone, email, or full address.
+- The page is read-only. It never mutates Notion, sends messages, settles money, changes access/configuration, or triggers a workflow.
+- Missing data is a system exception, never an “all clear.”
+- The publisher sends Junyan one short summary only after publication.
 
 ## Publish
-GitHub MCP connector (no Zapier): read `index.html` for the SHA → create/update file contents (repo `night-watch`, path `index.html`, message `Night Watch <date>`, sha). `git` push with a Contents:write token is the equivalent CLI path. Then Slack self-DM to Junyan (U0AR42HAEB0). See `HANDOFF.md` for the full operator guide.
+
+Use the GitHub contents write path or a normal git commit/push to replace `index.html`. The scheduled publisher remains read-only; the production work happens in the Concierge before this page is built.

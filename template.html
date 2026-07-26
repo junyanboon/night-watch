@@ -1,37 +1,29 @@
 <!doctype html>
 <!--
   ═════════════════════════════════════════════════════════════════════════════
-  THE NIGHT WATCH — CLONE TEMPLATE  (Day Sheet editorial system)
+  THE NIGHT WATCH — EXCEPTION CONSOLE TEMPLATE
   ═════════════════════════════════════════════════════════════════════════════
-  Each morning the Night Watch publisher CLONES this file and fills ONLY the
-  content slots below. Rules:
+  The Concierge completes the overnight handoff before this page is published.
+  The publisher CLONES this file and fills ONLY the content slots below. Rules:
 
   1. CONTENT-ONLY EDITS. Keep the <style> block, <script>, palette, fonts, and
      every layout class EXACTLY as-is. You edit: the kicker time, the verdict
-     sentence, the three score numbers, and the rows inside each of the two
-     sections. Do not restyle.
-  2. STRUCTURE (fixed, since 2026-07-23 — owner directive), TWO sections:
-       ACT I  (#log)  = "How the night unfolded" — the merged timeline+ledger.
-                        One .beat per overnight run, chronological (evening →
-                        dawn). Each beat: time · dot · persona (linked to its
-                        Notion report) · a 3-state pill · BULLETS (ul.bl) that
-                        say concretely what that agent did/found. The former
-                        separate "ledger" section is gone — its content lives
-                        in the bullets here.
-       ACT II (#acts) = "Waiting on you" — Ops-lead staff-gate items
-                        (Actions For = Ops Lead).
-     NO FIX SECTION (2026-07-21): "Fix these — you" (Actions For = Junyan)
-     lives ONLY on The Fixer Report (junyanboon.github.io/fixer-report/).
-     When ≥1 open For = Junyan row exists, render the .fixnote pointer line
-     after ACT II (count + link); when zero, omit the pointer entirely.
-  3. REDACTION (public site): first name + last initial for renters; NEVER an
+     sentence, the three score numbers, and the rows inside each section.
+  2. VERIFY THE HANDSHAKE FIRST. Require today's fresh Concierge marker:
+       NW-HANDOFF-V1 checked=N completed=N parked=N needs_ops=N
+       system_exceptions=N
+     Missing/stale marker or system exceptions > 0 renders the hot system row.
+     Never relabel raw overnight findings as Ops Lead work.
+  3. STRUCTURE — two sections:
+       ACT I  (#acts) = "Needs you" — only residual human-only Actions.
+                        At zero, render the green all-clear card.
+       ACT II (#audit)= "Automatic audit" — a compact collapsed record of
+                        what JOB 34 completed or parked for later Concierge work.
+     For = Junyan defects stay on The Fixer Report; render only its pointer.
+  4. REDACTION (public site): first name + last initial for renters; NEVER an
      alarm/door code, phone, email, or full address. Codes live only in Notion.
-  4. A MISSING report is a finding: give it a beat with a hot dot + "no report",
-     honest to <time>. Never invent content.
-  5. Keep the <meta robots noindex>, the self-refresh <script>, and the title.
-  6. The local ✓ check-off feature was removed 2026-07-23 (owner request) — do
-     not re-add it; completed items are closed in Notion, and the page may carry
-     static struck-through rows when the owner crosses items off mid-day.
+  5. Keep the <meta robots noindex>, self-refresh, external-link safety, title.
+  6. No worksheet controls, notes, checkboxes, selections, or chat handoff.
 
   CLASS VOCABULARY — THREE STATES ONLY (owner directive 2026-07-23)
     Dots AND pills use exactly three states:
@@ -39,7 +31,7 @@
       warn = amber  warning     (needs attention / flags raised / held items)
       hot  = red    urgent      (missing report / real time pressure / emergency)
     Pills: <span class="pill ok|warn|hot">label</span> — no other pill classes.
-    Beat, quiet-gap, bullets, chips, and ACT II row examples are shown inline
+    Human-action, all-clear, system-exception, and audit examples are inline
     below as REFERENCE — copy the pattern, swap the text.
   ═════════════════════════════════════════════════════════════════════════════
 -->
@@ -115,7 +107,24 @@
   section.acts .row.closed .head h3{text-decoration:line-through;text-decoration-thickness:1.5px}
   section.acts .row.closed .outcome{color:#4a7c59;font-size:.85em;font-weight:600;text-decoration:none}
 
-  /* Rows (ACT II) */
+  /* Exception-console states */
+  .clear-card, .system-card { margin-top: .8rem; padding: 1.2rem 1.25rem; border-radius: 7px; }
+  .clear-card { background: var(--done-soft); border: 1px solid color-mix(in srgb, var(--done) 28%, transparent); }
+  .system-card { background: var(--hot-soft); border: 1px solid color-mix(in srgb, var(--hot) 30%, transparent); }
+  .clear-card h3, .system-card h3 { margin: 0; font: 750 1.15rem/1.2 var(--sans); }
+  .clear-card h3 { color: var(--done); }
+  .system-card h3 { color: var(--hot); }
+  .clear-card p, .system-card p { margin: .45rem 0 0; color: var(--mute); max-width: 66ch; font-size: .93rem; }
+
+  details.audit { border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+  details.audit > summary { cursor: pointer; list-style: none; padding: 1rem 0; display: flex; align-items: baseline; gap: .8rem; color: var(--mute); }
+  details.audit > summary::-webkit-details-marker { display: none; }
+  details.audit > summary::before { content: "+"; color: var(--brand); font: 800 1.2rem/1 var(--cond); }
+  details.audit[open] > summary::before { content: "−"; }
+  details.audit > summary b { color: var(--ink); }
+  details.audit .tl { margin-bottom: .5rem; }
+
+  /* Rows (ACT I human actions) */
   .row { border-top: 1px solid var(--hair); padding: 1.15rem 0 1.25rem; }
   section > .row:last-of-type { border-bottom: 1px solid var(--hair); }
   .row .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; }
@@ -134,7 +143,7 @@
   .line { margin: .5rem 0 0; font-size: .93rem; color: var(--mute); max-width: 66ch; }
   .line b { color: var(--ink); font-weight: 650; }
 
-  /* ACT I — merged timeline (one beat per run, with bullets) */
+  /* ACT II — compact automatic audit */
   .tl { border-top: 1px solid var(--hair); }
   .tl .beat { display: grid; grid-template-columns: 68px 24px 1fr; column-gap: .8rem; align-items: start; }
   .tl .t { font: 600 .8rem/1.5 var(--cond); letter-spacing: .04em; font-variant-numeric: tabular-nums; color: var(--mute); text-align: right; padding-top: 1.05rem; white-space: nowrap; }
@@ -205,72 +214,68 @@
     <p class="date">{{One-sentence verdict, honest to the data. Wrap the key phrase in <b style="color:var(--ink)">…</b>.}}</p>
   </header>
 
-  <!-- FILL the three score numbers. Amber (act-n) when a count needs attention. -->
-  <nav class="score" aria-label="The night at a glance">
-    <a href="#log"><span class="n done-n">{{N}}</span><span class="k">Runs completed</span></a>
-    <a href="#log"><span class="n act-n">{{N}}</span><span class="k">Warnings</span></a>
-    <a href="#acts"><span class="n act-n">{{N}}</span><span class="k">Waiting on you</span></a>
-    <!-- NO "Fix these" score cell — Fix items live on The Fixer Report (see the .fixnote after ACT II). -->
+  <!-- Counts come from the fresh Concierge marker + residual Action-row re-read. -->
+  <nav class="score" aria-label="The morning handoff at a glance">
+    <a href="#audit"><span class="n done-n">{{N}}</span><span class="k">Checked overnight</span></a>
+    <a href="#audit"><span class="n done-n">{{N}}</span><span class="k">Handled automatically</span></a>
+    <a href="#acts"><span class="n act-n">{{N}}</span><span class="k">Needs you</span></a>
   </nav>
 
-  <!-- ══ ACT I · How the night unfolded (REQUIRED) — the merged timeline+ledger.
-       One .beat per run, chronological (evening → dawn). Each beat: persona
-       linked to its Notion report · 3-state pill · bullets of what happened. ══ -->
-  <section class="log" id="log">
-    <div class="act-head"><span class="no">ACT I</span><h2>How the night unfolded</h2><span class="note">evening close → dawn · times Eastern</span></div>
-    <div class="tl">
+  <!-- ══ ACT I · Needs you — residual human-only exceptions. ══ -->
+  <section class="acts" id="acts">
+    <div class="act-head"><span class="no">ACT I</span><h2>Needs you</h2><span class="note">{{human-only sub-note}}</span></div>
 
-      <!-- BEAT pattern — dot + pill state = ok | warn | hot (three states ONLY).
-           Pill label: ok → "All good" · warn/hot → the short reason. -->
-      <div class="beat">
-        <div class="t">{{H:MM PM}}</div>
-        <div class="rail"><div class="dot ok"></div></div>
-        <div class="b">
-          <div class="bhead"><a class="who" target="_blank" rel="noopener" href="{{notion report url}}">{{Persona}}</a><span class="ctx">{{run · context}}</span><span class="pill ok">All good</span></div>
-          <ul class="bl">
-            <li>{{What the agent did — one concrete fact per bullet. Bold key facts/amounts with <b>…</b>.}}</li>
-            <li>{{Second fact — flags raised, items queued, anything the reader must know.}}</li>
-          </ul>
-        </div>
-      </div>
+    {{SYSTEM_EXCEPTION_OR_EMPTY}}
+    {{ALL_CLEAR_OR_HUMAN_ACTION_ROWS}}
 
-      <!-- QUIET-GAP row (optional): collapse long silent stretches, no dot -->
-      <div class="beat"><div class="quiet">a quiet night — nothing stirred for {{N h NN m}}</div></div>
+    <!-- REFERENCE PATTERNS — copy into the slots above; never render all states.
+      SYSTEM:
+      <div class="system-card"><h3>Concierge handoff incomplete</h3>
+        <p>What failed, when last checked, and where the system retries. Never list raw findings as human work.</p></div>
+      ALL CLEAR:
+      <div class="clear-card"><h3>All clear</h3>
+        <p>The Concierge verified the overnight findings and nothing requires the Ops Lead.</p></div>
+      HUMAN ACTION (repeat only for DESIGN.md-qualified residuals):
+      <div class="row"><div class="head">
+        <a class="name" target="_blank" rel="noopener" href="NOTION_URL">First L.</a>
+        <span class="ctx">Studio · date · context</span>
+        <span class="pill warn">one human action</span></div>
+        <p class="line">Evidence + the exact one-click or physical action; state what the Concierge verified.</p></div>
+    -->
 
-      <!-- MISSING report still gets a beat: dot hot + pill hot "no report" -->
-      <!-- <div class="beat"><div class="t">—</div><div class="rail"><div class="dot hot"></div></div>
-           <div class="b"><div class="bhead"><span class="who">The Doorman</span><span class="pill hot">no report</span></div>
-           <ul class="bl"><li>No report filed as of {{time}}.</li></ul></div></div> -->
-
-      <!-- DOORMAN beat may carry renter chips (solid = today, dashed = tomorrow). Codes NEVER on the page. -->
-
-    </div>
+    <!-- Render only when ≥1 open For = Junyan verifier defect exists. -->
+    <div class="fixnote"><span class="tag">FIX</span><span>{{N}} agent {{mistake/mistakes}} for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
   </section>
 
-  <!-- ══ ACT II · Waiting on you — human-action items. Lead with $ amount when there is one. ══ -->
-  <section class="acts" id="acts">
-    <div class="act-head"><span class="no">ACT II</span><h2>Waiting on you</h2><span class="note">{{sub-note}}</span></div>
+  <!-- ══ ACT II · Automatic audit — trust/debug history, never a checklist. ══ -->
+  <section class="log" id="audit">
+    <div class="act-head"><span class="no">ACT II</span><h2>Automatic audit</h2><span class="note">Concierge JOB 34 · verified before publish</span></div>
+    {{AUTOMATIC_AUDIT}}
 
-    <div class="row">
-      <div class="head">
-        <a class="name" target="_blank" rel="noopener" href="{{notion url}}">{{First L.}}</a>
-        <span class="ctx">{{Studio · date · context}}</span>
-        <span class="pill warn">{{the next step}}</span>
-      </div>
-      <p class="line">{{One-sentence plain-English explanation. Bold the key fact with <b>…</b>.}}</p>
-    </div>
-
-    <!-- FIXER POINTER (render ONLY when there are ≥1 open Actions For = Junyan; omit when zero).
-         Agent-mistake items themselves live on The Fixer Report, never on this page. -->
-    <div class="fixnote"><span class="tag">FIX</span><span>{{N}} agent {{mistake/mistakes}} for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
-
+    <!-- REFERENCE PATTERN — fill AUTOMATIC_AUDIT with one collapsed details block:
+      <details class="audit"><summary><b>N findings handled or safely parked</b><span>show audit</span></summary>
+        <div class="tl"><div class="beat">
+          <div class="t">H:MM AM</div><div class="rail"><div class="dot ok"></div></div>
+          <div class="b"><div class="bhead">
+            <a class="who" target="_blank" rel="noopener" href="NOTION_SOURCE_URL">Finding</a>
+            <span class="ctx">source · live proof</span><span class="pill ok">completed</span></div>
+            <ul class="bl"><li>What the Concierge verified, changed, re-read, and closed. No Ops Lead instruction.</li></ul>
+          </div></div></div>
+      </details>
+    -->
   </section>
 
   <footer>
-    <span>Sources: Workflow Reports · Money Request Queue · live studio calendars · overnight autonomous runs.</span>
-    <span>Names open the Notion report ↗ · read-only digest · the daytime desk reports separately · codes &amp; contact info live only in Notion.</span>
+    <span>Sources: Concierge overnight handoff · Workflow Reports · Actions to Perform · live verification reads.</span>
+    <span>Exception-only, read-only console · safe work belongs to the Concierge · codes &amp; contact info live only in Notion.</span>
   </footer>
 
 </div>
+<script>
+  /* Every external link opens in a new tab, even if a generated row missed it. */
+  document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    a.target = "_blank"; a.rel = "noopener";
+  });
+</script>
 </body>
 </html>
