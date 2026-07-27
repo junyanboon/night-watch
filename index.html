@@ -208,110 +208,163 @@
 <div class="sheet">
 
   <header class="mast">
-    <!-- FILL kicker time (compiled time) and verdict (ONE honest sentence). -->
-    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Jul 27, 2026 · 3:42 PM</span></div>
+    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Jul 27, 2026 · 5:45 PM</span></div>
     <h1>The Night<em> Watch</em></h1>
-    <p class="date"><b style="color:var(--ink)">Concierge handoff incomplete.</b> Five findings were checked and thirteen were handled or safely parked, but three system exceptions prevent a verified human queue.</p>
+    <p class="date">This page ran nine hours late, and the morning handshake did not pass: the Concierge declared <b style="color:var(--ink)">3 system exceptions and 6 items needing you, but named none of them</b>, so nothing can be listed for you by name here.</p>
   </header>
 
   <!-- Counts come from the fresh Concierge marker + residual Action-row re-read. -->
   <nav class="score" aria-label="The morning handoff at a glance">
     <a href="#audit"><span class="n done-n">5</span><span class="k">Checked overnight</span></a>
     <a href="#audit"><span class="n done-n">13</span><span class="k">Handled automatically</span></a>
-    <a href="#acts"><span class="n act-n">—</span><span class="k">Needs you</span></a>
+    <a href="#acts"><span class="n act-n">6</span><span class="k">Needs you</span></a>
   </nav>
 
   <!-- ══ ACT I · Needs you — residual human-only exceptions. ══ -->
   <section class="acts" id="acts">
-    <div class="act-head"><span class="no">ACT I</span><h2>Needs you</h2><span class="note">human authority or hands only</span></div>
+    <div class="act-head"><span class="no">ACT I</span><h2>Needs you</h2><span class="note">claimed by the marker · not itemised by the Concierge</span></div>
 
     <div class="system-card"><h3>Concierge handoff incomplete</h3>
-        <p>The 8:37 AM Concierge marker is fresh but reports <code>system_exceptions=3</code>. It also declares six Ops Lead residuals without the six required <code>RESIDUAL</code> Action links, so none can be safely re-read or published as human work. Morning Shift, The Doorman, and the July 28 Issues Report were not available as of 3:42 PM.</p></div>
-    
-
-    <!-- REFERENCE PATTERNS — copy into the slots above; never render all states.
-      SYSTEM:
-      <div class="system-card"><h3>Concierge handoff incomplete</h3>
-        <p>What failed, when last checked, and where the system retries. Never list raw findings as human work.</p></div>
-      ALL CLEAR:
-      <div class="clear-card"><h3>All clear</h3>
-        <p>The Concierge verified the overnight findings and nothing requires the Ops Lead.</p></div>
-      HUMAN ACTION (repeat only for DESIGN.md-qualified residuals):
-      <div class="row"><div class="head">
-        <a class="name" target="_blank" rel="noopener" href="NOTION_URL">First L.</a>
-        <span class="ctx">Studio · date · context</span>
-        <span class="pill warn">one human action</span></div>
-        <p class="line">Evidence + the exact one-click or physical action; state what the Concierge verified.</p></div>
-    -->
+      <p>Today's marker on <b style="color:var(--ink)">The Concierge — Rolling Daily 2026-07-27</b> reads <b style="color:var(--ink)">checked=5 completed=5 parked=8 needs_ops=6 system_exceptions=3</b>. Two things fail the contract: it declares three system exceptions, and it carries <b style="color:var(--ink)">no <code>RESIDUAL class=</code> lines</b> beneath it — so the six items it says need you were never named or classified. The publisher will not invent them, and it will not relabel raw overnight findings as your work.</p>
+      <p>Three overnight reports are also absent, which is a finding in its own right: <b style="color:var(--ink)">Morning Shift — 2026-07-27 (The Opener)</b> — no report as of 5:45 PM, and none since Jul 23; <b style="color:var(--ink)">The Doorman — 2026-07-27</b> — no report as of 5:45 PM, which the Concierge itself flagged as "may still be in flight" at 8:15 AM; <b style="color:var(--ink)">Issues Report — 2026-07-28 (The Analyst)</b> — no report as of 5:45 PM, so tomorrow has no pre-flight. Without the Opener's "For You" list and the Doorman's access-window table, the alarm and access pre-flight for tonight and tomorrow is unverified.</p>
+      <p>Where the system retries: the Concierge's next rolling pass regenerates the marker and the Doorman/Opener/Analyst runs re-fire on their own schedules. The named work the Concierge did surface in prose — the bypassed 509B door sensor, the five held booking confirmations, the Anneka K. Peerspace consent gate, the held Himanshi M. explanation, and Chelly L. / David G.'s door confirmations — is live in Notion and is not reproduced here as instructions, because JOB 34 never classified it.</p></div>
 
     <!-- Render only when ≥1 open For = Junyan verifier defect exists. -->
-    <div class="fixnote"><span class="tag">FIX</span><span>8 agent mistakes for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
+    <div class="fixnote"><span class="tag">FIX</span><span>3 agent mistakes for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
   </section>
 
   <!-- ══ ACT II · Automatic audit — trust/debug history, never a checklist. ══ -->
   <section class="log" id="audit">
     <div class="act-head"><span class="no">ACT II</span><h2>Automatic audit</h2><span class="note">Concierge JOB 34 · verified before publish</span></div>
-    <details class="audit"><summary><b>5 findings checked · 5 completed · 8 safely parked</b><span>show audit</span></summary>
-        <div class="tl">
-          <div class="beat">
-            <div class="t">4:05 AM</div><div class="rail"><div class="dot ok"></div></div>
-            <div class="b"><div class="bhead">
-              <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c48163a366c922167c2ad5">The Custodian</a>
-              <span class="ctx">Fixer report · completed</span><span class="pill ok">available</span></div>
-              <ul class="bl"><li>The overnight verifier report was consumed by Concierge JOB 34; open Junyan-only defects remain on the Fixer Report.</li></ul>
-            </div>
-          </div>
-          <div class="beat">
-            <div class="t">7:19 AM</div><div class="rail"><div class="dot ok"></div></div>
-            <div class="b"><div class="bhead">
-              <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c4819aa617ef8528048ad7">The Host</a>
-              <span class="ctx">FBS · board · queues</span><span class="pill ok">consumed</span></div>
-              <ul class="bl"><li>Board preparation and queued-message findings were included in the Concierge ownership pass.</li></ul>
-            </div>
-          </div>
-          <div class="beat">
-            <div class="t">7:30 AM</div><div class="rail"><div class="dot warn"></div></div>
-            <div class="b"><div class="bhead">
-              <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c48126b616ccadaad25fc7">The Timekeeper</a>
-              <span class="ctx">13 booking windows · 1 flag</span><span class="pill warn">consumed</span></div>
-              <ul class="bl"><li>The overtime report and its held follow-ups were consumed; raw findings are not promoted without named residual Action links.</li></ul>
-            </div>
-          </div>
-          <div class="beat">
-            <div class="t">8:37 AM</div><div class="rail"><div class="dot hot"></div></div>
-            <div class="b"><div class="bhead">
-              <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c4816a8439d05d9ac9cc61">The Concierge</a>
-              <span class="ctx">JOB 34 · fresh marker</span><span class="pill hot">incomplete</span></div>
-              <ul class="bl"><li><code>checked=5 completed=5 parked=8 needs_ops=6 system_exceptions=3</code>; required residual Action links were absent.</li></ul>
-            </div>
-          </div>
-          <div class="beat">
-            <div class="t">3:42 PM</div><div class="rail"><div class="dot hot"></div></div>
-            <div class="b"><div class="bhead">
-              <span class="who">Expected reports</span>
-              <span class="ctx">Opener · Doorman · Analyst Jul 28</span><span class="pill hot">no report</span></div>
-              <ul class="bl"><li>No matching report was available at publish time; missing inputs remain system-health findings.</li></ul>
-            </div>
-          </div>
-        </div>
-      </details>
+    <details class="audit"><summary><b>How the night unfolded — 13 handled or parked, 3 reports never arrived</b><span>show audit</span></summary>
+      <div class="tl">
 
-    <!-- REFERENCE PATTERN — fill AUTOMATIC_AUDIT with one collapsed details block:
-      <details class="audit"><summary><b>N findings handled or safely parked</b><span>show audit</span></summary>
-        <div class="tl"><div class="beat">
-          <div class="t">H:MM AM</div><div class="rail"><div class="dot ok"></div></div>
+        <div class="beat">
+          <div class="t">8:13 PM</div><div class="rail"><div class="dot ok"></div></div>
           <div class="b"><div class="bhead">
-            <a class="who" target="_blank" rel="noopener" href="NOTION_SOURCE_URL">Finding</a>
-            <span class="ctx">source · live proof</span><span class="pill ok">completed</span></div>
-            <ul class="bl"><li>What the Concierge verified, changed, re-read, and closed. No Ops Lead instruction.</li></ul>
-          </div></div></div>
-      </details>
-    -->
+            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c4814683bdc64d7a1e61ee">The Planner</a>
+            <span class="ctx">evening close · Jul 26</span><span class="pill ok">completed</span></div>
+            <div class="cl">Posted the coverage digest: 10 touchpoints open across Jul 27–29, none claimed.</div>
+            <ul class="bl"><li>Unclaimed touchpoints default to <b>AI watch</b> at day start — the designed default, needing no cleanup.</li></ul>
+          </div></div>
+
+        <div class="beat"><div class="quiet">quiet through the small hours</div></div>
+
+        <div class="beat">
+          <div class="t">2:50 AM</div><div class="rail"><div class="dot warn"></div></div>
+          <div class="b"><div class="bhead">
+            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c48163a366c922167c2ad5">Fixer / Custodian night pass</a>
+            <span class="ctx">verifier · no production writes</span><span class="pill warn">3 defects filed</span></div>
+            <div class="cl">Reported, not repaired — all three are agent/infrastructure defects routed to Junyan, not to you.</div>
+            <ul class="bl">
+              <li>Correspondence Log writing <b>duplicate rows</b> — 22 duplicated turns in 24h, one logged 12×, corrupting the one dedup store every robot shares.</li>
+              <li>Blank <b>Drafted Body</b> on queue rows — third consecutive pass and rising: ~20 rows, was 6, was 5.</li>
+              <li>Ledger-replay minting has <b>stopped</b>; ~13 historic rows remain as board-hygiene backlog. Severity downgraded.</li>
+            </ul>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">7:17 AM</div><div class="rail"><div class="dot ok"></div></div>
+          <div class="b"><div class="bhead">
+            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c4812b9ec6d433a71ff7e3">The Bookkeeper &amp; The Weatherman</a>
+            <span class="ctx">both runs · Jul 27</span><span class="pill ok">completed</span></div>
+            <div class="cl">Both closed clean and were consumed by the morning handoff.</div>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">7:20 AM</div><div class="rail"><div class="dot warn"></div></div>
+          <div class="b"><div class="bhead">
+            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c4819aa617ef8528048ad7">The Host</a>
+            <span class="ctx">FBS prep · board seed · queue</span><span class="pill warn">3 flags raised</span></div>
+            <div class="cl">16 renter bookings verified across five studios, 3 rows corrected; 7 SMS rows queued, all Ready to Send with a future Send After.</div>
+            <ul class="bl">
+              <li><b>Dee A. B.</b> (901, Jul 28) was seeded to the booking holder and typed Self Serve; the calendar names her as facilitator, so the row was re-owned to her and retiered to Monitor Only — left alone she would have received no access information at all.</li>
+              <li>Her Returning Access was queued for <b>17:00, not 09:00</b>, honouring a documented "contactable after 5 PM" note; flagged in case you would rather it match the others.</li>
+              <li><b>Asuka N.</b> carried a panel check result of <code>manual_no_match</code> from Jul 26; her code and window are on file and her access message had already gone, so nothing was re-queued.</li>
+              <li>Alarm-code gate passed for all five recipients; nothing guessed. Codes live only in Notion.</li>
+            </ul>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">7:30 AM</div><div class="rail"><div class="dot warn"></div></div>
+          <div class="b"><div class="bhead">
+            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c48126b616ccadaad25fc7">Overtime — The Timekeeper</a>
+            <span class="ctx">Jul 26 · 13 windows reviewed</span><span class="pill warn">1 flag · 4 held</span></div>
+            <div class="cl">One overtime flag: <b>Himanshi M.</b> arrived 19 minutes early at 901. A $14.69 charge, a staff booking task and a heads-up were all created <b>held</b>, not sent.</div>
+            <ul class="bl">
+              <li>Two forgot-to-arm reminders (<b>Vicky Y.</b>, 509B; <b>Jesse</b>, 509A) staged and held.</li>
+              <li>Two physical-door follow-ups from the cleaning notes: 509A with the hallway door propped, and 693's front door unlocked.</li>
+              <li>Working-hours reconciliation completed with <b>no discrepancies and no corrections</b>.</li>
+              <li>No unauthorized or unrecognized access events for Jul 26.</li>
+            </ul>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">8:15 AM</div><div class="rail"><div class="dot hot"></div></div>
+          <div class="b"><div class="bhead">
+            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c4816a8439d05d9ac9cc61">The Concierge — JOB 34 handoff</a>
+            <span class="ctx">marker · handshake</span><span class="pill hot">handshake failed</span></div>
+            <div class="cl">Consumed five overnight reports and emitted <code>NW-HANDOFF-V1 checked=5 completed=5 parked=8 needs_ops=6 system_exceptions=3</code> — with no <code>RESIDUAL class=</code> lines beneath it.</div>
+            <ul class="bl">
+              <li>The Concierge recorded that <b>the Doorman's Jul 27 report was not found</b> and might still be in flight. It never arrived.</li>
+              <li>Git canon unreachable — the connector returns 404 for the private correspondence repo, so J28 ledger writes stay blocked.</li>
+            </ul>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">—</div><div class="rail"><div class="dot hot"></div></div>
+          <div class="b"><div class="bhead">
+            <span class="plain">Morning Shift — The Opener</span>
+            <span class="ctx">no page to link</span><span class="pill hot">no report</span></div>
+            <div class="cl">No report as of <b>5:45 PM</b>, and none filed since Jul 23. Its "For You" held items and run checklist are absent from this digest.</div>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">—</div><div class="rail"><div class="dot hot"></div></div>
+          <div class="b"><div class="bhead">
+            <span class="plain">The Doorman</span>
+            <span class="ctx">no page to link</span><span class="pill hot">no report</span></div>
+            <div class="cl">No report as of <b>5:45 PM</b>. Tonight's alarm panels and the access-window pre-flight table are unverified; no renter chips can be shown.</div>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">4:50 PM</div><div class="rail"><div class="dot warn"></div></div>
+          <div class="b"><div class="bhead">
+            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c4816a8439d05d9ac9cc61">The Concierge — heavy catch-up</a>
+            <span class="ctx">pass 2 · 17 messages · 5 bookings</span><span class="pill warn">parked for staff</span></div>
+            <div class="cl">Closed with staff follow-ups. Final live panel: all five studios armed away, all doors closed.</div>
+            <ul class="bl">
+              <li><b>Studio 509B door sensor remains bypassed</b> — the machine-readable gate stays open until a fresh panel reads <code>bypassed=false</code>. Four Credentials In Conflict troubles also persist.</li>
+              <li>Five Skedda requests became live paid bookings; five confirmations are <b>held</b> at Pending Review.</li>
+              <li><b>Anneka K.</b>'s Aug 20 move is consent-gated — neither booking may be touched unless she explicitly agrees.</li>
+              <li><b>Himanshi M.</b>'s $14.69 stays blocked after her dispute; a policy reply is held.</li>
+              <li>An earlier premature reschedule Action was <b>cancelled as a false positive</b>, its consent request re-routed to the message queue where outbound belongs.</li>
+            </ul>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">5:33 PM</div><div class="rail"><div class="dot ok"></div></div>
+          <div class="b"><div class="bhead">
+            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c481a3976ec12b486fffc9">Receptionist · Sentinel · Watchman</a>
+            <span class="ctx">late-day runs · Jul 27</span><span class="pill ok">completed</span></div>
+            <div class="cl">All three closed in the last hour before this page compiled. The Receptionist's run is still marked In Progress.</div>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">—</div><div class="rail"><div class="dot hot"></div></div>
+          <div class="b"><div class="bhead">
+            <span class="plain">Issues Report — 2026-07-28</span>
+            <span class="ctx">The Analyst · no page to link</span><span class="pill hot">no report</span></div>
+            <div class="cl">No report as of <b>5:45 PM</b>, so tomorrow has no issues pre-flight. Today's edition did land and still stands: the recurring <b>693 front-door lock</b> is the sharpest open item, and 901 has been sitting unarmed since Jul 25.</div>
+          </div></div>
+
+      </div>
+    </details>
   </section>
 
   <footer>
     <span>Sources: Concierge overnight handoff · Workflow Reports · Actions to Perform · live verification reads.</span>
-    <span>Exception-only, read-only console · safe work belongs to the Concierge · codes &amp; contact info live only in Notion.</span>
+    <span>Exception-only, read-only console · safe work belongs to the Concierge · codes &amp; contact info live only in Notion · the daytime desk reports separately.</span>
   </footer>
 
 </div>
