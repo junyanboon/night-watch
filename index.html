@@ -1,4 +1,40 @@
 <!doctype html>
+<!--
+  ═════════════════════════════════════════════════════════════════════════════
+  THE NIGHT WATCH — EXCEPTION CONSOLE TEMPLATE
+  ═════════════════════════════════════════════════════════════════════════════
+  The Concierge completes the overnight handoff before this page is published.
+  The publisher CLONES this file and fills ONLY the content slots below. Rules:
+
+  1. CONTENT-ONLY EDITS. Keep the <style> block, <script>, palette, fonts, and
+     every layout class EXACTLY as-is. You edit: the kicker time, the verdict
+     sentence, the three score numbers, and the rows inside each section.
+  2. VERIFY THE HANDSHAKE FIRST. Require today's fresh Concierge marker:
+       NW-HANDOFF-V1 checked=N completed=N parked=N needs_ops=N
+       system_exceptions=N
+     Missing/stale marker or system exceptions > 0 renders the hot system row.
+     Never relabel raw overnight findings as Ops Lead work.
+  3. STRUCTURE — two sections:
+       ACT I  (#acts) = "Needs you" — only residual human-only Actions.
+                        At zero, render the green all-clear card.
+       ACT II (#audit)= "Automatic audit" — a compact collapsed record of
+                        what JOB 34 completed or parked for later Concierge work.
+     For = Junyan defects stay on The Fixer Report; render only its pointer.
+  4. REDACTION (public site): first name + last initial for renters; NEVER an
+     alarm/door code, phone, email, or full address. Codes live only in Notion.
+  5. Keep the <meta robots noindex>, self-refresh, external-link safety, title.
+  6. No worksheet controls, notes, checkboxes, selections, or chat handoff.
+
+  CLASS VOCABULARY — THREE STATES ONLY (owner directive 2026-07-23)
+    Dots AND pills use exactly three states:
+      ok   = green  "All good"  (clean, pass, 0 flags)
+      warn = amber  warning     (needs attention / flags raised / held items)
+      hot  = red    urgent      (missing report / real time pressure / emergency)
+    Pills: <span class="pill ok|warn|hot">label</span> — no other pill classes.
+    Human-action, all-clear, system-exception, and audit examples are inline
+    below as REFERENCE — copy the pattern, swap the text.
+  ═════════════════════════════════════════════════════════════════════════════
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -8,77 +44,160 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
   :root {
-    --paper:#f5f4f0; --ink:#191715; --mute:#716c64; --hair:#dedbd3;
-    --brand:#5b2fd4; --act:#b06c00; --act-soft:#f6ead6;
-    --hot:#c23a2b; --hot-soft:#f9e6e2; --done:#2c7a4e; --done-soft:#e2efe7;
-    --cond:"Avenir Next Condensed","Arial Narrow","Helvetica Neue",sans-serif;
-    --sans:"Avenir Next",Avenir,Seravek,"Segoe UI",Ubuntu,sans-serif;
-    --text:Seravek,"Avenir Next","Segoe UI",Ubuntu,sans-serif;
+    --paper: #f5f4f0;
+    --ink: #191715;
+    --mute: #716c64;
+    --hair: #dedbd3;
+    --brand: #5b2fd4;
+    --act: #b06c00;   --act-soft: #f6ead6;
+    --wait: #51617e;  --wait-soft: #e9ecf2;
+    --hot: #c23a2b;   --hot-soft: #f9e6e2;
+    --done: #2c7a4e;  --done-soft: #e2efe7;
+    --cond: "Avenir Next Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+    --sans: "Avenir Next", Avenir, Seravek, "Segoe UI", Ubuntu, sans-serif;
+    --text: Seravek, "Avenir Next", "Segoe UI", Ubuntu, sans-serif;
   }
-  @media (prefers-color-scheme:dark) { :root {
-    --paper:#141210; --ink:#ece8e1; --mute:#979187; --hair:#33302b;
-    --brand:#a685f0; --act:#e2a552; --act-soft:#33270f;
-    --hot:#e8796a; --hot-soft:#3a1c17; --done:#6fbd92; --done-soft:#16291f;
+  @media (prefers-color-scheme: dark) { :root {
+    --paper: #141210; --ink: #ece8e1; --mute: #979187; --hair: #33302b;
+    --brand: #a685f0;
+    --act: #e2a552;  --act-soft: #33270f;
+    --wait: #92a6c8; --wait-soft: #1d2430;
+    --hot: #e8796a;  --hot-soft: #3a1c17;
+    --done: #6fbd92; --done-soft: #16291f;
   }}
-  * { box-sizing:border-box; }
-  body { background:var(--paper); color:var(--ink); font:16px/1.5 var(--text); margin:0; padding:0 clamp(1rem,4vw,2.5rem) 5rem; }
-  .sheet { max-width:900px; margin:0 auto; }
-  .mast { padding:3.2rem 0 0; }
-  .kicker { display:flex; align-items:center; gap:.7rem; }
-  .kicker span { font:600 .72rem/1 var(--sans); letter-spacing:.3em; text-transform:uppercase; color:var(--mute); }
-  .kicker i { flex:1; height:1px; background:var(--hair); }
-  h1 { font:800 clamp(3rem,11vw,6.2rem)/.95 var(--cond); text-transform:uppercase; letter-spacing:.01em; margin:.8rem 0 .4rem; }
-  h1 em { font-style:normal; color:var(--brand); }
-  .date { color:var(--mute); max-width:68ch; }
-  .score { display:grid; grid-template-columns:repeat(3,1fr); border-top:2px solid var(--ink); border-bottom:1px solid var(--hair); margin:2rem 0 0; }
-  .score a { display:flex; align-items:baseline; gap:.8rem; padding:1.1rem .2rem 1.2rem 1.2rem; color:inherit; text-decoration:none; border-left:1px solid var(--hair); }
-  .score a:first-child { border-left:0; padding-left:.2rem; }
-  .score .n { font:800 clamp(2.6rem,7vw,4rem)/1 var(--cond); color:var(--done); font-variant-numeric:tabular-nums; }
-  .score .k { font:600 .7rem/1.4 var(--sans); letter-spacing:.16em; text-transform:uppercase; color:var(--mute); max-width:9em; }
-  section { margin-top:3.4rem; }
-  .act-head { display:flex; align-items:baseline; gap:1rem; margin-bottom:.4rem; }
-  .act-head .no { font:800 1rem/1 var(--cond); color:var(--paper); padding:.34rem .6rem .28rem; border-radius:4px; letter-spacing:.05em; }
-  .act-head h2 { font:800 clamp(1.5rem,4vw,2.1rem)/1 var(--cond); text-transform:uppercase; letter-spacing:.03em; margin:0; }
-  .act-head .note { font-size:.85rem; color:var(--mute); margin-left:auto; text-align:right; }
-  .acts .no { background:var(--act); } .acts h2 { color:var(--act); }
-  .log .no { background:var(--brand); } .log h2 { color:var(--brand); }
-  .system-card { margin-top:.8rem; padding:1.2rem 1.25rem; border-radius:7px; background:var(--hot-soft); border:1px solid color-mix(in srgb,var(--hot) 30%,transparent); }
-  .system-card h3 { margin:0; color:var(--hot); font:750 1.15rem/1.2 var(--sans); }
-  .system-card p { margin:.45rem 0 0; color:var(--mute); max-width:66ch; font-size:.93rem; }
-  details.audit { border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); }
-  details.audit summary { cursor:pointer; list-style:none; padding:1rem 0; display:flex; align-items:baseline; gap:.8rem; color:var(--mute); }
-  details.audit summary::-webkit-details-marker { display:none; }
-  details.audit summary::before { content:"+"; color:var(--brand); font:800 1.2rem/1 var(--cond); }
-  details.audit[open] summary::before { content:"−"; }
-  details.audit summary b { color:var(--ink); }
-  .beat { display:grid; grid-template-columns:68px 24px 1fr; column-gap:.8rem; align-items:start; border-top:1px solid var(--hair); }
-  .t { font:600 .8rem/1.5 var(--cond); color:var(--mute); text-align:right; padding-top:1.05rem; }
-  .rail { position:relative; display:flex; justify-content:center; }
-  .dot { width:12px; height:12px; border-radius:50%; margin-top:1.1rem; background:var(--done); box-shadow:0 0 0 4px var(--paper); }
-  .b { padding:1.05rem 0 1.15rem; }
-  .who { font:700 1.05rem/1.2 var(--sans); }
-  .ctx { margin-left:.7rem; font:600 .72rem/1 var(--sans); letter-spacing:.14em; text-transform:uppercase; color:var(--mute); }
-  .pill { float:right; font:700 .78rem/1 var(--sans); padding:.5rem .9rem; border-radius:999px; background:var(--done-soft); color:var(--done); }
-  .bl { margin:.55rem 0 0; padding-left:1.15rem; font-size:.9rem; color:var(--mute); max-width:62ch; }
-  .bl li { margin:.28rem 0; }
-  footer { margin-top:4rem; border-top:2px solid var(--ink); padding-top:1rem; display:flex; flex-wrap:wrap; gap:.5rem 2rem; justify-content:space-between; font-size:.78rem; color:var(--mute); }
-  @media (prefers-reduced-motion:no-preference) {
-    .mast,.score,section,footer { animation:rise .55s cubic-bezier(.2,.7,.2,1) both; }
-    .score { animation-delay:.08s; } section:nth-of-type(1) { animation-delay:.16s; } section:nth-of-type(2) { animation-delay:.24s; }
-    @keyframes rise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+  * { box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font: 16px/1.5 var(--text); margin: 0; padding: 0 clamp(1rem, 4vw, 2.5rem) 5rem; }
+  .sheet { max-width: 900px; margin: 0 auto; }
+
+  /* Masthead */
+  .mast { padding: 3.2rem 0 0; }
+  .mast .kicker { display: flex; align-items: center; gap: .7rem; }
+  .mast .kicker span { font: 600 .72rem/1 var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--mute); }
+  .mast .kicker i { flex: 1; height: 1px; background: var(--hair); }
+  .mast h1 { font: 800 clamp(3rem, 11vw, 6.2rem)/0.95 var(--cond); text-transform: uppercase; letter-spacing: .01em; margin: .8rem 0 .4rem; }
+  .mast h1 em { font-style: normal; color: var(--brand); }
+  .mast .date { font: 500 .95rem/1.4 var(--text); color: var(--mute); max-width: 68ch; }
+
+  /* Score */
+  .score { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--hair); margin: 2rem 0 0; }
+  .score a { display: flex; align-items: baseline; gap: .8rem; padding: 1.1rem .2rem 1.2rem 1.2rem; text-decoration: none; color: inherit; border-left: 1px solid var(--hair); }
+  .score a:first-child { border-left: 0; padding-left: .2rem; }
+  .score .n { font: 800 clamp(2.6rem, 7vw, 4rem)/1 var(--cond); font-variant-numeric: tabular-nums; }
+  .score .k { font: 600 .7rem/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); max-width: 9em; }
+  .score a:hover .k { color: var(--ink); }
+  .score .act-n { color: var(--act); } .score .wait-n { color: var(--wait); } .score .done-n { color: var(--done); } .score .hot-n { color: var(--hot); }
+
+  /* Sections */
+  section { margin-top: 3.4rem; }
+  .act-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: .4rem; }
+  .act-head .no { font: 800 1rem/1 var(--cond); color: var(--paper); padding: .34rem .6rem .28rem; border-radius: 4px; letter-spacing: .05em; }
+  .act-head h2 { font: 800 clamp(1.5rem, 4vw, 2.1rem)/1 var(--cond); text-transform: uppercase; letter-spacing: .03em; margin: 0; }
+  .act-head .note { font-size: .85rem; color: var(--mute); margin-left: auto; text-align: right; }
+  section.log .act-head .no { background: var(--brand); } section.log h2 { color: var(--brand); }
+  section.acts .act-head .no { background: var(--act); } section.acts h2 { color: var(--act); }
+
+  /* Fixer pointer — the one-line hand-off to The Fixer Report (no #fixme section on this page) */
+  .fixnote { display: flex; align-items: baseline; gap: .6rem; margin-top: 1.1rem; font: 600 .85rem/1.4 var(--sans); color: var(--mute); }
+  .fixnote .tag { font: 800 .72rem/1 var(--cond); color: var(--paper); background: var(--hot); padding: .3rem .5rem .24rem; border-radius: 4px; letter-spacing: .04em; white-space: nowrap; }
+  .fixnote a { color: var(--hot); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--hot) 35%, transparent); }
+  .fixnote a:hover { border-bottom-color: var(--hot); }
+
+  /* Owner cross-offs (static, published) — a closed ACT II row */
+  section.acts .row.closed{opacity:.55}
+  section.acts .row.closed .head h3{text-decoration:line-through;text-decoration-thickness:1.5px}
+  section.acts .row.closed .outcome{color:#4a7c59;font-size:.85em;font-weight:600;text-decoration:none}
+
+  /* Exception-console states */
+  .clear-card, .system-card { margin-top: .8rem; padding: 1.2rem 1.25rem; border-radius: 7px; }
+  .clear-card { background: var(--done-soft); border: 1px solid color-mix(in srgb, var(--done) 28%, transparent); }
+  .system-card { background: var(--hot-soft); border: 1px solid color-mix(in srgb, var(--hot) 30%, transparent); }
+  .clear-card h3, .system-card h3 { margin: 0; font: 750 1.15rem/1.2 var(--sans); }
+  .clear-card h3 { color: var(--done); }
+  .system-card h3 { color: var(--hot); }
+  .clear-card p, .system-card p { margin: .45rem 0 0; color: var(--mute); max-width: 66ch; font-size: .93rem; }
+
+  details.audit { border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+  details.audit > summary { cursor: pointer; list-style: none; padding: 1rem 0; display: flex; align-items: baseline; gap: .8rem; color: var(--mute); }
+  details.audit > summary::-webkit-details-marker { display: none; }
+  details.audit > summary::before { content: "+"; color: var(--brand); font: 800 1.2rem/1 var(--cond); }
+  details.audit[open] > summary::before { content: "−"; }
+  details.audit > summary b { color: var(--ink); }
+  details.audit .tl { margin-bottom: .5rem; }
+
+  /* Rows (ACT I human actions) */
+  .row { border-top: 1px solid var(--hair); padding: 1.15rem 0 1.25rem; }
+  section > .row:last-of-type { border-bottom: 1px solid var(--hair); }
+  .row .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; }
+  a.name { font: 700 clamp(1.15rem, 3vw, 1.45rem)/1.2 var(--sans); color: var(--ink); text-decoration: none; letter-spacing: -.01em; }
+  a.name:hover, a.name:focus-visible { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; outline: none; }
+  a.name::after { content: "↗"; font-size: .65em; vertical-align: .35em; margin-left: .35em; color: var(--mute); }
+  .plain { font: 700 clamp(1.15rem, 3vw, 1.45rem)/1.2 var(--sans); letter-spacing: -.01em; }
+  .ctx { font: 600 .72rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+
+  /* Pills — THREE STATES ONLY: ok (all good) · warn (warning) · hot (urgent) */
+  .pill { margin-left: auto; font: 700 .78rem/1 var(--sans); letter-spacing: .02em; padding: .5rem .9rem; border-radius: 999px; white-space: nowrap; }
+  .pill.ok   { background: var(--done-soft); color: var(--done); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--done) 25%, transparent); }
+  .pill.warn { background: var(--act);  color: var(--paper); }
+  .pill.hot  { background: var(--hot);  color: var(--paper); }
+
+  .line { margin: .5rem 0 0; font-size: .93rem; color: var(--mute); max-width: 66ch; }
+  .line b { color: var(--ink); font-weight: 650; }
+
+  /* ACT II — compact automatic audit */
+  .tl { border-top: 1px solid var(--hair); }
+  .tl .beat { display: grid; grid-template-columns: 68px 24px 1fr; column-gap: .8rem; align-items: start; }
+  .tl .t { font: 600 .8rem/1.5 var(--cond); letter-spacing: .04em; font-variant-numeric: tabular-nums; color: var(--mute); text-align: right; padding-top: 1.05rem; white-space: nowrap; }
+  .tl .rail { position: relative; display: flex; justify-content: center; }
+  .tl .rail::before { content: ""; position: absolute; top: 0; bottom: 0; width: 2px; left: 50%; transform: translateX(-50%); background: linear-gradient(180deg, var(--brand), var(--act)); }
+  .tl .beat:first-child .rail::before { top: 1.35rem; }
+  .tl .beat:last-child .rail::before { bottom: calc(100% - 1.35rem); }
+  .tl .dot { position: relative; z-index: 1; width: 12px; height: 12px; border-radius: 50%; margin-top: 1.1rem; background: var(--done); box-shadow: 0 0 0 4px var(--paper); }
+  .tl .dot.ok { background: var(--done); } .tl .dot.warn { background: var(--act); } .tl .dot.hot { background: var(--hot); }
+  .tl .b { padding: 1.05rem 0 1.15rem; border-top: 1px solid var(--hair); }
+  .tl .beat:first-child .b { border-top: 0; }
+  .tl .bhead { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem 1rem; }
+  .tl .who { font: 700 1.05rem/1.2 var(--sans); letter-spacing: -.01em; }
+  a.who { color: var(--ink); text-decoration: none; }
+  a.who:hover, a.who:focus-visible { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; outline: none; }
+  a.who::after { content: "↗"; font-size: .65em; vertical-align: .35em; margin-left: .35em; color: var(--mute); }
+  .tl .cl { font-size: .9rem; color: var(--mute); margin-top: .15rem; max-width: 62ch; }
+  .tl ul.bl { margin: .55rem 0 0; padding-left: 1.15rem; font-size: .9rem; color: var(--mute); max-width: 62ch; }
+  .tl .bl li { margin: .28rem 0; }
+  .tl .bl li::marker { color: var(--hair); }
+  .tl .bl b { color: var(--ink); font-weight: 650; }
+  .tl .quiet { grid-column: 1 / -1; text-align: center; font: italic 500 .9rem/1.4 var(--text); color: var(--mute); padding: .9rem 0 1rem; }
+
+  /* Chips */
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
+  .chip { font: 600 .78rem/1 var(--sans); padding: .38rem .7rem; border-radius: 999px; background: var(--wait-soft); color: var(--wait); }
+  .chip.tmw { background: transparent; color: var(--mute); box-shadow: inset 0 0 0 1px var(--hair); border: 1px dashed var(--hair); }
+  .chip-key { font: 600 .68rem/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); margin-top: .55rem; }
+
+  footer { margin-top: 4rem; border-top: 2px solid var(--ink); padding-top: 1rem; display: flex; flex-wrap: wrap; gap: .5rem 2rem; justify-content: space-between; font-size: .78rem; color: var(--mute); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mast, .score, section, footer { animation: rise .55s cubic-bezier(.2,.7,.2,1) both; }
+    .score { animation-delay: .08s; }
+    section:nth-of-type(1) { animation-delay: .16s; } section:nth-of-type(2) { animation-delay: .24s; }
+    footer { animation-delay: .32s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   }
-  @media (max-width:620px) {
-    .score { grid-template-columns:1fr; }
-    .score a { border-left:0; border-top:1px solid var(--hair); padding-left:.2rem; }
-    .score a:first-child { border-top:0; }
-    .pill { float:none; display:inline-block; margin-top:.5rem; }
+  @media (max-width: 620px) {
+    .score { grid-template-columns: 1fr; }
+    .score a { border-left: 0; padding-left: .2rem; border-top: 1px solid var(--hair); }
+    .score a:first-child { border-top: 0; }
+    .pill { margin-left: 0; }
   }
 </style>
 <script>
+  /* Self-refresh: keep an open tab current without a manual reload. KEEP AS-IS. */
   (function () {
-    var MAX_AGE = 10 * 60 * 1000, loadedAt = Date.now();
+    var MAX_AGE = 10 * 60 * 1000;
+    var loadedAt = Date.now();
     function maybeReload() {
-      if (document.visibilityState === "visible" && Date.now() - loadedAt > MAX_AGE) location.reload();
+      if (document.visibilityState === "visible" && Date.now() - loadedAt > MAX_AGE) {
+        location.reload();
+      }
     }
     setInterval(maybeReload, 60 * 1000);
     document.addEventListener("visibilitychange", maybeReload);
@@ -87,50 +206,109 @@
 </head>
 <body>
 <div class="sheet">
+
   <header class="mast">
-    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Jul 26, 2026 · 4:32 PM</span></div>
+    <!-- FILL kicker time (compiled time) and verdict (ONE honest sentence). -->
+    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Jul 27, 2026 · 8:29 AM</span></div>
     <h1>The Night<em> Watch</em></h1>
-    <p class="date"><b style="color:var(--ink)">Exception console activated.</b> Today’s original run predates the Concierge handoff, so no legacy worksheet decisions have been carried forward.</p>
+    <p class="date"><b style="color:var(--ink)">Concierge handoff incomplete.</b> No fresh July 27 JOB 34 marker was available at 8:29 AM, so raw overnight findings remain off the human queue.</p>
   </header>
 
+  <!-- Counts come from the fresh Concierge marker + residual Action-row re-read. -->
   <nav class="score" aria-label="The morning handoff at a glance">
-    <a href="#audit"><span class="n">—</span><span class="k">Checked overnight</span></a>
-    <a href="#audit"><span class="n">—</span><span class="k">Handled automatically</span></a>
-    <a href="#acts"><span class="n">—</span><span class="k">Needs you</span></a>
+    <a href="#audit"><span class="n done-n">—</span><span class="k">Checked overnight</span></a>
+    <a href="#audit"><span class="n done-n">—</span><span class="k">Handled automatically</span></a>
+    <a href="#acts"><span class="n act-n">—</span><span class="k">Needs you</span></a>
   </nav>
 
+  <!-- ══ ACT I · Needs you — residual human-only exceptions. ══ -->
   <section class="acts" id="acts">
     <div class="act-head"><span class="no">ACT I</span><h2>Needs you</h2><span class="note">human authority or hands only</span></div>
-    <div class="system-card">
-      <h3>Concierge handoff incomplete</h3>
-      <p>The July 26 morning pass ran before JOB 34 and could not emit an <code>NW-HANDOFF-V1</code> marker. This transition edition does not reinterpret the thirteen raw findings as Ops Lead work. The next scheduled morning pass will use the new contract.</p>
-    </div>
+
+    <div class="system-card"><h3>Concierge handoff incomplete</h3>
+        <p>No <code>The Concierge — Rolling Daily 2026-07-27</code> report or fresh <code>NW-HANDOFF-V1</code> marker was available at 8:29 AM. Morning Shift, The Doorman, and the July 28 Issues Report were also absent. The publisher will retry on its next scheduled run; raw report findings have not been relabelled as Ops Lead work.</p></div>
+    
+
+    <!-- REFERENCE PATTERNS — copy into the slots above; never render all states.
+      SYSTEM:
+      <div class="system-card"><h3>Concierge handoff incomplete</h3>
+        <p>What failed, when last checked, and where the system retries. Never list raw findings as human work.</p></div>
+      ALL CLEAR:
+      <div class="clear-card"><h3>All clear</h3>
+        <p>The Concierge verified the overnight findings and nothing requires the Ops Lead.</p></div>
+      HUMAN ACTION (repeat only for DESIGN.md-qualified residuals):
+      <div class="row"><div class="head">
+        <a class="name" target="_blank" rel="noopener" href="NOTION_URL">First L.</a>
+        <span class="ctx">Studio · date · context</span>
+        <span class="pill warn">one human action</span></div>
+        <p class="line">Evidence + the exact one-click or physical action; state what the Concierge verified.</p></div>
+    -->
+
+    <!-- Render only when ≥1 open For = Junyan verifier defect exists. -->
+    <div class="fixnote"><span class="tag">FIX</span><span>8 agent mistakes for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
   </section>
 
+  <!-- ══ ACT II · Automatic audit — trust/debug history, never a checklist. ══ -->
   <section class="log" id="audit">
-    <div class="act-head"><span class="no">ACT II</span><h2>Automatic audit</h2><span class="note">Concierge JOB 34 · begins next morning pass</span></div>
-    <details class="audit">
-      <summary><b>13 findings removed from the worksheet model</b><span>show transition audit</span></summary>
-      <div class="beat">
-        <div class="t">4:32 PM</div><div class="rail"><div class="dot"></div></div>
-        <div class="b">
-          <div><span class="who">Night Watch process</span><span class="ctx">July 26 transition</span><span class="pill">deployed</span></div>
-          <ul class="bl">
-            <li>The Concierge now owns live verification, safe remediation, ticket advancement, documentation, deduplication, and closure of satisfied machine-readable gates before publication.</li>
-            <li>Night Watch now displays only freshly verified residuals requiring money authority, physical action, access/configuration changes, an undecided policy, or a message review required by the live send mode.</li>
-            <li>A missing or inconsistent handoff becomes one system exception; it never becomes a long human checklist.</li>
-          </ul>
+    <div class="act-head"><span class="no">ACT II</span><h2>Automatic audit</h2><span class="note">Concierge JOB 34 · verified before publish</span></div>
+    <details class="audit"><summary><b>Available reports checked; handoff not promoted</b><span>show audit</span></summary>
+        <div class="tl">
+          <div class="beat">
+            <div class="t">PRIOR</div><div class="rail"><div class="dot warn"></div></div>
+            <div class="b"><div class="bhead">
+              <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3a97503281c4813fb335fdd6302a5553">The Analyst</a>
+              <span class="ctx">Issues Report · Jul 27</span><span class="pill warn">prior</span></div>
+              <ul class="bl"><li>The July 27 report exists but was created before the bounded overnight window; the July 28 report was not present.</li></ul>
+            </div>
+          </div>
+          <div class="beat">
+            <div class="t">7:19 AM</div><div class="rail"><div class="dot ok"></div></div>
+            <div class="b"><div class="bhead">
+              <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c4819aa617ef8528048ad7">The Host</a>
+              <span class="ctx">Run report · completed</span><span class="pill ok">available</span></div>
+              <ul class="bl"><li>FBS preparation, board seeds, message queues, and staff flags are recorded in the source report; no raw item was promoted without Concierge verification.</li></ul>
+            </div>
+          </div>
+          <div class="beat">
+            <div class="t">7:30 AM</div><div class="rail"><div class="dot warn"></div></div>
+            <div class="b"><div class="bhead">
+              <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3aa7503281c48126b616ccadaad25fc7">The Timekeeper</a>
+              <span class="ctx">Overtime · Jul 26</span><span class="pill warn">held</span></div>
+              <ul class="bl"><li>One overtime flag and held follow-ups are recorded, pending the required Concierge ownership pass.</li></ul>
+            </div>
+          </div>
+          <div class="beat">
+            <div class="t">8:29 AM</div><div class="rail"><div class="dot hot"></div></div>
+            <div class="b"><div class="bhead">
+              <span class="who">Morning handoff</span>
+              <span class="ctx">Opener · Doorman · Concierge · Analyst Jul 28</span><span class="pill hot">no report</span></div>
+              <ul class="bl"><li>No fresh JOB 34 marker was available. Score counts remain deliberately withheld, and no human-action rows were rendered.</li></ul>
+            </div>
+          </div>
         </div>
-      </div>
-    </details>
+      </details>
+
+    <!-- REFERENCE PATTERN — fill AUTOMATIC_AUDIT with one collapsed details block:
+      <details class="audit"><summary><b>N findings handled or safely parked</b><span>show audit</span></summary>
+        <div class="tl"><div class="beat">
+          <div class="t">H:MM AM</div><div class="rail"><div class="dot ok"></div></div>
+          <div class="b"><div class="bhead">
+            <a class="who" target="_blank" rel="noopener" href="NOTION_SOURCE_URL">Finding</a>
+            <span class="ctx">source · live proof</span><span class="pill ok">completed</span></div>
+            <ul class="bl"><li>What the Concierge verified, changed, re-read, and closed. No Ops Lead instruction.</li></ul>
+          </div></div></div>
+      </details>
+    -->
   </section>
 
   <footer>
     <span>Sources: Concierge overnight handoff · Workflow Reports · Actions to Perform · live verification reads.</span>
     <span>Exception-only, read-only console · safe work belongs to the Concierge · codes &amp; contact info live only in Notion.</span>
   </footer>
+
 </div>
 <script>
+  /* Every external link opens in a new tab, even if a generated row missed it. */
   document.querySelectorAll('a[href^="http"]').forEach(function (a) {
     a.target = "_blank"; a.rel = "noopener";
   });
