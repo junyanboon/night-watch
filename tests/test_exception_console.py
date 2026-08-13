@@ -44,10 +44,20 @@ class ExceptionConsoleContract(unittest.TestCase):
         parser = MarkupProbe()
         parser.feed(source)
 
+        # Contract invariants, not the text of any one published morning. An
+        # assertion naming a specific day's copy goes red the next time the page
+        # publishes real data, which is every day.
         self.assertFalse(re.search(r"\{\{.+?\}\}", source))
-        self.assertIn("Concierge handoff incomplete", source)
-        self.assertIn("Exception console activated", source)
-        self.assertEqual(source.count('<span class="n">—</span>'), 3)
+        self.assertEqual(source.count('<span class="k">'), 3)
+        self.assertEqual(source.count('<span class="tk">'), 5)
+        self.assertIn('class="truth"', source)
+        # Either a verdict for the Ops Lead or an honest statement that none can
+        # be given — never neither.
+        self.assertTrue(
+            'class="clear-card"' in source
+            or 'class="system-card"' in source
+            or 'class="row"' in source
+        )
         self.assertNotIn("Waiting on you", source)
         self.assertNotIn("worksheet status", source)
         self.assertNotIn("<select", source)
