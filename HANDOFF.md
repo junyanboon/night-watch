@@ -15,11 +15,22 @@ The publisher is read-only: never update a ticket or Action row, never send a cu
 - `template.html`: visual and structural source of truth
 - `DESIGN.md`: exception qualification and content contract
 - `ACCEPTANCE.md`: July 26 regression fixture and expected ownership
-- Workflow Reports data source. **Retired runs are not findings:** The Opener / `Morning Shift` report was retired 2026-07-23 (ticket 007, dissolved-never-restore). Its absence is expected — never render it as a missing report, a ledger row, or a system exception.
+- Workflow Reports data source (see **Retired runs** below before treating any absence as a finding)
 - Actions to Perform data source
 - Message Queue: read only when a residual action is a human-reviewed outbound
 - Fixer Report: https://junyanboon.github.io/fixer-report/
 - Configured Junyan self-DM target
+
+## Retired runs — check this list before calling any absence a finding
+
+A run that no longer exists cannot be missing. Before rendering "no report", "never ran", or a system exception for any workflow, check it against this list:
+
+| Run | Retired | Authority |
+|---|---|---|
+| The Opener / `Morning Shift` | 2026-07-23 | ticket 007 — dissolved, never restore |
+| The Closer | 2026-07-23 | ticket 007 — dissolved, never restore |
+
+A retired run gets no ledger row, no pill, no exception, and no manual-cover link. Add a row here when a run is retired; never remove one.
 
 ## Daily procedure
 
@@ -31,10 +42,14 @@ Fetch today’s `The Concierge — Rolling Daily YYYY-MM-DD` report in full. Req
 
 Re-fetch if the Notion response is stale.
 
+**Take the LAST marker on the page, not the first.** The rolling report grows all day; a later Concierge pass supersedes an earlier one and re-emits the marker with new counts and a new residual list. Scan the whole page, use the final `NW-HANDOFF-V1` line, and note how many passes have filed since — a marker with two later passes behind it is describing a morning that has already moved on. *(2026-08-13: the 09:00 publish used pass 1's `needs_ops=5` and listed five items the 10:35 pass had already closed.)*
+
 - Fresh marker, zero system exceptions: continue.
 - Missing, stale, malformed, internally inconsistent marker, unknown residual class, or any system exception: render one hot **Concierge handoff incomplete** system row and carry its evidence. Do not list every raw overnight report item as work for the Ops Lead.
 
-### 2. Re-read the residual human queue
+### 2. Re-read the residual human queue — a gate, not a formality
+
+**No residual reaches ACT I without its own fresh row read in this publish run.** Fetch each named Action row and check its live `Status`; a row reading `Processed` or `Cancelled` is dropped, however recently the marker named it. The marker says what was true when the Concierge wrote it; the row says what is true now, and only the row may put an item in front of the Ops Lead. If you cannot read a row, that is a system exception — never a reason to render it from the marker's description.
 
 Read only the Action URLs named on `RESIDUAL` lines beneath the marker. For every candidate, fetch the complete row and linked ticket. Include it only when its present state is still open, the requested outcome remains unmet, and its class is one of `money`, `physical`, `access-config`, `policy`, or `message-review`.
 
@@ -73,6 +88,9 @@ Keep the established design. Never add worksheet controls or a chat handoff.
 Before publishing, check:
 
 - exactly three score cells;
+- **every ACT I row was confirmed open by its own row read this run** — no row rendered from the marker's description alone;
+- **the marker used is the LAST one on the rolling report**, and any later pass's closures are reflected;
+- **no retired run appears anywhere on the page** — cross-check every "missing"/"never ran"/"no report" against the Retired runs table above;
 - `Needs you` count equals the rendered human-action rows;
 - a zero count renders the all-clear card;
 - missing handoff never renders all clear;

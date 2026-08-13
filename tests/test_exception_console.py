@@ -105,9 +105,33 @@ class ExceptionConsoleContract(unittest.TestCase):
 
     def test_retired_runs_are_not_findings(self):
         handoff = (ROOT / "HANDOFF.md").read_text()
+        design = (ROOT / "DESIGN.md").read_text()
 
-        self.assertIn("Retired runs are not findings", handoff)
+        # A named table the publisher must consult, not a note buried in Sources.
+        self.assertIn("## Retired runs", handoff)
         self.assertIn("Morning Shift", handoff)
+        self.assertIn("The Closer", handoff)
+        # And a validate-step check, so it is verified rather than merely known.
+        self.assertIn("no retired run appears anywhere on the page", handoff)
+        self.assertIn("Retired runs table", design)
+
+    def test_residual_rows_require_their_own_fresh_read(self):
+        handoff = (ROOT / "HANDOFF.md").read_text()
+        design = (ROOT / "DESIGN.md").read_text()
+
+        # The marker nominates; only a live row read admits an item to ACT I.
+        self.assertIn(
+            "No residual reaches ACT I without its own fresh row read", handoff
+        )
+        self.assertIn("The marker is a nomination, never a verdict", design)
+        self.assertIn(
+            "every ACT I row was confirmed open by its own row read this run", handoff
+        )
+
+        # The rolling report grows all day; the last marker wins.
+        self.assertIn("Take the LAST marker on the page, not the first", handoff)
+        self.assertIn("the marker used is the LAST one on the rolling report".lower(), handoff.lower())
+        self.assertIn("last** one on the report", design)
 
     def test_july_26_fixture_contains_all_thirteen_findings(self):
         acceptance = (ROOT / "ACCEPTANCE.md").read_text()

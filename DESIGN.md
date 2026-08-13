@@ -23,6 +23,7 @@ Before rendering, fetch the current `The Concierge — Rolling Daily YYYY-MM-DD`
 
 `NW-HANDOFF-V1 checked=<N> completed=<N> parked=<N> needs_ops=<N> system_exceptions=<N>`
 
+- The marker to use is the **last** one on the report, not the first. Passes file all day and each supersedes the one before it.
 - A fresh marker proves the Concierge consumed the overnight reports.
 - The Concierge lists every human-only candidate directly below it as `RESIDUAL class=<money|physical|access-config|policy|message-review> action=<Notion URL>`. That classification is canonical; the publisher verifies current state without rerouting raw findings.
 - If the marker is missing, stale, malformed, internally inconsistent, names an unknown class, or reports one or more system exceptions, render one hot system exception: **Concierge handoff incomplete**. Do not promote the raw overnight findings into Ops Lead tasks.
@@ -58,9 +59,11 @@ A row may appear only when all of these are true:
 2. The Concierge’s fresh handoff re-read the source and left the row open.
 3. The requested outcome is still unmet.
 4. JOB 34 named it with one allowed `RESIDUAL class`: `money`, `physical`, `access-config`, `policy`, or `message-review`.
+5. **The publisher read that row itself during this run and found it open.** The marker is a nomination, never a verdict — a residual named at 08:30 and closed at 10:35 is closed. Being unable to read the row is a system exception, not permission to render it from the marker's text. *(2026-08-13: five residuals were published as needing the Ops Lead; all five had been closed by a later Concierge pass before the page went out.)*
 
 Never render:
 
+- a retired run's absence as a missing report or system exception (HANDOFF.md carries the Retired runs table — check it before writing "never ran");
 - machine-readable gates that already read true;
 - ticket routing, correspondence capture, documentation, deduplication, or closure work;
 - a future artist-facing `Gate: Time` outbound before its due date (live verification and fact-driven advancement still run every pass);
