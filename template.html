@@ -14,10 +14,16 @@
        system_exceptions=N
      Missing/stale marker or system exceptions > 0 renders the hot system row.
      Never relabel raw overnight findings as Ops Lead work.
-  3. STRUCTURE — two sections:
+  3. STRUCTURE — one band + three sections:
+       TRUTH BAND (.truth) = counts read DIRECTLY from the ticket + Actions data
+                        sources, independent of the marker. Always rendered, even
+                        when the handshake fails. It is a gauge, not a task list.
        ACT I  (#acts) = "Needs you" — only residual human-only Actions.
                         At zero, render the green all-clear card.
-       ACT II (#audit)= "Automatic audit" — a compact collapsed record of
+       ACT II (#queue)= "The queue" — the open ticket surface grouped by Position,
+                        oldest first, so a backlog is worked in order instead of
+                        hunted. Rows are pointers to work, NOT authority to act.
+       ACT III(#audit)= "Automatic audit" — a compact collapsed record of
                         what JOB 34 completed or parked for later Concierge work.
      For = Junyan defects stay on The Fixer Report; render only its pointer.
   4. REDACTION (public site): first name + last initial for renters; NEVER an
@@ -95,6 +101,26 @@
   .act-head .note { font-size: .85rem; color: var(--mute); margin-left: auto; text-align: right; }
   section.log .act-head .no { background: var(--brand); } section.log h2 { color: var(--brand); }
   section.acts .act-head .no { background: var(--act); } section.acts h2 { color: var(--act); }
+  section.queue .act-head .no { background: var(--wait); } section.queue h2 { color: var(--wait); }
+
+  /* Truth band — direct reads, independent of the Concierge marker. A gauge. */
+  .truth { border-bottom: 1px solid var(--hair); padding: .9rem 0 1rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1.6rem; }
+  .truth .lede { font: 600 .7rem/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--mute); width: 100%; }
+  .truth .cell { display: flex; align-items: baseline; gap: .45rem; }
+  .truth .tn { font: 800 1.5rem/1 var(--cond); font-variant-numeric: tabular-nums; color: var(--ink); }
+  .truth .tn.warn { color: var(--act); } .truth .tn.hot { color: var(--hot); }
+  .truth .tk { font-size: .82rem; color: var(--mute); }
+  .truth .gap { width: 100%; margin: .35rem 0 0; font-size: .86rem; color: var(--hot); font-weight: 650; }
+
+  /* ACT II — queue lines */
+  .qrow { border-top: 1px solid var(--hair); padding: .85rem 0 .9rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .9rem; }
+  section.queue > .qrow:last-of-type { border-bottom: 1px solid var(--hair); }
+  .qrow .qn { font: 800 1.3rem/1 var(--cond); font-variant-numeric: tabular-nums; color: var(--wait); min-width: 2ch; }
+  .qrow .qpos { font: 700 1rem/1.2 var(--sans); }
+  .qrow .qage { font: 600 .72rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+  .qrow .qlist { width: 100%; margin: .35rem 0 0; font-size: .88rem; color: var(--mute); }
+  .qrow .qlist a { color: var(--mute); text-decoration: none; border-bottom: 1px solid var(--hair); }
+  .qrow .qlist a:hover { color: var(--brand); border-bottom-color: var(--brand); }
 
   /* Fixer pointer — the one-line hand-off to The Fixer Report (no #fixme section on this page) */
   .fixnote { display: flex; align-items: baseline; gap: .6rem; margin-top: 1.1rem; font: 600 .85rem/1.4 var(--sans); color: var(--mute); }
@@ -179,7 +205,8 @@
     .mast, .score, section, footer { animation: rise .55s cubic-bezier(.2,.7,.2,1) both; }
     .score { animation-delay: .08s; }
     section:nth-of-type(1) { animation-delay: .16s; } section:nth-of-type(2) { animation-delay: .24s; }
-    footer { animation-delay: .32s; }
+    section:nth-of-type(3) { animation-delay: .32s; }
+    footer { animation-delay: .4s; }
     @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   }
   @media (max-width: 620px) {
@@ -221,6 +248,26 @@
     <a href="#acts"><span class="n act-n">{{N}}</span><span class="k">Needs you</span></a>
   </nav>
 
+  <!-- ══ TRUTH BAND — direct reads, NOT marker-derived. Always render. ══
+       Query the two ticket data sources and Actions to Perform yourself. These
+       numbers do not depend on the Concierge having named anything. If the
+       marker's `needs_ops` and the live open surface disagree by more than a
+       rounding, say so in .gap — an exception console that reads "3" while 139
+       rows sit open is answering a question nobody asked. -->
+  <div class="truth" aria-label="Live open surface, read directly">
+    <span class="lede">Open right now · read direct, not from the handoff</span>
+    <span class="cell"><span class="tn">{{N}}</span><span class="tk">actions for Ops Lead</span></span>
+    <span class="cell"><span class="tn">{{N}}</span><span class="tk">for Junyan → Fixer</span></span>
+    <span class="cell"><span class="tn">{{N}}</span><span class="tk">open care tickets</span></span>
+    <span class="cell"><span class="tn">{{N}}</span><span class="tk">open sales tickets</span></span>
+    <span class="cell"><span class="tn">{{N}}</span><span class="tk">days oldest</span></span>
+    {{TRUTH_GAP_OR_EMPTY}}
+    <!-- GAP PATTERN — render only when marker and live reads disagree:
+      <p class="gap">The handoff named 3 residuals; 139 rows are open. The
+      Concierge skipped JOBS 3, 4, 31 this pass — the difference is unworked,
+      not clear.</p> -->
+  </div>
+
   <!-- ══ ACT I · Needs you — residual human-only exceptions. ══ -->
   <section class="acts" id="acts">
     <div class="act-head"><span class="no">ACT I</span><h2>Needs you</h2><span class="note">{{human-only sub-note}}</span></div>
@@ -247,12 +294,34 @@
     <div class="fixnote"><span class="tag">FIX</span><span>{{N}} agent {{mistake/mistakes}} for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
   </section>
 
-  <!-- ══ ACT II · Automatic audit — trust/debug history, never a checklist. ══ -->
+  <!-- ══ ACT II · The queue — the open ticket surface, ordered. ══
+       Grouped by Position, oldest group first. This is a SERVING ORDER, not an
+       authority to act: every row is still walked with process-studio-tickets,
+       which owns all ticket mechanics. Render Gate: Staff first (human-only by
+       the gates.md self-serve test), then Review, then the rest. Name at most
+       five tickets per group and give the group count; a wall of links is the
+       same hunt in a different font. Omit the section entirely at zero. -->
+  <section class="queue" id="queue">
+    <div class="act-head"><span class="no">ACT II</span><h2>The queue</h2><span class="note">{{N}} open tickets · worked with process-studio-tickets</span></div>
+    {{QUEUE_ROWS_OR_EMPTY}}
+
+    <!-- REFERENCE PATTERN — one .qrow per Position group:
+      <div class="qrow">
+        <span class="qn">10</span><span class="qpos">Gate: Staff</span>
+        <span class="qage">oldest 12 days</span>
+        <p class="qlist">Human-only gates — a physical task, a Skedda UI step, or your call.
+          <a target="_blank" rel="noopener" href="NOTION_URL">First L.</a> ·
+          <a target="_blank" rel="noopener" href="NOTION_URL">First L.</a> · +8 more</p>
+      </div>
+    -->
+  </section>
+
+  <!-- ══ ACT III · Automatic audit — trust/debug history, never a checklist. ══ -->
   <section class="log" id="audit">
-    <div class="act-head"><span class="no">ACT II</span><h2>Automatic audit</h2><span class="note">Concierge JOB 34 · verified before publish</span></div>
+    <div class="act-head"><span class="no">ACT III</span><h2>Automatic audit</h2><span class="note">Concierge JOB 34 · verified before publish</span></div>
     {{AUTOMATIC_AUDIT}}
 
-    <!-- REFERENCE PATTERN — fill AUTOMATIC_AUDIT with one collapsed details block:
+    <!-- REFERENCE PATTERN — fill AUTOMATIC_AUDIT with one collapsed details block (ACT III):
       <details class="audit"><summary><b>N findings handled or safely parked</b><span>show audit</span></summary>
         <div class="tl"><div class="beat">
           <div class="t">H:MM AM</div><div class="rail"><div class="dot ok"></div></div>
@@ -266,7 +335,7 @@
   </section>
 
   <footer>
-    <span>Sources: Concierge overnight handoff · Workflow Reports · Actions to Perform · live verification reads.</span>
+    <span>Sources: Concierge overnight handoff · Workflow Reports · Actions to Perform · ticket data sources read direct · live verification reads.</span>
     <span>Exception-only, read-only console · safe work belongs to the Concierge · codes &amp; contact info live only in Notion.</span>
   </footer>
 

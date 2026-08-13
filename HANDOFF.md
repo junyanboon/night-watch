@@ -42,14 +42,28 @@ JOB 34's classification is canonical. The publisher does not search the whole Op
 
 Open `For = Junyan`, `Type = Review`, `Raised by = The Custodian` rows contribute only to the Fixer Report pointer count.
 
+### 2b. Read the live open surface directly
+
+Independent of the marker — run these every publish, and run them even when the handshake failed:
+
+- Customer Care tickets `collection://047caea0-3da0-4434-a924-319efa8237cb` — group by `Position`, exclude `Done`.
+- Sales tickets `collection://b4bd4ed7-0ae8-44bb-aed0-adf78b7848b0` — group by `Position`, exclude `Won` and `Lost`.
+- Actions to Perform `collection://20df225d-382f-4bb8-9c15-c31571c9f4e0` — open rows (`Status` not `Processed`/`Cancelled`), split by `For`.
+
+Take the oldest `Created time` across the open set for the age figure. These feed the truth band and ACT II. They are counts and pointers only — never a basis for the publisher to act, reclassify, or advance anything.
+
+Compare `needs_ops` against the live open surface. On a material disagreement, write the `.gap` line naming both numbers, plus the reason when the rolling report gives one (skipped jobs, partial pass, budget exhaustion).
+
 ### 3. Build the page
 
 Clone `template.html` and fill the content slots:
 
 - masthead date/time and honest verdict;
 - score counts as `checked`, `completed + parked`, and the freshly verified residual count;
+- truth band: the five direct-read counts, plus the gap line when they disagree with the marker;
 - ACT I human-only rows, or the all-clear card at zero;
-- ACT II compact automatic audit from JOB 34;
+- ACT II queue groups, ordered `Gate: Staff` → `Review` → rest by age, max five named tickets per group; omit the section at zero;
+- ACT III compact automatic audit from JOB 34;
 - optional system exception and Fixer pointer.
 
 Keep the established design. Never add worksheet controls or a chat handoff.
@@ -62,6 +76,8 @@ Before publishing, check:
 - `Needs you` count equals the rendered human-action rows;
 - a zero count renders the all-clear card;
 - missing handoff never renders all clear;
+- the truth band rendered, with all five numbers filled, even on a failed handshake;
+- ACT II queue-group counts sum to the truth band's ticket totals, or the section is absent because both are zero;
 - every displayed action links to its live Notion row;
 - no codes, phone numbers, emails, or full addresses;
 - renter names are first name + last initial;
@@ -74,7 +90,7 @@ Read the current `index.html` SHA, replace the full file on the default branch, 
 
 Then send one Slack self-DM:
 
-`Night Watch published for <date> — <all clear | N items need you | Concierge handoff incomplete>. https://junyanboon.github.io/night-watch/`
+`Night Watch published for <date> — <all clear | N items need you | Concierge handoff incomplete>; <N> open across the queue. https://junyanboon.github.io/night-watch/`
 
 ## Trigger boundary
 

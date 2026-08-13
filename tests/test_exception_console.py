@@ -63,6 +63,42 @@ class ExceptionConsoleContract(unittest.TestCase):
         self.assertIn("RESIDUAL class=", design)
         self.assertIn("JOB 34's classification is canonical", handoff)
 
+    def test_truth_band_and_queue_are_direct_reads(self):
+        template = (ROOT / "template.html").read_text()
+        design = (ROOT / "DESIGN.md").read_text()
+        handoff = (ROOT / "HANDOFF.md").read_text()
+
+        # The band and queue exist in the template.
+        self.assertIn('class="truth"', template)
+        self.assertIn("{{TRUTH_GAP_OR_EMPTY}}", template)
+        self.assertIn("{{QUEUE_ROWS_OR_EMPTY}}", template)
+        self.assertIn('id="queue"', template)
+
+        # Five direct-read cells, and the score band still has exactly three.
+        self.assertEqual(template.count('<span class="tk">'), 5)
+        self.assertEqual(template.count('<span class="k">'), 3)
+
+        # They are gauges, not a promotion of work to the Ops Lead.
+        self.assertIn("gauge, never a task list", design)
+        self.assertIn("pointers to work, not authority to act", design)
+
+        # The publisher reads the data sources itself, not via the marker.
+        for collection in (
+            "collection://047caea0-3da0-4434-a924-319efa8237cb",
+            "collection://b4bd4ed7-0ae8-44bb-aed0-adf78b7848b0",
+            "collection://20df225d-382f-4bb8-9c15-c31571c9f4e0",
+        ):
+            self.assertIn(collection, handoff)
+
+        # A failed handshake must not suppress them — that is when they matter most.
+        self.assertIn("even when the handshake failed", handoff)
+
+    def test_retired_runs_are_not_findings(self):
+        handoff = (ROOT / "HANDOFF.md").read_text()
+
+        self.assertIn("Retired runs are not findings", handoff)
+        self.assertIn("Morning Shift", handoff)
+
     def test_july_26_fixture_contains_all_thirteen_findings(self):
         acceptance = (ROOT / "ACCEPTANCE.md").read_text()
         rows = [
