@@ -15,7 +15,7 @@ The publisher is read-only: never update a ticket or Action row, never send a cu
 - `template.html`: visual and structural source of truth
 - `DESIGN.md`: exception qualification and content contract
 - `ACCEPTANCE.md`: July 26 regression fixture and expected ownership
-- Workflow Reports data source
+- Workflow Reports data source. **Retired runs are not findings:** The Opener / `Morning Shift` report was retired 2026-07-23 (ticket 007, dissolved-never-restore). Its absence is expected — never render it as a missing report, a ledger row, or a system exception.
 - Actions to Perform data source
 - Message Queue: read only when a residual action is a human-reviewed outbound
 - Fixer Report: https://junyanboon.github.io/fixer-report/
