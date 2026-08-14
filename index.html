@@ -127,7 +127,7 @@
   .line { margin: .5rem 0 0; font-size: .93rem; color: var(--mute); max-width: 66ch; }
   .line b { color: var(--ink); font-weight: 650; }
 
-  /* ACT III — compact automatic audit */
+  /* ACT II — compact automatic audit */
   .tl { border-top: 1px solid var(--hair); }
   .tl .beat { display: grid; grid-template-columns: 68px 24px 1fr; column-gap: .8rem; align-items: start; }
   .tl .t { font: 600 .8rem/1.5 var(--cond); letter-spacing: .04em; font-variant-numeric: tabular-nums; color: var(--mute); text-align: right; padding-top: 1.05rem; white-space: nowrap; }
@@ -193,154 +193,183 @@
 <div class="sheet">
 
   <header class="mast">
-    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Aug 14, 2026 · 9:35 AM</span></div>
+    <div class="kicker"><span>Dance Annex Studios</span><i></i><span>Night Watch · Aug 14, 2026 · 12:15 PM</span></div>
     <h1>The Night<em> Watch</em></h1>
-    <p class="date">The morning handoff is incomplete because <b style="color:var(--ink)">Alarm.com cannot be read back</b>; five verified human actions remain, while 135 items are open across the live queue.</p>
+    <p class="date">The Concierge got two people through a door they could not otherwise have opened, and <b style="color:var(--ink)">then declared five of its own jobs skipped</b> — four things need your hands today, and 36 open tickets sit behind them.</p>
   </header>
 
   <nav class="score" aria-label="The morning handoff at a glance">
     <a href="#audit"><span class="n done-n">15</span><span class="k">Checked overnight</span></a>
     <a href="#audit"><span class="n done-n">5</span><span class="k">Handled automatically</span></a>
-    <a href="#acts"><span class="n act-n">5</span><span class="k">Needs you</span></a>
+    <a href="#acts"><span class="n act-n">4</span><span class="k">Needs you</span></a>
   </nav>
 
   <div class="truth" aria-label="Live open surface, read directly">
     <span class="lede">Open right now · read direct, not from the handoff</span>
-    <span class="cell"><span class="tn warn">66</span><span class="tk">actions for Ops Lead</span></span>
-    <span class="cell"><span class="tn warn">34</span><span class="tk">for Junyan → Fixer</span></span>
+    <span class="cell"><span class="tn hot">72</span><span class="tk">actions for Ops Lead</span></span>
+    <span class="cell"><span class="tn warn">36</span><span class="tk">for Junyan → Fixer</span></span>
     <span class="cell"><span class="tn">11</span><span class="tk">open care tickets</span></span>
-    <span class="cell"><span class="tn">24</span><span class="tk">open sales tickets</span></span>
+    <span class="cell"><span class="tn warn">25</span><span class="tk">open sales tickets</span></span>
     <span class="cell"><span class="tn hot">41</span><span class="tk">days oldest</span></span>
-    <p class="gap">The handoff named 5 genuine residuals; 135 items are open across Actions and tickets. The difference is the wider backlog, not evidence that those rows were checked overnight.</p>
+    <p class="gap">The handoff named 5 residuals; 72 Ops Lead actions and 36 tickets are open, the oldest 41 days. The Concierge's own ledger records JOB 35, JOB 3, JOB 4, JOB 31 and HEAVY-AM skipped this morning and 12 inbox threads deferred — the difference is unworked, not clear.</p>
   </div>
 
   <section class="acts" id="acts">
-    <div class="act-head"><span class="no">ACT I</span><h2>Needs you</h2><span class="note">5 human-only actions · all re-read live</span></div>
+    <div class="act-head"><span class="no">ACT I</span><h2>Needs you</h2><span class="note">4 residuals, each re-read open at 12:15<br>human authority or human hands only</span></div>
 
     <div class="system-card"><h3>Concierge handoff incomplete</h3>
-      <p>At 9:2x AM Toronto, every required Alarm.com read returned an empty execution error: user-code lookup, booking coverage, panel snapshot and alarm status. No panel write was attempted. Access work remains open until the integration can read the saved state back.</p></div>
+      <p>The 09:32 close-out marker carries <b>system_exceptions=1</b>: every alarm-mcp read returned an empty execution error, so all panel-dependent verification stopped. That specific outage has since cleared — the 10:22 pass read the panel normally and closed the access gap it had blocked — but the same pass declares <b>JOB 35 skipped for a second consecutive morning</b> (inbound replies expire at 24h), plus JOB 3, JOB 4, JOB 31 and the whole HEAVY-AM block not run on the tick that owns them. The handoff is incomplete by the Concierge's own ledger, and the unread work is Concierge work — it is not listed below as yours.</p></div>
 
     <div class="row"><div class="head">
-      <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3b97503281c4816ab55df1a692adb5e1">Studio 901 door</a>
-      <span class="ctx">physical · recurring bypass</span>
-      <span class="pill warn">check latch/contact</span></div>
-      <p class="line">The front-door sensor has repeatedly been bypassed immediately after arming. A clean panel read alone does not prove the cause; physically check the latch/contact and record the result.</p></div>
+      <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3b97503281c4816ab55df1a692adb5e1">Studio 901 front door</a>
+      <span class="ctx">Physical · open since Aug 11 · 5th event in 4 days</span>
+      <span class="pill hot">check the latch yourself</span></div>
+      <p class="line">Five different renters across three studios armed away and the door bypassed within one to two minutes — an identical signature each time. <b>Five people do not independently invent the same workaround</b>, so this reads as doors not seating closed at arm time, not user habit. Needs a hand on the 901 front door latch and contact; nothing about it can be read remotely.</p></div>
 
     <div class="row"><div class="head">
-      <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3bb7503281c4814c960af9239d335ed8">Jake M.</a>
-      <span class="ctx">509B · Sat Aug 15 · 11:15 AM</span>
-      <span class="pill hot">access not provisioned</span></div>
-      <p class="line">The last successful panel read found no Alarm.com user under any name variant. Provision his permanent code today, then require both the four-panel code read and booking-coverage read to pass before releasing access details.</p></div>
+      <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3bc7503281c481fdb934d84a5bed0dc6">Julie M. and Vicky Y.</a>
+      <span class="ctx">Access-config · raised Aug 14 by The Doorman</span>
+      <span class="pill warn">re-apply, then watch it hold</span></div>
+      <p class="line">Both were made permanent by a human in the UI on Aug 13 and verified live that day. Today both read as temporary windows again — the old pre-Aug-13 windows, restored. <b>Vicky's is the one with teeth: her window expires Aug 24 and covers none of her nine paid Fall bookings.</b> Both changes were human UI edits that reverted within ~24h, so this is not an agent write bug and re-applying it alone may not stick. Neither books within 7 days, so no door is at risk today.</p></div>
 
     <div class="row"><div class="head">
-      <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3bc7503281c481fdb934d84a5bed0dc6">Julie M. + Vicky Y.</a>
-      <span class="ctx">access configuration · systemic revert</span>
-      <span class="pill warn">investigate rollback</span></div>
-      <p class="line">Two permanent-access changes verified yesterday reverted to their old temporary windows within about 24 hours. Treat this as one systemic defect; do not simply reapply and mark it fixed.</p></div>
-
-    <div class="row"><div class="head">
-      <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3bc7503281c4816190ecd506765892bc">ADT retirement sweep</a>
-      <span class="ctx">policy · Gmail search path</span>
-      <span class="pill warn">approve safe query</span></div>
-      <p class="line">The ADT feed is healthy, but every label-scoped Gmail query returns empty. Fix the connector query or approve the documented subject-search plus label-ID check before code retirement resumes.</p></div>
+      <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3bc7503281c4816190ecd506765892bc">Gmail label: search returns empty</a>
+      <span class="ctx">Policy · raised Aug 14 · corroborated twice</span>
+      <span class="pill warn">your call to keep the sweep paused</span></div>
+      <p class="line">Every label-scoped query returns an empty object against a label holding 45,186 messages, while an identical-scope sender query returns ~60 threads normally — so the ADT feed is healthy and the label index is the broken half. The Doorman <b>suspended the code-retirement sweep rather than run it</b>, because presence evidence is its first eligibility test and a search that returns empty for everything would mark every renter idle and qualify their codes for deletion. A wrongly kept code is clutter; a wrongly deleted one is a renter at a locked door. Nothing else is blocked by this — the decision is whether the sweep stays paused.</p></div>
 
     <div class="row"><div class="head">
       <a class="name" target="_blank" rel="noopener" href="https://app.notion.com/p/3bc7503281c48167bc8ce992ada22c6f">Alvin W.</a>
-      <span class="ctx">509B · Sat Aug 15 · 9:00 PM</span>
-      <span class="pill hot">access delivery</span></div>
-      <p class="line">His paid booking and code are recorded, but his phone field is blank. Get a verified mobile number for the normal access message or hand-post the details in Peerspace and log the outbound.</p></div>
+      <span class="ctx">Message-review · 509B · tomorrow 21:00</span>
+      <span class="pill hot">hand-post it before Saturday night</span></div>
+      <p class="line">His access itself is fine and verified — the gap is delivery. <b>His artist record has no phone number at all</b>, and How-to-Access is SMS-only: the send engine fails closed on any non-SMS row, so it cannot be re-routed and an SMS row with no number would flip to error and never send. Nothing was queued rather than park a row guaranteed to fail. He is a first-ever renter holding the last slot of the night, arriving 21:00 Saturday with props. Needs either his mobile number on the record, or the details hand-posted through the Peerspace inbox.</p></div>
 
-    <div class="fixnote"><span class="tag">FIX</span><span>34 open items for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
+    <div class="fixnote"><span class="tag">FIX</span><span>36 agent mistakes for Junyan → <a target="_blank" rel="noopener" href="https://junyanboon.github.io/fixer-report/">The Fixer Report ↗</a></span></div>
   </section>
 
   <section class="queue" id="queue">
-    <div class="act-head"><span class="no">ACT II</span><h2>The queue</h2><span class="note">35 open tickets · worked with process-studio-tickets</span></div>
+    <div class="act-head"><span class="no">ACT II</span><h2>The queue</h2><span class="note">36 open tickets · worked with process-studio-tickets</span></div>
 
     <div class="qrow">
       <span class="qn">18</span><span class="qpos">Gate: Staff</span>
       <span class="qage">oldest 13 days</span>
-      <p class="qlist">Human-only gates — a physical task, guarded system step, or staff decision.
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3af7503281c481e8aff1fc067f6488f6">Welton R. — Aug 15 event</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3b27503281c481aabe3dea2f8822d78d">Rebecca W. — Sep 5 party</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3b47503281c4816aa3edc2b7f643ddaf">Sinéad B. — Aug 22</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3b57503281c4818898f3c08f6fda86a2">Jesse D. — community rate</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3b57503281c48105a8c3c4e6beb8783f">Grace L. — Tagvenue</a> · +13 more</p>
+      <p class="qlist">Human-only gates — a physical task, a Skedda UI step, or your call. Nothing here can be self-served.
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3af7503281c481e8aff1fc067f6488f6">Welton R.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3b27503281c481aabe3dea2f8822d78d">Rebecca W.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3b47503281c4816aa3edc2b7f643ddaf">Sinéad B.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3b57503281c4818898f3c08f6fda86a2">Jesse D.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3b57503281c48105a8c3c4e6beb8783f">Grace L.</a> · +13 more</p>
     </div>
 
     <div class="qrow">
       <span class="qn">3</span><span class="qpos">Gate: Time</span>
       <span class="qage">oldest 41 days</span>
-      <p class="qlist">Waiting on a date rather than a person, but still part of the live surface.
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3937503281c48117b9daf1e985d1de07">Nicholas W. — Fall youth theatre</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3ba7503281c48127a7c3c3ad5377e865">Diana L. — Monday evenings</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3bc7503281c481fa8a99cdb53ac5ee78">Aakanksha P. — Sunday series</a></p>
+      <p class="qlist">Waiting on a date or a season to arrive — but the oldest has been waiting since Jul 4, which is no longer waiting.
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3937503281c48117b9daf1e985d1de07">Nicholas W.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3ba7503281c48127a7c3c3ad5377e865">Diana L.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3bc7503281c481fa8a99cdb53ac5ee78">Aakanksha P.</a></p>
     </div>
 
     <div class="qrow">
       <span class="qn">3</span><span class="qpos">Gate: Money</span>
       <span class="qage">oldest 19 days</span>
-      <p class="qlist">A charge, price, or discretionary money decision — always human.
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3a97503281c48188b3e0c9500c074d6b">Julie M. — recurring classes</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3b07503281c481a98852c61cab95008f">Abbey R. — Sep 9 &amp; 26</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3ba7503281c481c1be17d0fae20b2576">Dante Paolo D. — community rate</a></p>
+      <p class="qlist">Blocked on a rate, a payment, or a discount decision only you can make.
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3a97503281c48188b3e0c9500c074d6b">Julie M.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3b07503281c481a98852c61cab95008f">Abbey R.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3ba7503281c481c1be17d0fae20b2576">Dante P.</a></p>
     </div>
 
     <div class="qrow">
       <span class="qn">8</span><span class="qpos">Gate: Artist</span>
       <span class="qage">oldest 15 days</span>
-      <p class="qlist">Waiting on the renter; live reads and satisfied machine gates still advance independently.
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3ad7503281c481ba8da4ff0cd4042a08">Jillia C. — Fall intensive</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3b67503281c481b9aadee7ee49cc45aa">Jai S. — Aug 11</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3b87503281c4811e977ceef71decf936">Jillia C. — studio viewing</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3b87503281c481e98de0caa9f3198f0c">Kate K. — booking-system issue</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3b87503281c481aaaff6fb33cbb86a41">Megan C. — Aug 9 departure</a> · +3 more</p>
+      <p class="qlist">Waiting on the renter to reply — check whether the ask actually reached them before chasing.
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3ad7503281c481ba8da4ff0cd4042a08">Jillia C.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3b67503281c481b9aadee7ee49cc45aa">Jai S.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3b87503281c481e98de0caa9f3198f0c">Kate K.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3b87503281c481aaaff6fb33cbb86a41">Megan C.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3b97503281c481fc805de4997c63c471">Matthew J. → Laura F.</a> · +3 more</p>
+    </div>
+
+    <div class="qrow">
+      <span class="qn">3</span><span class="qpos">In Progress</span>
+      <span class="qage">opened today</span>
+      <p class="qlist">Backfilled this morning and already moving; listed so the count reconciles, not because they need you.
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3bc7503281c481e6b52cf3e5d4f589af">Eri T.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3bc7503281c481ea83f4e1d18e9a02f3">Kristyan C.</a> ·
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3bc7503281c481558e88f55f591cc085">Leticia S.</a></p>
     </div>
 
     <div class="qrow">
       <span class="qn">1</span><span class="qpos">Routing</span>
-      <span class="qage">raised yesterday</span>
-      <p class="qlist">Not yet classified; route it before it disappears between boards.
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3bb7503281c481e682b8f2786c75d21a">Enrico C. — COI missing Additional Insured</a></p>
-    </div>
-
-    <div class="qrow">
-      <span class="qn">2</span><span class="qpos">In Progress</span>
-      <span class="qage">raised today</span>
-      <p class="qlist">Active ticket work with no current human or artist gate.
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3bc7503281c481e6b52cf3e5d4f589af">Eri T. — Aug 16 backfill</a> ·
-        <a target="_blank" rel="noopener" href="https://app.notion.com/3bc7503281c481ea83f4e1d18e9a02f3">Kristyan C. — Aug 23 backfill</a></p>
+      <span class="qage">oldest 1 day</span>
+      <p class="qlist">Not yet classified into a gate.
+        <a target="_blank" rel="noopener" href="https://app.notion.com/p/3bb7503281c481e682b8f2786c75d21a">Enrico C.</a></p>
     </div>
   </section>
 
   <section class="log" id="audit">
     <div class="act-head"><span class="no">ACT III</span><h2>Automatic audit</h2><span class="note">Concierge JOB 34 · verified before publish</span></div>
-    <details class="audit"><summary><b>15 findings checked · 5 closed end to end</b><span>show audit</span></summary>
+    <details class="audit"><summary><b>15 findings checked · 5 handled or safely parked · 2 lockouts closed end to end</b><span>show audit</span></summary>
       <div class="tl">
+
         <div class="beat">
-          <div class="t">9:20 AM</div><div class="rail"><div class="dot ok"></div></div>
-          <div class="b"><div class="bhead"><span class="plain who">Overnight intake</span>
-            <span class="ctx">Workflow Reports · complete</span><span class="pill ok">consumed</span></div>
-            <ul class="bl"><li>The seven reports skipped by the earlier Concierge pass were fetched in full. Overtime returned zero flags; issue-prevention items were deduplicated against their live owners.</li></ul>
-          </div></div>
-        <div class="beat">
-          <div class="t">9:24 AM</div><div class="rail"><div class="dot ok"></div></div>
+          <div class="t">8:24 AM</div><div class="rail"><div class="dot ok"></div></div>
           <div class="b"><div class="bhead">
-            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3b97503281c4817a81c2d21e81dd4d0e">Alvin W. mirror</a>
-            <span class="ctx">Skedda · exact-studio read</span><span class="pill ok">closed</span></div>
-            <ul class="bl"><li>The supposedly missing mirror exists on Studio 509B at the exact paid time. The obsolete Action was marked Processed only after the booking ID, studio, time, title and paid state were re-read.</li></ul>
+            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3bc7503281c481a58f14d5e148cc7a7e">Aaron A. — 901 tonight</a>
+            <span class="ctx">wrong number · live re-read each step</span><span class="pill ok">completed</span></div>
+            <ul class="bl"><li>Access details had gone to a stranger on a number wrong by <b>one digit</b>. His correct number arrived by email at 08:00 and was written to both the artist record and the Skedda profile.</li>
+              <li>Alarm code confirmed as the rotated one, not the exposed one; coverage for 19:00–21:00 verified permanent; the access message re-sent with wording copied verbatim and only the code changed.</li>
+              <li>The shared door-code question was <b>deliberately not decided here</b> — it went to an owner ruling, which came back <i>do not rotate shared credentials</i>, and the duplicate Ops row was cancelled as obsolete.</li></ul>
           </div></div>
+
         <div class="beat">
-          <div class="t">9:27 AM</div><div class="rail"><div class="dot ok"></div></div>
-          <div class="b"><div class="bhead"><span class="plain who">Stale gates</span>
-            <span class="ctx">Actions · deduplicated</span><span class="pill ok">2 removed</span></div>
-            <ul class="bl"><li>The obsolete Aaron Ops row was cancelled after a later owner ruling was verified; the older Welton Ops row was cancelled in favor of the fuller Junyan handoff.</li></ul>
+          <div class="t">8:26 AM</div><div class="rail"><div class="dot ok"></div></div>
+          <div class="b"><div class="bhead">
+            <span class="who">Alarm panels · all five studios</span>
+            <span class="ctx">JOB 1 mandatory half</span><span class="pill ok">clean</span></div>
+            <ul class="bl"><li>All five partitions armed away, none faulted, none in alarm. Both mandated email searches ran — <b>no pending-to-alarm pair in 24 hours</b>.</li>
+              <li>Attention items were all on the standing skip list; the bypassed 901 sensor cleared at 09:50. Nothing filed, correctly rather than by omission.</li></ul>
           </div></div>
+
         <div class="beat">
-          <div class="t">9:30 AM</div><div class="rail"><div class="dot ok"></div></div>
-          <div class="b"><div class="bhead"><span class="plain who">System checks</span>
-            <span class="ctx">GitHub + Sentinel</span><span class="pill ok">healthy</span></div>
-            <ul class="bl"><li>The earlier quick-answer reviewer failure has self-healed across six consecutive green runs. Sentinel re-read all clear after the Watchman's stale alert.</li></ul>
+          <div class="t">9:32 AM</div><div class="rail"><div class="dot hot"></div></div>
+          <div class="b"><div class="bhead">
+            <span class="who">Alarm reads went dark</span>
+            <span class="ctx">system exception · carried into ACT I</span><span class="pill hot">blocked</span></div>
+            <ul class="bl"><li>Every panel read returned an empty execution error. No write was attempted, and every panel-dependent verification was left open rather than assumed — including the 509B access gap for Saturday.</li>
+              <li>Overnight report intake, which an earlier pass had left <b>7 of 9 unread</b>, was completed at this close-out.</li></ul>
           </div></div>
+
+        <div class="beat">
+          <div class="t">10:29 AM</div><div class="rail"><div class="dot ok"></div></div>
+          <div class="b"><div class="bhead">
+            <a class="who" target="_blank" rel="noopener" href="https://app.notion.com/p/3bb7503281c4814c960af9239d335ed8">Jake M. — 509B tomorrow</a>
+            <span class="ctx">the marker's 5th residual · now closed</span><span class="pill ok">completed</span></div>
+            <ul class="bl"><li>Overnight reads had established that <b>no panel user existed for him at all</b> — the code on file was a stale cache with nothing behind it. He would have arrived tomorrow to a locked door.</li>
+              <li>Once the panel responded again the work became possible: booking confirmed paid, the code confirmed free of any collision, the user created, then <b>two independent verify reads</b> before the access details were sent.</li>
+              <li>This is why <b>Needs you reads 4 and the marker said 5</b> — the row closed after the handoff was written, and it was re-read closed before this page went out.</li></ul>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">10:40 AM</div><div class="rail"><div class="dot ok"></div></div>
+          <div class="b"><div class="bhead">
+            <span class="who">Three stale red flags cleared</span>
+            <span class="ctx">verified live, not assumed</span><span class="pill ok">completed</span></div>
+            <ul class="bl"><li>Today's 12:30 and 14:00 bookings still carried yesterday's access escalations; both renters <b>verified clear on the live panel</b>. Staff had already provisioned them — the boards were stale, the reality was fine.</li>
+              <li>A renter flagged "entirely unprovisioned" for three consecutive runs reads permanent on the panel with a complete artist record. The false flag was rewritten at the source so a fourth run does not repeat it.</li>
+              <li>The quick-answer reviewer lane, reported down overnight, re-verified healthy across six consecutive runs — those alerts were stale.</li></ul>
+          </div></div>
+
+        <div class="beat">
+          <div class="t">11:05 AM</div><div class="rail"><div class="dot warn"></div></div>
+          <div class="b"><div class="bhead">
+            <span class="who">What the Concierge says it owes</span>
+            <span class="ctx">its own ledger, quoted not softened</span><span class="pill warn">parked</span></div>
+            <ul class="bl"><li><b>Two consecutive passes spent themselves on access and deferred the protected inbox job.</b> Each was individually the right call — a paid booking with a real lockout inside 24 hours beats inbox hygiene — but the ledger names the pattern rather than defending it.</li>
+              <li>12 inbox threads deferred. Four people are waiting on an answer, two of them since early this morning; one asked for a call today. The unpaid-charge scan has had no owner today.</li>
+              <li>These are <b>Concierge jobs, not yours</b> — they are recorded here so the backlog is legible, and deliberately not promoted into ACT I.</li></ul>
+          </div></div>
+
       </div>
     </details>
   </section>
