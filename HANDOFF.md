@@ -1,3 +1,5 @@
+> **RETIRED 2026-09-02 (Junyan).** The publisher trigger is disabled, `index.html` is a retirement notice, and no session should run this procedure. Kept for history only.
+
 # Night Watch — session handoff
 
 How to run the Dance Annex Night Watch publisher. `DESIGN.md` is the product contract and `template.html` is the page to clone.
